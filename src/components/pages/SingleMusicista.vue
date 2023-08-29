@@ -1,3 +1,5 @@
 <script></script>
-<template></template>
+<template>
+    ciao
+</template>
 <style></style>

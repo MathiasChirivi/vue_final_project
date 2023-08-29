@@ -3,6 +3,7 @@ import AppHome from './components/pages/AppHome.vue';
 import AppAbout from './components/pages/AppAbout.vue';
 import AppMusicisti from './components/pages/AppMusicisti.vue';
 import SingleMusicista from './components/pages/SingleMusicista.vue';
+import AppLogin from './components/pages/AppLogin.vue';
 
 
 const router = createRouter({
@@ -27,6 +28,11 @@ const router = createRouter({
             path: "/Musicisti/:id",
             name: "SingleMusicista",
             component: SingleMusicista
+        },
+        {
+            path: "/Login",
+            name: "Login",
+            component: AppLogin
         },
 
 
