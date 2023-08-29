@@ -83,11 +83,9 @@ export default {
                         <div class="card-body">
                             <h3 class="card-title">{{ user.name }}</h3>
                             <div class="card-text text-truncate">{{ user.experience }}</div>
-                            <div class="card-text"><font-awesome-icon icon="fa-solid fa-location-dot" /> {{ user.region }}</div>
-                            <div class="card-text">
-                                <font-awesome-icon icon="fa-solid fa-music" /> {{ user.genres.map(genre => genre.name).join(', ') }}
-                            </div>
-                            <div class="card-text">{{ user.cachet }}</div>
+                            <div class="card-text"><font-awesome-icon icon="fa-solid fa-location-dot " class="me-3" style="color: #5d96f8;" /> {{ user.region }}</div>
+                            <div class="card-text"><font-awesome-icon icon="fa-solid fa-music" class="me-3" style="color: #5d96f8;" /> {{ user.genres.map(genre => genre.name).join(', ') }}</div>
+                            <div class="card-text"><font-awesome-icon icon="fa-solid fa-money-bill"  class="me-3" style="color: #5d96f8;" /> {{ user.cachet }}</div>
                         </div>
 
                     </div>

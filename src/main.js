@@ -14,4 +14,7 @@ library.add(faLocationDot)
 import { faMusic } from '@fortawesome/free-solid-svg-icons'
 library.add(faMusic)
 
+import { faMoneyBill } from '@fortawesome/free-solid-svg-icons'
+library.add(faMoneyBill)
+
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
