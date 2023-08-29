@@ -80,6 +80,16 @@ export default {
                 <div v-for="user in users">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" :src="store.storageUrl + user.img" />
+                        <div class="card-body">
+                            <h3 class="card-title">{{ user.name }}</h3>
+                            <div class="card-text text-truncate">{{ user.experience }}</div>
+                            <div class="card-text"><font-awesome-icon icon="fa-solid fa-location-dot" /> {{ user.region }}</div>
+                            <div class="card-text">
+                                <font-awesome-icon icon="fa-solid fa-music" /> {{ user.genres.map(genre => genre.name).join(', ') }}
+                            </div>
+                            <div class="card-text">{{ user.cachet }}</div>
+                        </div>
+
                     </div>
                 </div>
             </div>
