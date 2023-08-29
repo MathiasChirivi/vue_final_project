@@ -7,8 +7,8 @@ export default{
                 {label:"Home", name:"Home"},
                 {label:"About-us", name:"About-us"},
                 {label:"Musicisti", name:"Musicisti"},
-                {label:"Login", name:"Login"},
-                {label:"Register", name:"Register"},
+                // {label:"Login", name:"Login"},
+                // {label:"Register", name:"Register"},
             ]
         }
     }

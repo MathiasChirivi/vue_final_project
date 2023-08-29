@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AppHome from './pages/AppHome.vue';
-import AppAbout from './pages/AppAbout.vue';
-import AppMusicisti from './pages/AppMusicisti.vue';
-import SingleMusicista from './pages/SingleMusicista.vue';
+import AppHome from './components/pages/AppHome.vue';
+import AppAbout from './components/pages/AppAbout.vue';
+import AppMusicisti from './components/pages/AppMusicisti.vue';
+import SingleMusicista from './components/pages/SingleMusicista.vue';
 
 
 const router = createRouter({
@@ -14,7 +14,7 @@ const router = createRouter({
             component:AppHome
         },
         {
-            path: "AppAbout",
+            path: "/AppAbout",
             name: "About-us",
             component: AppAbout
         },
