@@ -1,6 +1,7 @@
 body{
-    background: #fefefe !important;
-    background: -webkit-linear-gradient(116deg, #fefefe 0%, #5c75d1 100%) !important;
-    background: linear-gradient(116deg, #fefefe 0%, #5c75d1 100%) !important;
+    background: #f8f8f8;
+    background: -webkit-linear-gradient(0deg, #f8f8f8 0%, #8d8fff 100%);
+    background: linear-gradient(0deg, #f8f8f8 0%, #8d8fff 100%);
     background-repeat: no-repeat;
+    min-height: 100vh;
 }
