@@ -14,13 +14,12 @@ export default {
 </script>
 
 <template>
-    <div class="container p-0">
-        <nav class="navbar navbar-expand-lg bg_navbar rounded-5">
+    <div class="container header_bg p-0">
+        <nav class="navbar navbar-expand-lg bg_navbar rounded-5 p-0">
             <div class="container p-0">
                 <div class="col-lg-3 mx-4">
                     <a class="navbar-brand" href="#">
-                        <img src="" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-                        Nome Sito
+                        <img src="../assets/img/logo_1.png" alt="Logo"  class="d-inline-block align-text-top">
                     </a>
                 </div>
                 <!-- bottone a scomparsa -->
@@ -54,6 +53,12 @@ export default {
     display: flex;
     justify-content: flex-start;
     height: 100px;
+}
+
+.header_bg{
+    background-color: #00000000;
+    position: relative;
+    z-index: 999;
 }
 
 </style>
