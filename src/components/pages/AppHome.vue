@@ -1,11 +1,16 @@
 <script>
+import Appstatistiche from '../pages/Appstatistiche.vue'
 export default {
     name: "AppHome",
     data() {
         return {
             
         }
+    },
+    components:{
+        Appstatistiche,
     }
+    
 }
 </script>
 <template>
@@ -42,10 +47,21 @@ export default {
             <div class="col-4 my-5">
                 <div>
                     <!-- <img class="w-100" src="../../assets/img/Progetto_senza_titolo_2.png" alt=""> -->
+                    <img class="w-100" src="../../assets/img/Progetto_senza_titolo_2.png" alt="">
                 </div>
-            </div>
-
+            </div> -->
         </div>
     </div>
+    <Appstatistiche />
 </template>
-<style></style>
+
+
+<style scoped lang="scss">
+
+.bgcolor_search {
+    background-color: rgba(255, 255, 255, 0.493);
+}
+
+
+
+</style>
