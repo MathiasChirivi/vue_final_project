@@ -11,7 +11,7 @@ export default {
 <template>
     <div class="container p-0 ">
         <div class="row">
-            <div class="col-9">
+            <div class="col-8 my-5">
                 <!-- titolone. -->
                 <div class="col-9 titolo">
                     <h1>Trova musicisti Interessanti, gruppi, DJ e band per il tuo evento</h1>
@@ -39,9 +39,9 @@ export default {
             </div>
 
             <!-- immagine.-->
-            <div class="col-3">
+            <div class="col-4 my-5">
                 <div>
-                    <img class="img" src="../assets/img/Progetto_senza_titolo_2.png" alt="">
+                    <!-- <img class="w-100" src="../../assets/img/Progetto_senza_titolo_2.png" alt=""> -->
                 </div>
             </div>
 
