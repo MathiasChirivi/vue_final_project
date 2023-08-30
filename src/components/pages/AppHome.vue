@@ -29,11 +29,11 @@ export default {
 </script>
 <template>
     <!-- carousel. -->
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active height_carousel">
-                <img src="../../assets/img/sfondo_uno.png" class="d-block w-100 bg_size_cover" alt="...">
-            </div>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active height_carousel">
+                    <img src="../../assets/img/sfondo_uno.png" class="d-block w-100 bg_size_cover" alt="...">
+                </div>
             <div class="carousel-item height_carousel">
                 <img src="../../assets/img/sfondo_2.png" class="d-block w-100 bg_size_cover" alt="...">
             </div>
@@ -51,17 +51,20 @@ export default {
         </button>
 
         <!-- searche musicista. -->
-        <div class="col-6 d-flex position-absolute rounded search  p-3">
-            <div class="col-3 me-2">
+        <div class="col-6 d-flex position-absolute justify-content-around rounded search  p-3">
+            <div class="col-5 me-2">
                 <input type="text" class="form-control" id="" placeholder="Genere">
             </div>
-            <div class="col-3 me-2">
+            <div class="col-5 me-2">
                 <input type="text" class="form-control" id="" placeholder="Regione">
             </div>
             <div class="col-2 me-2">
                 <input type="submit" class="form-control" id="">
             </div> 
         </div>
+    </div>
+    <div class="container mx-auto mtCarousel">
+        <AppCarousel />
     </div>
 </template>
 
@@ -89,5 +92,9 @@ export default {
     bottom: -30px;
     transform: translateX(50%);
     
+}
+
+.mtCarousel{
+    margin-top: 10%;
 }
 </style>
