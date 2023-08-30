@@ -1,6 +1,8 @@
 <script>
 import axios from 'axios'
 import { store } from '../../store'
+import AppCarousel from '../AppCarousel.vue';
+
 export default {
     name: "AppHome",
     data() {
@@ -17,6 +19,7 @@ export default {
         }
     },
     components: {
+        AppCarousel
     },
     mounted() {
         this.getUser();
@@ -81,7 +84,9 @@ export default {
                 </div> -->
             <!-- </div> -->
         </div>
+        <AppCarousel/>
     </div>
+
 </template>
 
 
