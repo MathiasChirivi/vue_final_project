@@ -147,15 +147,16 @@ export default {
         </div>
     </div>
     <div class="d-flex justify-content-center gap-4 mt-5">
-        <a class="btn btn-primary" @click="getUsersPrevPage">
-            <i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>
-            <span class="ms-3">Previous</span>
+        <a class="btn" @click="getUsersPrevPage">
+            <span class="ms-3">
+                <font-awesome-icon icon="fa-solid fa-arrow-left" />
+            </span>
         </a>
-        <a class="btn text-black" :class="{ 'bg_violet': pageNumber === usersCurrentPage }"
-            @click="getUsersPage(pageNumber)" v-for="pageNumber in usersTotalPages">{{ pageNumber }}</a>
-        <a class="btn btn-primary" @click="getUsersNextPage">
-            <span class="me-3">Next</span>
-            <i class="fa-solid fa-chevron-right" style="color: #ffffff;"></i>
+        <a class="btn text-black rounded-circle" :class="{ 'bg_violet': pageNumber === usersCurrentPage }" @click="getUsersPage(pageNumber)" v-for="pageNumber in usersTotalPages">{{ pageNumber }}</a>
+        <a class="btn" @click="getUsersNextPage">
+            <span class="me-3">
+                <font-awesome-icon icon="fa-solid fa-arrow-right" />
+            </span>
         </a>
     </div>
 </template>

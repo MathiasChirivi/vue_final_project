@@ -20,4 +20,10 @@ library.add(faMoneyBill)
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 library.add(faMagnifyingGlass)
 
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+library.add(faArrowRight)
+
+import { faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+library.add(faArrowLeft)
+
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
