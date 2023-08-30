@@ -1,16 +1,27 @@
 <script>
-import Appstatistiche from '../pages/Appstatistiche.vue'
+import axios from 'axios'
+import { store } from '../../store'
 export default {
     name: "AppHome",
     data() {
         return {
-            
+            store,
         }
     },
-    components:{
-        Appstatistiche,
-    }
-    
+    methods: {
+        getUser() {
+            axios.get(this.store.apiUrl + this.store.usersApi).then(response => {
+                this.users = response.data.results.data;
+                console.log(this.users)
+            })
+        }
+    },
+    components: {
+    },
+    mounted() {
+        this.getUser();
+    },
+
 }
 </script>
 <template>
@@ -49,19 +60,22 @@ export default {
                     <!-- <img class="w-100" src="../../assets/img/Progetto_senza_titolo_2.png" alt=""> -->
                     <img class="w-100" src="../../assets/img/Progetto_senza_titolo_2.png" alt="">
                 </div>
-            </div> -->
+            </div>
+            <div class="d-flex justify-content-center container pt-5 pb-5">
+                <span class="colorPrimary fs-3">{{ users.length }}</span>
+
+                <div v-for="statistica in store.statistiche" class=" d-flex flex-column align-items-center pr-5 ps-5 ">
+                    <!-- <img src="../assets/background-pattern-grid-line-06.png" alt=""> -->
+                    <p class="fs-2">{{ statistica.testo }}</p>
+                </div>
+            </div>
         </div>
     </div>
-    <Appstatistiche />
 </template>
 
 
 <style scoped lang="scss">
-
 .bgcolor_search {
     background-color: rgba(255, 255, 255, 0.493);
 }
-
-
-
 </style>

@@ -7,15 +7,12 @@ export const store = reactive({
 
     statistiche:[
         {
-            dato: "32.225",
             testo: "Musicisti iscritti",
         },
         {
-            dato:"88.326",
             testo: "Richieste per concerti",
         },
         {
-            dato:"10.599",
             testo: "Recensioni clienti",
         },
         
