@@ -60,14 +60,6 @@ export default {
     display: flex;
     justify-content: flex-start;
     height: 100px;
-
 }
 
-.bgcolor_search {
-    background-color: rgba(255, 255, 255, 0.493);
-}
-
-.img {
-    width: 100%;
-}
 </style>
