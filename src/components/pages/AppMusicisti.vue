@@ -129,7 +129,8 @@ export default {
         <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
             <div v-for="user in users">
                 <div class="card" style="width:20rem;">
-                    <img class="card-img-top" :src="store.storageUrl + user.img" />
+                    <img v-if="user.img" class="card-img-top" :src="store.storageUrl + user.img" />
+                    <img v-else class="card-img-top" src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
                     <div class="card-body">
                         <h3 class="card-title">{{ user.name }}</h3>
                         <h3 class="card-title">{{ user.surname }}</h3>
