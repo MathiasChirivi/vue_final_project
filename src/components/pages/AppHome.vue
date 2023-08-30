@@ -60,7 +60,7 @@ export default {
 
                 </div>
             </div>
-            <div class="d-flex justify-content-center container pt-5 pb-5">
+            <!-- <div class="d-flex justify-content-center container pt-5 pb-5">
 
 
                 <div class=" d-flex align-items-center pr-5 ps-5 ">
@@ -78,10 +78,10 @@ export default {
                     </div>
 
 
-                </div>
+                </div> -->
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 </template>
 
 
