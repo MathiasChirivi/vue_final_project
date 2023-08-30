@@ -60,9 +60,9 @@ export default {
             </div>
             <div class="col-2 me-2">
                 <input type="submit" class="form-control" id="">
-            <!-- </div> -->
+            </div> 
         </div>
-    <!-- </div> -->
+    </div>
 </template>
 
 
