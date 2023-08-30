@@ -213,7 +213,7 @@ export default {
         </h3>
         <h3 v-if="loadingError"> {{ loadingError }} </h3>
     </div>
-    <div class="col-12 d-flex flex-row-reverse">
+    <div class="col-12 d-flex flex-row-reverse my-3">
         <nav class="navbar bg_violet rounded-5 me-5">
             <div class="container mx-3">
                 <form class="d-flex" @submit.prevent="searchUsers">
@@ -224,10 +224,10 @@ export default {
                 </form>
             </div>
             
-            <div class="d-flex justify-content-center gap-4 mt-3">
-                <button class="btn" @click="orderingSet('default')">Ordine Alfabetico</button>
-                <button class="btn" @click="orderingSet('reviews')">Più Recensioni</button>
-                <button class="btn" @click="orderingSet('votes')">Più Voti</button>
+            <div class="d-flex justify-content-center gap-4 mt-3 p-3">
+                <button class="btn badge"  v-bind:class="orderBy === 'null' ? 'bg_cl_primary' : '' "  @click="orderingSet('null')">Ordine Alfabetico</button>
+                <button class="btn badge"  v-bind:class="orderBy === 'reviews' ? 'bg_cl_primary' : '' "  @click="orderingSet('reviews')">Più Recensioni</button>
+                <button class="btn badge"  v-bind:class="orderBy === 'votes' ? 'bg_cl_primary' : '' "  @click="orderingSet('votes')">Più Voti</button>
             </div>
         </nav>
     </div>
@@ -295,4 +295,9 @@ export default {
 .bg_violet {
     background-color: #8999da;
 }
+
+.bg_cl_primary{
+    background-color:#5c75d1e0 ;
+}
+
 </style>
