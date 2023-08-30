@@ -105,11 +105,21 @@ export default {
             }
         },
         getUsersPrevPage() {
-            this.getUsersPage(this.usersCurrentPage - 1);
+            // this.getUsersPage(this.usersCurrentPage - 1);
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }else {
+                console.error("non ci sono piu pagine");
+            }
         },
         getUsersNextPage() {
             // this.getUsersPage(this.usersCurrentPage + 1);
-            this.currentPage++;
+            if (this.currentPage < Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
+                this.currentPage++;
+            }else {
+                console.error("non ci sono piu pagine");
+            }
+            // this.currentPage++;
         },
 
         // SEARCH
@@ -153,6 +163,7 @@ export default {
         paginatedFilteredUsers() {
             const startIndex = (this.currentPage - 1) * this.resultsPerPage;
             const endIndex = startIndex + this.resultsPerPage;
+            console.log(this.currentPage);
             
             // return this.users
             //     .filter(user => {
