@@ -17,4 +17,7 @@ library.add(faMusic)
 import { faMoneyBill } from '@fortawesome/free-solid-svg-icons'
 library.add(faMoneyBill)
 
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+library.add(faMagnifyingGlass)
+
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

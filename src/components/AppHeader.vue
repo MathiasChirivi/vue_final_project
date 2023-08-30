@@ -49,12 +49,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-// .bg_navbar{
-//     background-color:#5c75d1e0;
-// }
-// .btnColor{
-//     background-color: #8999da;
-// }
 
 .titolo {
     display: flex;
