@@ -57,16 +57,27 @@ export default {
             <!-- immagine.-->
             <div class="col-4 my-5">
                 <div>
-                    <!-- <img class="w-100" src="../../assets/img/Progetto_senza_titolo_2.png" alt=""> -->
-                    <img class="w-100" src="../../assets/img/Progetto_senza_titolo_2.png" alt="">
+
                 </div>
             </div>
             <div class="d-flex justify-content-center container pt-5 pb-5">
-                <span class="colorPrimary fs-3">{{ users.length }}</span>
 
-                <div v-for="statistica in store.statistiche" class=" d-flex flex-column align-items-center pr-5 ps-5 ">
-                    <!-- <img src="../assets/background-pattern-grid-line-06.png" alt=""> -->
-                    <p class="fs-2">{{ statistica.testo }}</p>
+
+                <div class=" d-flex align-items-center pr-5 ps-5 ">
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-5">
+                        <span class="colorPrimary fs-3">{{ users.length }}</span>
+                        <div class="fs-2">Musicisti iscritti</div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-5">
+                        <span class="colorPrimary fs-3">{{ users.length }}</span>
+                        <div class="fs-2">Richieste per concerti</div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-5">
+                        <span class="colorPrimary fs-3">{{ users.length }}</span>
+                        <div class="fs-2">Recensioni clienti</div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
