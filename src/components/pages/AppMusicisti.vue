@@ -52,7 +52,7 @@ export default {
             //     }
             // }
             ).then(response => {
-                console.log(response);
+                
                 this.users = response.data.results;
                 this.filteredUsers = response.data.results;
                 // .data;
@@ -132,7 +132,7 @@ export default {
             return fullName.toLowerCase().includes(this.searchQuery.toLowerCase());
         });
         this.currentPage = 1; // Reset to first page after new search
-        console.log(this.filteredUsers)
+        
     },
         
         // searchUsers() {
@@ -163,7 +163,7 @@ export default {
         paginatedFilteredUsers() {
             const startIndex = (this.currentPage - 1) * this.resultsPerPage;
             const endIndex = startIndex + this.resultsPerPage;
-            console.log(this.currentPage);
+            
             
             // return this.users
             //     .filter(user => {
@@ -262,6 +262,7 @@ export default {
                                 style="color: #5d96f8;" /> {{ user.genres.map(genre => genre.name).join(', ') }}</div>
                         <div class="card-text"><font-awesome-icon icon="fa-solid fa-money-bill" class="me-3"
                                 style="color: #5d96f8;" /> {{ user.cachet }}</div>
+                        <router-link class="btn text-decoration-none my-3" :to="{ name:'SingleMusicista', params: {id: user.id}}">Vedi dettagli</router-link>
                     </div>
 
                 </div>
