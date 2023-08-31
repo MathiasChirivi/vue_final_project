@@ -48,13 +48,13 @@ export default {
                         <div class="col-5 d-flex align-items-center justify-content-center">
                             <img class="w-75" :src="store.storageUrl + user.img" />
                         </div>
-            
-                        <StarItems :itemRate="(user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0)" />
                         <div class="col-4 d-flex flex-column justify-content-around">
+                            <div>
+                                <StarItems :itemRate="(user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0)" />
+                                <div>({{ user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0 }} recensioni su {{ user.reviews.length }})</div>
+                                </div>
                             <div class="d-flex flex-column justify-content-start ">
-                                <span>{{ user.name }} {{ user.surname }}</span>
-                                <span>{{ user.cachet }}</span>
-                                <span>{{ user.experience }}</span>
+                                <h3>{{ user.name }} {{ user.surname }}</h3>
                             </div>
                         </div>
                     </div>
