@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios'
 import { store } from '../../store'
+import AppEventi from '../AppEventi.vue';
 import AppCarousel from '../AppCarousel.vue';
 
 export default {
@@ -19,6 +20,7 @@ export default {
         }
     },
     components: {
+        AppEventi,
         AppCarousel
     },
     mounted() {
@@ -51,17 +53,20 @@ export default {
         </button>
 
         <!-- searche musicista. -->
-        <div class="col-6 d-flex position-absolute justify-content-around rounded search  p-3">
-            <div class="col-5 me-2">
-                <input type="text" class="form-control" id="" placeholder="Genere">
+        <div class="col-3 d-flex position-absolute justify-content-around rounded search  p-3">
+            <div class="col-4 me-2">
+                <input type="text" class="input" id="" placeholder="Genere">
             </div>
-            <div class="col-5 me-2">
-                <input type="text" class="form-control" id="" placeholder="Regione">
-            </div>
-            <div class="col-2 me-2">
-                <input type="submit" class="form-control" id="">
+            <!-- <div class="col-4 me-2">
+                <input type="text" class="input" id="" placeholder="Regione">
+            </div> -->
+            <div class="col-3 me-2 pe-2 pr-2">
+                <input type="submit" class="input" id="">
             </div> 
         </div>
+    </div>
+    <div class=" bg_img">
+        <AppEventi />
     </div>
     <div class="container mx-auto mtCarousel">
         <AppCarousel />
@@ -70,10 +75,6 @@ export default {
 
 
 <style scoped lang="scss">
-.bgcolor_search {
-    background-color: rgba(255, 255, 255, 0.493);
-
-}
 
 #carouselExampleControls{
     margin-top: -100px;
@@ -88,13 +89,29 @@ export default {
 }
 
 .search{
-    background-color: rgba(17, 13, 13, 0.384);
+    background-color: #4b5b8b;;
     bottom: -30px;
-    transform: translateX(50%);
+    left: 709px;
+}
+
+.input{
+    color: #fff;
+    background-color: rgba(28, 28, 30, 0.849);
+    font-weight: 500;
+    font-size: .8vw;
+    border-radius: 0.4vw;
+    border: none;
+    outline: none;
+    padding: 0.4vw;
+    max-width: 190px;
     
 }
 
 .mtCarousel{
     margin-top: 10%;
+}
+
+.bg_img{
+    background-image: url(../../assets/img/sfondo_macchiato.png);
 }
 </style>
