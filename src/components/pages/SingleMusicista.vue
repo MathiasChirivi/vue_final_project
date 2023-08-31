@@ -2,9 +2,14 @@
 
 import { store } from '../../store';
 import axios from "axios";
+import StarItems from '../StarItems.vue'
+
 
 export default {
     name: "SingleMusicista",
+    components:{
+        StarItems
+    },
     data() {
         return {
             store,
@@ -42,6 +47,7 @@ export default {
                         <div class="col-5 d-flex align-items-center justify-content-center">
                             <img class="w-75" :src="store.storageUrl + user.img" />
                         </div>
+                        <StarItems :itemRate="user.reviews" />
                         <div class="col-4 d-flex flex-column justify-content-around">
                             <div class="d-flex flex-column justify-content-start ">
                                 <span>{{ user.name }} {{ user.surname }}</span>
