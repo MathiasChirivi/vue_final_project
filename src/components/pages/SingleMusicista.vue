@@ -34,6 +34,7 @@ export default {
     mounted() {
         this.getUser(this.$route.params.id);
     }
+    
 }
 
 </script>
@@ -47,7 +48,8 @@ export default {
                         <div class="col-5 d-flex align-items-center justify-content-center">
                             <img class="w-75" :src="store.storageUrl + user.img" />
                         </div>
-                        <StarItems :itemRate="user.reviews" />
+            
+                        <StarItems :itemRate="(user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0)" />
                         <div class="col-4 d-flex flex-column justify-content-around">
                             <div class="d-flex flex-column justify-content-start ">
                                 <span>{{ user.name }} {{ user.surname }}</span>
