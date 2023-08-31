@@ -38,21 +38,14 @@ export default {
         <div v-if="user" class="vh-100">
             <div class="container mt-5">
                 <div class="row">
-                    <div class="col-12 d-flex">
-                        <div class="col-7">
+                    <div class="col-10 d-flex">
+                        <div class="col-5 d-flex align-items-center justify-content-center">
                             <img class="w-75" :src="store.storageUrl + user.img" />
                         </div>
-                        <div class="col-5">
-                            <div class="d-flex align-items-center my-3">
-                                <strong class="badge fs-5 fw-blod bg_violet me-3">Nome:</strong>
-                                <span>{{ user.name }}  {{ user.surname }}</span>
-                            </div>
-                            <div class="d-flex align-items-center my-3">
-                                <strong class="badge fs-5 fw-blod bg_violet me-3">Prezzo:</strong>
+                        <div class="col-4 d-flex flex-column justify-content-around">
+                            <div class="d-flex flex-column justify-content-start ">
+                                <span>{{ user.name }} {{ user.surname }}</span>
                                 <span>{{ user.cachet }}</span>
-                            </div>
-                            <div class="d-flex align-items-center my-3">
-                                <strong class="badge fs-5 fw-blod bg_violet me-3">Esperienza:</strong>
                                 <span>{{ user.experience }}</span>
                             </div>
                         </div>
@@ -72,4 +65,5 @@ export default {
         </div>
     </section>
 </template>
-<style scoped></style>
+<style lang="scss" scoped>
+</style>

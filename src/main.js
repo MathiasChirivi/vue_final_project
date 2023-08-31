@@ -29,4 +29,7 @@ library.add(faArrowRight)
 import { faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 library.add(faArrowLeft)
 
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+library.add(faStar)
+
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
