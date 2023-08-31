@@ -262,6 +262,7 @@ export default {
                                 style="color: #5d96f8;" /> {{ user.genres.map(genre => genre.name).join(', ') }}</div>
                         <div class="card-text"><font-awesome-icon icon="fa-solid fa-money-bill" class="me-3"
                                 style="color: #5d96f8;" /> {{ user.cachet }}</div>
+                        <router-link class="btn text-decoration-none my-3" :to="{ name:'SingleMusicista', params: {id: user.id}}">Vedi i dettagli</router-link>
                     </div>
 
                 </div>
