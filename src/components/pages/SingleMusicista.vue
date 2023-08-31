@@ -45,11 +45,7 @@ export default {
                         <div class="col-5">
                             <div class="d-flex align-items-center my-3">
                                 <strong class="badge fs-5 fw-blod bg_violet me-3">Nome:</strong>
-                                <span>{{ user.name }}</span>
-                            </div>
-                            <div class="d-flex align-items-center my-3">
-                                <strong class="badge fs-5 fw-blod bg_violet me-3">Cognome:</strong>
-                                <span>{{ user.surname }}</span>
+                                <span>{{ user.name }}  {{ user.surname }}</span>
                             </div>
                             <div class="d-flex align-items-center my-3">
                                 <strong class="badge fs-5 fw-blod bg_violet me-3">Prezzo:</strong>
