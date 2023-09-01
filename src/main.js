@@ -41,4 +41,7 @@ library.add(faWhatsapp)
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 library.add(faArrowLeftLong)
 
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+library.add(faPlus)
+
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

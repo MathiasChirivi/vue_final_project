@@ -17,6 +17,10 @@ export default {
             loadingError: false,
             user: null,
             selectedSection: "dettagli",
+            isPopupVisible: false,
+            review: '',
+            voto: 0,
+            VoteStar:false
         }
     },
     methods: {
@@ -29,9 +33,25 @@ export default {
                 this.loading = false;
                 this.loadingError = err.message;
                 this.$router.push({ name: 'error', params: { code: 404 } })
-            })
+            });
+        },
+        showPopup() {
+            console.log("davide");
+            this.isPopupVisible = true;
+        },
+        closePopup() {
+            this.isPopupVisible = false;
+        },
+        submitReview() {
+            // Qui puoi implementare la logica per inviare la recensione al tuo backend
+            console.log('Recensione inviata:', this.review);
+            this.closePopup();
+        },
+        functionStar(){
+            this.VoteStar = !this.VoteStar;
         }
     },
+
     mounted() {
         this.getUser(this.$route.params.id);
     }
@@ -131,6 +151,36 @@ export default {
                             </div>
                         </div>
                         <div v-else-if="selectedSection === 'recensioni'">
+                            <!-- <a class="btn">
+                                <font-awesome-icon class="me-2" icon="fa-solid fa-plus" />
+                                <span>Lascia una recensione</span>
+                            </a> -->
+                            <button @click="showPopup">Aggiungi una recensione</button>
+
+                            <!-- Popup -->
+                            <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
+                                <div class="popup-content">
+                                    <h2>Aggiungi una recensione</h2>
+                                    <form class="review-form" @submit="handleSubmit">
+                                        <label for="review">Nome:</label>
+                                        <input class="w-50" type="text">
+                                        <label for="review">Email:</label>
+                                        <input class="w-50" type="email">
+                                        <label for="review">Recensione:</label>
+                                        <textarea id="review" name="review" rows="4"></textarea>
+
+                                        <button type="button" @click="functionStar" class="mt-3">Dai un voto</button>
+                                        <div v-if="VoteStar">
+                                            <span class="fs-2" type="button" v-for="n in 5" :key="n" @click="voto = n"
+                                                :class="{ 'selectedStar': n <= voto }">&#9733;</span>
+                                        </div>
+                                        
+                                        <button class="w-25 m-3 btn btn-info" type="submit">Invia recensione</button>
+                                    </form>
+                                    <button class="btn btn-info" @click="closePopup">Chiudi</button>
+                                </div>
+                            </div>
+
                             <div v-for="review in user.reviews" :key="review.id">
                                 <h5 class="m-0">{{ review.name }}</h5>
                                 <div class="fw-light">{{ review.date }}</div>
@@ -150,11 +200,49 @@ export default {
     </section>
 </template>
 <style lang="scss" scoped>
+
+.selectedStar {
+    color: gold; /* Puoi personalizzare il colore qui */
+  }
 .btnCall {
     background-color: #001580;
 }
 
 .btnWhats {
     background-color: #0d8000
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-content {
+    width: 50%;
+    min-height: 50%;
+    background: #9496ff;
+    background: -webkit-linear-gradient(173deg, #9496ff 0%, #ffffff 100%);
+    background: linear-gradient(173deg, #9496ff 0%, #ffffff 100%);
+    background-repeat: no-repeat;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(30%);
+
+}
+
+/* Stili per il form */
+.review-form {
+    display: flex;
+    flex-direction: column;
 }
 </style>
