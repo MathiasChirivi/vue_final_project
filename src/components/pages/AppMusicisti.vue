@@ -13,8 +13,6 @@ export default {
             loadingError: false,
             // per gestire carosello
             users: [],
-            usersCurrentPage: 0,
-            usersTotalPages: 0,
             // search
             searchQuery: '',
             filteredUsers: [],
@@ -46,19 +44,11 @@ export default {
         getUsersFirstPage() {
             this.loading = true;
             axios.get(this.store.apiUrl + this.store.usersApi
-            // , {
-            //     params: {
-            //         search: this.searchQuery,
-            //     }
-            // }
+
             ).then(response => {
                 
                 this.users = response.data.results;
                 this.filteredUsers = response.data.results;
-                // .data;
-                // this.usersCurrentPage = response.data.results.current_page;
-                // this.usersTotalPages = response.data.results.last_page
-
                 this.loading = false;
             }).catch(err => {
                 this.loading = false;
@@ -66,28 +56,7 @@ export default {
                 this.$router.push({ name: 'error', params: { code: 404 } })
             })
         },
-        getUsersPage(pageNumber) {
-            // if (pageNumber && pageNumber > 0 && pageNumber <= this.usersTotalPages) {
-            //     let config = {
-            //         params: {
-            //             search: this.searchQuery,
-            //             page: pageNumber
-            //         }
-            //     };
-            //     this.loading = true;
-            //     axios.get(this.store.apiUrl + this.store.usersApi, config).then(response => {
-            //         console.log(response);
-            //         this.users = response.data.results.data;
-            //         this.usersCurrentPage = response.data.results.current_page;
-            //         this.usersTotalPages = response.data.results.last_page;
-            //         this.loading = false;
-            //     }).catch(err => {
-            //         this.loading = false;
-            //         this.loadingError = err.message;
-            //     });
-            // if (pageNumber > 0 && pageNumber <= this.usersTotalPages)
-            if (pageNumber > 0 && pageNumber <= Math.ceil(this.filteredUsers.length / this.resultsPerPage))
-            {
+        getUsersPage(pageNumber) {if (pageNumber > 0 && pageNumber <= Math.ceil(this.filteredUsers.length / this.resultsPerPage)){
             this.currentPage = pageNumber;
             // this.loading = true;
 
@@ -124,37 +93,13 @@ export default {
 
         // SEARCH
         searchUsers() {
-            // this.getUsersFirstPage(); // Avvia la ricerca dalla prima pagina
-            // console.log("ciao cazzo")
-            // console.log(this.users)
         this.filteredUsers = this.users.filter(user => {
             const fullName = user.name + ' ' + user.surname;
             return fullName.toLowerCase().includes(this.searchQuery.toLowerCase());
         });
         this.currentPage = 1; // Reset to first page after new search
         
-    },
-        
-        // searchUsers() {
-        //     if (this.searchQuery.trim() !== '') {
-        //         this.loading = true;
-        //         axios.get(this.store.apiUrl + this.store.usersApi, {
-        //             params: {
-        //                 search: this.searchQuery
-        //             }
-        //         }).then(response => {
-        //             console.log(response.data);
-        //             this.users = response.data.results.data;
-        //             this.usersCurrentPage = response.data.results.current_page;
-        //             this.usersTotalPages = response.data.results.last_page;
-        //             this.loading = false;
-        //         }).catch(err => {
-        //             this.loading = false;
-        //             this.loadingError = err.message;
-        //         });
-        //     }
-        // }
-
+        },
     },
             // Ricerca Utenti
 
@@ -163,17 +108,6 @@ export default {
         paginatedFilteredUsers() {
             const startIndex = (this.currentPage - 1) * this.resultsPerPage;
             const endIndex = startIndex + this.resultsPerPage;
-            
-            
-            // return this.users
-            //     .filter(user => {
-            //         const fullName = user.name + ' ' + user.surname;
-            //         return fullName.toLowerCase().includes(this.searchQuery.toLowerCase());
-            //     })
-            //     .slice(startIndex, endIndex);
-
-
-            // return this.filteredUsers.slice(startIndex, endIndex);
 
             this.filteredUsers.sort((a, b) => {
         if (this.orderBy === 'reviews') {
@@ -213,10 +147,6 @@ export default {
 
 
 <template>
-    
-    <!-- <h1 style="color: red;">{{ users }}</h1>
-    <h1 style="color: green;">{{ filteredUsers }}</h1>
-    <h1 style="color: blue;">{{ paginatedFilteredUsers }}</h1> -->
     <div class="mb-5 mt-4">
         <h3 v-if="loading">
             <div class="spinner"></div>
@@ -224,6 +154,9 @@ export default {
         </h3>
         <h3 v-if="loadingError"> {{ loadingError }} </h3>
     </div>
+    
+    <!-- <button v-for="genre in " class="btn badge"  v-bind:class="genres === 'votes' ? 'bg_cl_primary' : '' "  @click="genresSet('votes')">Più Voti</button> -->
+
     <div class="col-12 d-flex flex-row-reverse my-3">
         <nav class="navbar bg_violet rounded-5 me-5">
             <div class="container mx-3">
