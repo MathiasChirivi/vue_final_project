@@ -18,8 +18,13 @@ export default {
             user: null,
             selectedSection: "dettagli",
             isPopupVisible: false,
-            review: '',
             voto: 0,
+            formData: {
+                user_id: '',
+                name: '',
+                email: '',
+                comment: ''
+            }
         }
     },
     methods: {
@@ -41,23 +46,49 @@ export default {
         closePopup() {
             this.isPopupVisible = false;
         },
-        submitReview() {
-            // Qui puoi implementare la logica per inviare la recensione al tuo backend
-            console.log('Recensione inviata:', this.review);
-            this.closePopup();
-        },
         selectStar(n) {
             this.voto = n;
         },
         deselectStar() {
             this.voto = 0; // Imposta il voto a 0 per deselezionare tutte le stelle
-        }
-    },
+        },
+        submitReview() {
+            // Crea un oggetto che contiene i dati da inviare
+            const reviewData = {
+                user_id: this.formData.user_id,
+                name: this.formData.name,
+                email: this.formData.email,
+                comment: this.formData.comment
+            };
 
+            // Invia la recensione al server utilizzando Axios o un'altra libreria di tua scelta
+            axios.post(this.store.apiUrl + 'reviews', reviewData, {
+                headers: {
+                    'Content-Type': 'application/json', // Imposta l'intestazione Content-Type
+                }
+            })
+                .then(response => {
+                    // Gestisci la risposta dal server, ad esempio mostra un messaggio di successo
+                    alert(response.data.message);
+                    // Puoi anche reimpostare il formData se necessario
+                    this.formData = {
+                        user_id: '',
+                        name: '',
+                        email: '',
+                        comment: ''
+                    };
+                })
+                .catch(error => {
+                    // Gestisci gli errori qui, ad esempio mostra un messaggio di errore
+                    console.error(error);
+                    alert('Si è verificato un errore durante l\'invio della recensione.');
+                });
+        }
+
+    },
     mounted() {
         this.getUser(this.$route.params.id);
     }
-
 }
 
 </script>
@@ -163,23 +194,46 @@ export default {
                             <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
                                 <div class="popup-content">
                                     <h2>Aggiungi una recensione</h2>
-                                    <form class="review-form" @submit="handleSubmit">
-                                        <label for="review">Nome:</label>
+                                    <form class="review-form" @submit.prevent="submitReview">
+                                        <!-- <label for="review">Nome:</label>
                                         <input class="w-50" type="text">
                                         <label for="review">Email:</label>
                                         <input class="w-50" type="email">
                                         <label for="review">Recensione:</label>
-                                        <textarea id="review" name="review" rows="4"></textarea>
+                                        <textarea id="review" name="review" rows="4"></textarea> -->
 
-                                        <label type="button" class="mt-3">Voto</label>
+                                        <!-- <label type="button" class="mt-3">Voto</label>
 
                                         <div>
                                             <span class="fs-2" type="button" v-for="n in 5" :key="n"
                                                 @click="voto === n ? deselectStar() : selectStar(n)"
                                                 :class="{ 'selectedStar': n <= voto }">&#9733;</span>
-                                        </div>
+                                        </div> -->
 
-                                        <button class="w-25 m-3 btn btn-info" type="submit">Invia recensione</button>
+                                        <!-- <button class="w-25 m-3 btn btn-info" type="submit">Invia recensione</button> -->
+                                        <div class="form-group">
+                                            <label for="user_id">User ID</label>
+                                            <input type="text" v-model="formData.user_id" class="form-control" id="user_id"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input type="text" v-model="formData.name" class="form-control" id="name"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" v-model="formData.email" class="form-control" id="email"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="comment">Comment</label>
+                                            <textarea v-model="formData.comment" class="form-control" id="comment"
+                                                required></textarea>
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                                        </div>
                                     </form>
                                     <button class="btn btn-info" @click="closePopup">Chiudi</button>
                                 </div>
@@ -199,7 +253,7 @@ export default {
             <h3 v-if="loading">
                 <div class="spinner vh-100">Caricameto dati</div>
             </h3>
-            <h3 v-else="loadingError"> {{ loadingError }} </h3>
+            <h3> {{ loadingError }} </h3>
         </div>
     </section>
 </template>
