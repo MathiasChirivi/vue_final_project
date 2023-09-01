@@ -34,13 +34,13 @@ export default {
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active height_carousel">
-                    <img src="../../assets/img/sfondo_uno.png" class="d-block w-100 bg_size_cover" alt="...">
+                    <img src="../../assets/img/jumbo_uno.png" class="d-block w-100 bg_size_cover" alt="...">
                 </div>
             <div class="carousel-item height_carousel">
-                <img src="../../assets/img/sfondo_2.png" class="d-block w-100 bg_size_cover" alt="...">
+                <img src="../../assets/img/jumbo_due.png" class="d-block w-100 bg_size_cover" alt="...">
             </div>
             <div class="carousel-item height_carousel">
-                <img  src="../../assets/img/sfondo_3.png" class="d-block w-100 bg_size_cover" alt="...">
+                <img  src="../../assets/img/jumbo_tre.png" class="d-block w-100 bg_size_cover" alt="...">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
