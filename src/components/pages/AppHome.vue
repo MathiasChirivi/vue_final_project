@@ -3,6 +3,7 @@ import axios from 'axios'
 import { store } from '../../store'
 import AppEventi from '../AppEventi.vue';
 import AppCarousel from '../AppCarousel.vue';
+import AppStep from '../AppStep.vue'
 
 export default {
     name: "AppHome",
@@ -21,7 +22,8 @@ export default {
     },
     components: {
         AppEventi,
-        AppCarousel
+        AppCarousel,
+        AppStep,
     },
     mounted() {
         this.getUser();
@@ -31,9 +33,9 @@ export default {
 </script>
 <template>
     <!-- carousel. -->
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active height_carousel">
+    <div id="carouselExampleControls" class="carousel slide col-12" data-bs-ride="carousel">
+        <div class="carousel-inner">
+                <div class="carousel-item active height_carousel ">
                     <img src="../../assets/img/jumbo_uno.png" class="d-block w-100 bg_size_cover" alt="...">
                 </div>
             <div class="carousel-item height_carousel">
@@ -53,23 +55,26 @@ export default {
         </button>
 
         <!-- searche musicista. -->
-        <div class="col-3 d-flex position-absolute justify-content-around rounded search  p-3">
+        <!-- <div class="col-3 d-flex position-absolute justify-content-around rounded search  p-3">
             <div class="col-4 me-2">
                 <input type="text" class="input" id="" placeholder="Genere">
-            </div>
+            </div> -->
             <!-- <div class="col-4 me-2">
                 <input type="text" class="input" id="" placeholder="Regione">
             </div> -->
-            <div class="col-3 me-2 pe-2 pr-2">
+            <!-- <div class="col-3 me-2 pe-2 pr-2">
                 <input type="submit" class="input" id="">
             </div> 
-        </div>
+        </div> -->
     </div>
-    <div class=" bg_img">
+    <div class="bg_img">
         <AppEventi />
     </div>
-    <div class="container mx-auto mtCarousel">
+    <div class="container mx-auto mt-5">
         <AppCarousel />
+    </div>
+    <div class=" bg_img">
+        <AppStep />
     </div>
 </template>
 
@@ -113,5 +118,6 @@ export default {
 
 .bg_img{
     background-image: url(../../assets/img/sfondo_macchiato.png);
+    min-width: 600px;
 }
 </style>

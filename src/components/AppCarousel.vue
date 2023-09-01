@@ -21,7 +21,12 @@ export default (await import('vue')).defineComponent({
     },
 });
 </script>
-<template>  <swiper
+<template>  
+
+  <div class="col-12 d-flex justify-content-center mb-4 pb-4 ">
+    <h2 class="text-center">Scopri I Musicisti In Evidenza</h2>
+  </div>
+  <swiper
     ref="{swiperRef}"
     :slidesPerView="3"
     :centeredSlides="true"
@@ -30,15 +35,48 @@ export default (await import('vue')).defineComponent({
     :modules="modules"
     class="mySwiper"
   >
+
+  
     <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443378767175690/musicista1.jpeg">
-        <div>Stelle</div>
+        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+          Band i Violinisti
+        </div>
     </swiper-slide>
-    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379035615372/musicista2.jpeg"></swiper-slide>
-    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379325030523/musicista3.jpeg"></swiper-slide>
-    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379597647914/musicista4.jpeg"></swiper-slide>
-    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379597647914/musicista4.jpeg"></swiper-slide>
-    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379597647914/musicista4.jpeg"></swiper-slide>
+    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379035615372/musicista2.jpeg">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+          Band i Violinisti
+        </div>
+    </swiper-slide>
+    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379325030523/musicista3.jpeg">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+          Band i Violinisti
+        </div>
+    </swiper-slide>
+    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379597647914/musicista4.jpeg">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+          Band i Violinisti
+        </div>
+    </swiper-slide>
+    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379597647914/musicista4.jpeg">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+          Band i Violinisti
+        </div>
+    </swiper-slide>
+    <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379597647914/musicista4.jpeg">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+          Band i Violinisti
+        </div>
+    </swiper-slide>
   </swiper>
 
   <p class="append-buttons"></p></template>
-<style></style>
+
+
+<style scoped lang="scss">
+
+.bg_color{
+  background-color: #4b5b8bd5;
+}
+
+
+</style>
