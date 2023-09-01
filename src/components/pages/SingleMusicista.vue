@@ -20,7 +20,7 @@ export default {
             isPopupVisible: false,
             voto: 0,
             formData: {
-                user_id: '',
+                user_id: this.$route.params.id,
                 name: '',
                 email: '',
                 comment: ''
@@ -55,7 +55,7 @@ export default {
         submitReview() {
             // Crea un oggetto che contiene i dati da inviare
             const reviewData = {
-                user_id: this.formData.user_id,
+                user_id: this.$route.params.id,
                 name: this.formData.name,
                 email: this.formData.email,
                 comment: this.formData.comment
@@ -72,7 +72,7 @@ export default {
                     alert(response.data.message);
                     // Puoi anche reimpostare il formData se necessario
                     this.formData = {
-                        user_id: '',
+                        user_id: this.$route.params.id,
                         name: '',
                         email: '',
                         comment: ''
@@ -88,6 +88,7 @@ export default {
     },
     mounted() {
         this.getUser(this.$route.params.id);
+        console.log(this.$route.params.id)
     }
 }
 
@@ -213,8 +214,7 @@ export default {
                                         <!-- <button class="w-25 m-3 btn btn-info" type="submit">Invia recensione</button> -->
                                         <div class="form-group">
                                             <label for="user_id">User ID</label>
-                                            <input type="text" v-model="formData.user_id" class="form-control" id="user_id"
-                                                required>
+                                            <input type="text" :value="this.$route.params.id" class="form-control" id="user_id" disabled>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Name</label>
