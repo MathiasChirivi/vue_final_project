@@ -8,7 +8,7 @@ import StarItems from '../StarItems.vue'
 export default {
     name: "SingleMusicista",
     components: {
-        StarItems
+        StarItems,
     },
     data() {
         return {
@@ -16,6 +16,7 @@ export default {
             loading: false,
             loadingError: false,
             user: null,
+            selectedSection: "dettagli",
         }
     },
     methods: {
@@ -53,64 +54,87 @@ export default {
                     <div class="col-10 d-flex ">
                         <div class="d-flex me-3">
                             <img v-if="user.img" class="w-100" :src="store.storageUrl + user.img" />
-                            <img v-else class="w-100" src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" alt="">
+                            <img v-else class="w-100"
+                                src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4="
+                                alt="">
                         </div>
                         <div class="col-4 d-flex flex-column justify-content-end">
                             <div class="d-flex flex-column justify-content-start ">
                                 <h5 class="mb-0">Feedback</h5>
-                                <StarItems :itemRate="(user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0)" />
+                                <StarItems
+                                    :itemRate="(user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0)" />
                                 <h3 class="mt-4">{{ user.name }} {{ user.surname }}</h3>
                             </div>
                         </div>
                         <div class="col-4 d-flex align-items-end justify-content-end">
-                            <a class="btn btn-primary" href=""><font-awesome-icon :icon="['fas', 'music']" class="me-2" style="color: #ffffff;" />Contatta l'artista</a>
+                            <a class="btn btn-primary" href=""><font-awesome-icon :icon="['fas', 'music']" class="me-2"
+                                    style="color: #ffffff;" />Contatta l'artista</a>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-12 d-flex gap-4">
-                        <a class="text-decoration-none" href="">Dettagli</a>
-                        <a class="text-decoration-none" href="">Recensioni</a>
+                        <a class="text-decoration-none" href="" @click.prevent="selectedSection = 'dettagli'"
+                            :class="{ 'selected': selectedSection === 'dettagli' }">
+                            Dettagli
+                        </a>
+                        <a class="text-decoration-none" href="" @click.prevent="selectedSection = 'recensioni'"
+                            :class="{ 'selected': selectedSection === 'recensioni' }">
+                            Recensioni
+                        </a>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-12">
-                        <h3>INFORMAZIONI</h3>
-                        <div>
-                            <font-awesome-icon class="fs-4" icon="fa-solid fa-location-dot" style="color: #001580;" />
-                            <span class="ms-2 fs-5">{{ user.region }}</span>
-                        </div>
-                        <div class="mt-4">
-                            <a class="btn btnCall text-white me-3" href=""><font-awesome-icon icon="fa-solid fa-phone"
-                                    class="me-2" style="color: #ffffff;" />Chiama</a>
-                            <a class="btn btnWhats text-white" href=""><font-awesome-icon :icon="['fab', 'whatsapp']"
-                                    class="me-2" style="color: #ffffff;" />Whatsapp</a>
-                        </div>
-                    </div>
-                    <hr class="w-75 mt-5 mb-5">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3>CACHET</h3>
-                            <div class="fs-6 fw-light">
-                                € {{ user.cachet }}
+                        <div v-if="selectedSection === 'dettagli'">
+                            <div class="text-decoration-none">
+                                <h3>INFORMAZIONI</h3>
+                                <div>
+                                    <font-awesome-icon class="fs-4" icon="fa-solid fa-location-dot"
+                                        style="color: #001580;" />
+                                    <span class="ms-2 fs-5">{{ user.region }}</span>
+                                </div>
+                                <div class="mt-4">
+                                    <a class="btn btnCall text-white me-3" href=""><font-awesome-icon
+                                            icon="fa-solid fa-phone" class="me-2" style="color: #ffffff;" />Chiama</a>
+                                    <a class="btn btnWhats text-white" href=""><font-awesome-icon
+                                            :icon="['fab', 'whatsapp']" class="me-2" style="color: #ffffff;" />Whatsapp</a>
+                                    <hr class="w-75 mt-5 mb-5">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3>CACHET</h3>
+                                            <div class="fs-6 fw-light">
+                                                € {{ user.cachet }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="w-75 mt-5 mb-5">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3>GENERI</h3>
+                                            <div class="fs-5 fw-normal badge btnCall me-3 mt-3"
+                                                v-for="genre in user.genres">
+                                                {{ genre.name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="w-75 mt-5 mb-5">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3>DESCRIZIONE</h3>
+                                            <div class="w-50">
+                                                {{ user.experience }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <hr class="w-75 mt-5 mb-5">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3>GENERI</h3>
-                            <div class="fs-5 fw-normal badge btnCall me-3 mt-3" v-for="genre in user.genres">
-                                {{ genre.name }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="w-75 mt-5 mb-5">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3>DESCRIZIONE</h3>
-                            <div class="w-50">
-                                {{ user.experience }}
+                        <div v-else-if="selectedSection === 'recensioni'">
+                            <div v-for="review in user.reviews" :key="review.id">
+                                <h5 class="m-0">{{ review.name }}</h5>
+                                <div class="fw-light">{{ review.date }}</div>
+                                <div class="fw-lighter mt-2">{{ review.comment }}</div>
                             </div>
                         </div>
                     </div>
@@ -133,5 +157,4 @@ export default {
 .btnWhats {
     background-color: #0d8000
 }
-
 </style>
