@@ -66,23 +66,35 @@ export default {
                 headers: {
                     'Content-Type': 'application/json', // Imposta l'intestazione Content-Type
                 }
-            })
-                .then(response => {
-                    // Gestisci la risposta dal server, ad esempio mostra un messaggio di successo
-                    alert(response.data.message);
-                    // Puoi anche reimpostare il formData se necessario
-                    this.formData = {
-                        user_id: this.$route.params.id,
-                        name: '',
-                        email: '',
-                        comment: ''
-                    };
-                })
-                .catch(error => {
-                    // Gestisci gli errori qui, ad esempio mostra un messaggio di errore
-                    console.error(error);
-                    alert('Si è verificato un errore durante l\'invio della recensione.');
-                });
+            }).then(response => {
+                // Gestisci la risposta dal server, ad esempio mostra un messaggio di successo
+                alert(response.data.message);
+                // Puoi anche reimpostare il formData se necessario
+                const newReview = {
+                    name: this.formData.name, // Aggiungi il nome
+                    date: new Date().toLocaleDateString(),
+                    comment: this.formData.comment
+                };
+
+                // Aggiungi la nuova recensione direttamente all'array delle recensioni
+                this.user.reviews.push(newReview);
+
+                // Resetta il formData dopo aver aggiunto la recensione
+                this.formData = {
+                    user_id: this.$route.params.id,
+                    name: '',
+                    email: '',
+                    comment: ''
+                };
+                // Chiudi il popup dopo 2 secondi (2000 millisecondi)
+                setTimeout(() => {
+                    this.closePopup();
+                }, 200);
+            }).catch(error => {
+                // Gestisci gli errori qui, ad esempio mostra un messaggio di errore
+                console.error(error);
+                alert('Si è verificato un errore durante l\'invio della recensione.');
+            });
         }
 
     },
@@ -135,6 +147,14 @@ export default {
                         <a class="text-decoration-none" href="" @click.prevent="selectedSection = 'recensioni'"
                             :class="{ 'selected': selectedSection === 'recensioni' }">
                             Recensioni
+                        </a>
+                        <a class="text-decoration-none" href="" @click.prevent="selectedSection = 'Voti'"
+                            :class="{ 'selected': selectedSection === 'Voti' }">
+                            Voti
+                        </a>
+                        <a class="text-decoration-none" href="" @click.prevent="selectedSection = 'Messaggi'"
+                            :class="{ 'selected': selectedSection === 'Messaggi' }">
+                            Messaggi
                         </a>
                     </div>
                 </div>
@@ -212,10 +232,10 @@ export default {
                                         </div> -->
 
                                         <!-- <button class="w-25 m-3 btn btn-info" type="submit">Invia recensione</button> -->
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="user_id">User ID</label>
                                             <input type="text" :value="this.$route.params.id" class="form-control" id="user_id" disabled>
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                             <label for="name">Name</label>
                                             <input type="text" v-model="formData.name" class="form-control" id="name"
@@ -238,11 +258,20 @@ export default {
                                     <button class="btn btn-info" @click="closePopup">Chiudi</button>
                                 </div>
                             </div>
-
                             <div v-for="review in user.reviews" :key="review.id">
                                 <h5 class="m-0">{{ review.name }}</h5>
                                 <div class="fw-light">{{ review.date }}</div>
                                 <div class="fw-lighter mt-2">{{ review.comment }}</div>
+                            </div>
+                        </div>
+                        <div v-else-if="selectedSection === 'Voti'">
+                            <div>
+                                voti
+                            </div>
+                        </div>
+                        <div v-else-if="selectedSection === 'Messaggi'">
+                            <div>
+                                messaggi
                             </div>
                         </div>
                     </div>
