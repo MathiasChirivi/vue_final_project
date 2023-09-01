@@ -32,24 +32,25 @@ export default {
 }
 </script>
 <template>
+    
     <!-- carousel. -->
     <div id="carouselExampleControls" class="carousel slide col-12" data-bs-ride="carousel">
-        <div class="carousel-inner">
-                <div class="carousel-item active height_carousel ">
+        <div class="carousel-inner height_carousel">
+                <div class="carousel-item active ">
                     <img src="../../assets/img/jumbo_uno.png" class="d-block w-100 bg_size_cover" alt="...">
                 </div>
-            <div class="carousel-item height_carousel">
+            <div class="carousel-item">
                 <img src="../../assets/img/jumbo_due.png" class="d-block w-100 bg_size_cover" alt="...">
             </div>
-            <div class="carousel-item height_carousel">
+            <div class="carousel-item">
                 <img  src="../../assets/img/jumbo_tre.png" class="d-block w-100 bg_size_cover" alt="...">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <button class="carousel-control-prev d-none d-xl-block" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <button class="carousel-control-next d-none d-xl-block" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
@@ -118,6 +119,5 @@ export default {
 
 .bg_img{
     background-image: url(../../assets/img/sfondo_macchiato.png);
-    min-width: 600px;
 }
 </style>
