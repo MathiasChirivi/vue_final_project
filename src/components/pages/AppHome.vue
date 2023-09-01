@@ -71,7 +71,7 @@ export default {
     <div class="bg_img">
         <AppEventi />
     </div>
-    <div class="container mx-auto mt-5">
+    <div class="d-none d-md-block container mx-auto mt-5">
         <AppCarousel />
     </div>
     <div class=" bg_img">
@@ -86,9 +86,9 @@ export default {
     margin-top: -100px;
     height: 70%;
 }
-.height_carousel{
-    height: 700px;
-}
+// .height_carousel{
+//     height: 700px;
+// }
 
 .bg_size_cover{
     background-size: cover;
