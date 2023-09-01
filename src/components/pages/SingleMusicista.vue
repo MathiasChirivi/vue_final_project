@@ -20,7 +20,6 @@ export default {
             isPopupVisible: false,
             review: '',
             voto: 0,
-            VoteStar:false
         }
     },
     methods: {
@@ -47,8 +46,11 @@ export default {
             console.log('Recensione inviata:', this.review);
             this.closePopup();
         },
-        functionStar(){
-            this.VoteStar = !this.VoteStar;
+        selectStar(n) {
+            this.voto = n;
+        },
+        deselectStar() {
+            this.voto = 0; // Imposta il voto a 0 per deselezionare tutte le stelle
         }
     },
 
@@ -169,12 +171,14 @@ export default {
                                         <label for="review">Recensione:</label>
                                         <textarea id="review" name="review" rows="4"></textarea>
 
-                                        <button type="button" @click="functionStar" class="mt-3">Dai un voto</button>
-                                        <div v-if="VoteStar">
-                                            <span class="fs-2" type="button" v-for="n in 5" :key="n" @click="voto = n"
+                                        <label type="button" class="mt-3">Voto</label>
+
+                                        <div>
+                                            <span class="fs-2" type="button" v-for="n in 5" :key="n"
+                                                @click="voto === n ? deselectStar() : selectStar(n)"
                                                 :class="{ 'selectedStar': n <= voto }">&#9733;</span>
                                         </div>
-                                        
+
                                         <button class="w-25 m-3 btn btn-info" type="submit">Invia recensione</button>
                                     </form>
                                     <button class="btn btn-info" @click="closePopup">Chiudi</button>
@@ -200,10 +204,11 @@ export default {
     </section>
 </template>
 <style lang="scss" scoped>
-
 .selectedStar {
-    color: gold; /* Puoi personalizzare il colore qui */
-  }
+    color: gold;
+    /* Puoi personalizzare il colore qui */
+}
+
 .btnCall {
     background-color: #001580;
 }
