@@ -209,7 +209,14 @@ export default {
                                 <font-awesome-icon class="me-2" icon="fa-solid fa-plus" />
                                 <span>Lascia una recensione</span>
                             </a> -->
-                            <button @click="showPopup">Aggiungi una recensione</button>
+                            <div class="containerReview d-flex align-items-center justify-content-center bg-light ">
+                                <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-dark" @click="showPopup">
+                                    <span class="circle-icon">
+                                        <font-awesome-icon icon="fa-solid fa-plus"  style="color: #000000;" />
+                                    </span>
+                                    Aggiungi una recensione
+                                </a>
+                            </div>
 
                             <!-- Popup -->
                             <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
@@ -333,4 +340,27 @@ export default {
     display: flex;
     flex-direction: column;
 }
+
+.circle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; 
+  height: 30px; 
+  border-radius: 50%;
+  border: 1px solid black;
+  color: #ffffff;
+  margin-right: 5px; 
+}
+
+.containerReview{
+    height: 75px;
+    width: 50%;
+    margin: auto;
+}
+
+.btnLink{
+    cursor: pointer;
+}
+
 </style>
