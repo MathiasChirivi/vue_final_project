@@ -210,9 +210,10 @@ export default {
                                 <span>Lascia una recensione</span>
                             </a> -->
                             <div class="containerReview d-flex align-items-center justify-content-center bg-light ">
-                                <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-dark" @click="showPopup">
+                                <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-dark"
+                                    @click="showPopup">
                                     <span class="circle-icon">
-                                        <font-awesome-icon icon="fa-solid fa-plus"  style="color: #000000;" />
+                                        <font-awesome-icon icon="fa-solid fa-plus" style="color: #000000;" />
                                     </span>
                                     Aggiungi una recensione
                                 </a>
@@ -221,8 +222,8 @@ export default {
                             <!-- Popup -->
                             <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
                                 <div class="popup-content">
-                                    <h2>Aggiungi una recensione</h2>
-                                    <form class="review-form" @submit.prevent="submitReview">
+                                    <form class="form" @submit.prevent="submitReview">
+                                        <h2 class="text-white">Lascia una recensione</h2>
                                         <!-- <label for="review">Nome:</label>
                                         <input class="w-50" type="text">
                                         <label for="review">Email:</label>
@@ -243,26 +244,26 @@ export default {
                                             <label for="user_id">User ID</label>
                                             <input type="text" :value="this.$route.params.id" class="form-control" id="user_id" disabled>
                                         </div> -->
-                                        <div class="form-group">
-                                            <label for="name">Name</label>
-                                            <input type="text" v-model="formData.name" class="form-control" id="name"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" v-model="formData.email" class="form-control" id="email"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="comment">Comment</label>
-                                            <textarea v-model="formData.comment" class="form-control" id="comment"
-                                                required></textarea>
-                                        </div>
-                                        <div>
-                                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                                        <label>
+                                            <input type="text" placeholder="" required="" v-model="formData.name"
+                                                class="input" id="name">
+                                            <span>Nome</span>
+                                        </label>
+                                        <label>
+                                            <input type="email" placeholder="" required="" v-model="formData.email"
+                                                class="input" id="email">
+                                            <span>Email</span>
+                                        </label>
+                                        <label>
+                                            <textarea placeholder="" rows="3" required="" v-model="formData.comment"
+                                                class="input01" id="comment"></textarea>
+                                            <span>Commento</span>
+                                        </label>
+                                        <div class="d-flex justify-content-between">
+                                            <button type="submit" class="btn btn-primary">Invia recensione</button>
+                                            <button class="text-white btn " @click="closePopup">Annulla</button>
                                         </div>
                                     </form>
-                                    <button class="btn btn-info" @click="closePopup">Chiudi</button>
                                 </div>
                             </div>
                             <div v-for="review in user.reviews" :key="review.id">
@@ -321,11 +322,11 @@ export default {
 
 .popup-content {
     width: 50%;
-    min-height: 50%;
-    background: #9496ff;
-    background: -webkit-linear-gradient(173deg, #9496ff 0%, #ffffff 100%);
-    background: linear-gradient(173deg, #9496ff 0%, #ffffff 100%);
-    background-repeat: no-repeat;
+    // min-height: 50%;
+    // background: #9496ff;
+    // background: -webkit-linear-gradient(173deg, #9496ff 0%, #ffffff 100%);
+    // background: linear-gradient(173deg, #9496ff 0%, #ffffff 100%);
+    // background-repeat: no-repeat;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -342,25 +343,224 @@ export default {
 }
 
 .circle-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px; 
-  height: 30px; 
-  border-radius: 50%;
-  border: 1px solid black;
-  color: #ffffff;
-  margin-right: 5px; 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid black;
+    color: #ffffff;
+    margin-right: 5px;
 }
 
-.containerReview{
+.containerReview {
     height: 75px;
     width: 50%;
     margin: auto;
 }
 
-.btnLink{
+.btnLink {
     cursor: pointer;
 }
 
-</style>
+.form {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    gap: 10px;
+    width: 90%;
+    background-color: #355891;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.message {
+    color: #355891;
+    font-size: 14px;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+}
+
+.form label {
+    position: relative;
+}
+
+.form label .input {
+    width: 100%;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid #355891;
+    border-radius: 5px;
+}
+
+.form label .input+span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: #355891;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+}
+
+.form label .input:placeholder-shown+span {
+    top: 15px;
+    font-size: 0.9em;
+}
+
+.form label .input:focus+span,
+.form label .input:valid+span {
+    top: 30px;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+.form label .input:valid+span {
+    color: green;
+}
+
+.input01 {
+    width: 100%;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid #355891;
+    border-radius: 5px;
+}
+
+.form label .input01+span {
+    position: absolute;
+    left: 10px;
+    top: 50px;
+    color: #355891;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+}
+
+.form label .input01:placeholder-shown+span {
+    top: 40px;
+    font-size: 0.9em;
+}
+
+.form label .input01:focus+span,
+.form label .input01:valid+span {
+    top: 50px;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+.form label .input01:valid+span {
+    color: green;
+}
+
+.fancy {
+    background-color: white;
+    border: 2px solid #355891;
+    border-radius: 0px;
+    box-sizing: border-box;
+    color: #355891;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 390;
+    letter-spacing: 2px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 8px 30px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    transition: all 0.3s ease-in-out;
+    user-select: none;
+    font-size: 13px;
+}
+
+.fancy::before {
+    content: " ";
+    width: 1.7rem;
+    height: 2px;
+    background: #355891;
+    top: 50%;
+    left: 1.5em;
+    position: absolute;
+    transform: translateY(-50%);
+    transform: translateX(230%);
+    transform-origin: center;
+    transition: background 0.3s linear, width 0.3s linear;
+}
+
+.fancy .text {
+    font-size: 1.125em;
+    line-height: 1.33333em;
+    padding-left: 2em;
+    display: block;
+    text-align: left;
+    transition: all 0.3s ease-in-out;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: #355891;
+    transform: translateX(30%);
+}
+
+.fancy .top-key {
+    height: 2px;
+    width: 1.5625rem;
+    top: -2px;
+    left: 0.625rem;
+    position: absolute;
+    background: #355891;
+    transition: width 0.5s ease-out, left 0.3s ease-out;
+}
+
+.fancy .bottom-key-1 {
+    height: 2px;
+    width: 1.5625rem;
+    right: 1.875rem;
+    bottom: -2px;
+    position: absolute;
+    background: #355891;
+    transition: width 0.5s ease-out, right 0.3s ease-out;
+}
+
+.fancy .bottom-key-2 {
+    height: 2px;
+    width: 0.625rem;
+    right: 0.625rem;
+    bottom: -2px;
+    position: absolute;
+    background: #355891;
+    transition: width 0.5s ease-out, right 0.3s ease-out;
+}
+
+.fancy:hover {
+    color: #355891;
+    background: #5f82a9;
+}
+
+.fancy:hover::before {
+    width: 1.5rem;
+    background: #355891;
+}
+
+.fancy:hover .text {
+    color: white;
+    padding-left: 1.5em;
+}
+
+.fancy:hover .top-key {
+    left: -2px;
+    width: 0px;
+}
+
+.fancy:hover .bottom-key-1,
+.fancy:hover .bottom-key-2 {
+    right: 0;
+    width: 0;
+}</style>
