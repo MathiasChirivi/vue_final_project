@@ -9,56 +9,93 @@ export default {
                 { label: "Musicisti", name: "Musicisti" },
             ]
         }
+    },
+    methods: {
+
     }
 }
 </script>
 
 <template>
-    <div class="container header_bg p-0">
+    <div class="container prova header_bg p-0">
         <nav class="navbar navbar-expand-lg bg_navbar rounded-5 p-0">
             <div class="container p-0">
+                <!-- logo. -->
                 <div class="col-lg-3 mx-4">
                     <a class="navbar-brand" href="#">
-                        <img src="../assets/img/logo_1.png" alt="Logo"  class="d-inline-block align-text-top">
+                        <img src="../assets/img/logo_1.png" alt="Logo" class="d-inline-block align-text-top">
                     </a>
                 </div>
-                <!-- bottone a scomparsa -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                <!-- hamburger. -->
+                <button class="bg-transparent btn btn-light d-sm-none me-2" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="col-lg-3 flex-grow-0 collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li v-for="navLink in navLinks" class="nav-item my-2">
-                            <router-link class="nav-link badge btnColor fs-5 me-3" :to="{ name: navLink.name }">{{
-                                navLink.label }}</router-link>
-                        </li>
-                    </ul>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                    aria-labelledby="offcanvasRightLabel">
+
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">Tutto Quello Che Ti Serve</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li v-for="navLink in navLinks" class="nav-item my-2">
+                                <router-link class="nav-link  fs-5 me-3" :to="{ name: navLink.name }">{{
+                                    navLink.label }}</router-link>
+                            </li>
+
+                            <!-- login/register. -->
+                            <li>
+                                <a class="nav-link fs-5 my-2 me-2" href="http://localhost:8000/login">Login</a>
+                            </li>
+
+                            <li>
+                                <a class="nav-link fs-5 my-2" href="http://localhost:8000/register">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
 
-                <div class="col-lg-3 login_ collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
-                    <a class="nav-link badge btnColor fs-5 my-2 me-2" href="http://localhost:8000/login">Login</a>
-                    <a class="nav-link badge btnColor fs-5 my-2" href="http://localhost:8000/register">Register</a>
+                <!-- search. -->
+                <div class="inputBox1 d-flex d-none d-md-block">
+                    <input type="search" required="required" placeholder="Cerca Musicista">
+                    <!-- <button class="btn btn-outline-light" type="submit">Search</button> -->
                 </div>
+
             </div>
         </nav>
     </div>
 </template>
 
 <style scoped lang="scss">
-
 .titolo {
     display: flex;
     justify-content: flex-start;
     height: 100px;
 }
 
-.header_bg{
+.header_bg {
     background-color: #00000000;
     position: relative;
     z-index: 999;
 }
 
+
+.inputBox1 input {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: none;
+  color: #00000056;
+  font-size: 1em;
+  background: transparent;
+  border-left: 2px solid #00000057;
+  border-bottom: 2px solid #00000065;
+  transition: 0.1s;
+  border-bottom-left-radius: 8px;
+}
 </style>

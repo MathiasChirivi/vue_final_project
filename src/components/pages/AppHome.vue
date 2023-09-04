@@ -36,7 +36,7 @@ export default {
 <template>
     
     <!-- carousel. -->
-    <div id="carouselExampleControls" class="carousel slide col-12" data-bs-ride="carousel">
+    <div id="carouselExampleControls" class="carousel slide col-12 " data-bs-ride="carousel">
         <div class="carousel-inner height_carousel">
                 <div class="carousel-item active ">
                     <img src="../../assets/img/jumbo_uno.png" class="d-block w-100 bg_size_cover" alt="...">
