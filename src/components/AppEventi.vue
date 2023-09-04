@@ -53,4 +53,5 @@
 
 .card:active {
     transform: scale(0.95) rotateZ(1.7deg);
-}</style>
+}
+</style>

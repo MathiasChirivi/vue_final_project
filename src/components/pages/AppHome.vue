@@ -5,6 +5,7 @@ import AppEventi from '../AppEventi.vue';
 import AppCarousel from '../AppCarousel.vue';
 import AppStep from '../AppStep.vue'
 import AppNuovoProfilo from '../AppNuovoProfilo.vue';
+import AppFooter from '../AppFooter.vue'
 
 export default {
     name: "AppHome",
@@ -49,6 +50,7 @@ export default {
         AppCarousel,
         AppStep,
         AppNuovoProfilo,
+        AppFooter,
     },
     mounted() {
         this.getUser();
@@ -60,7 +62,7 @@ export default {
 <template>
     
     <!-- carousel. -->
-    <div id="carouselExampleControls" class="carousel slide col-12" data-bs-ride="carousel">
+    <div id="carouselExampleControls" class="carousel slide col-12 " data-bs-ride="carousel">
         <div class="carousel-inner height_carousel">
                 <div class="carousel-item active ">
                     <img src="../../assets/img/jumbo_uno.png" class="d-block w-100 bg_size_cover" alt="...">
@@ -104,11 +106,14 @@ export default {
     <div class="d-none d-md-block container mx-auto mt-5">
         <AppCarousel />
     </div>
-    <div class=" bg_img">
+    <div class="bg_img">
         <AppStep />
     </div>
-    <div class="">
+    <div>
         <AppNuovoProfilo />
+    </div>
+    <div class="bg_color">
+        <AppFooter />
     </div>
 </template>
 
@@ -119,9 +124,7 @@ export default {
     margin-top: -100px;
     height: 70%;
 }
-// .height_carousel{
-//     height: 700px;
-// }
+
 
 .bg_size_cover{
     background-size: cover;
@@ -153,4 +156,8 @@ export default {
 .bg_img{
     background-image: url(../../assets/img/sfondo_macchiato.png);
 }
+
+.bg_color{
+        background-color: #4B5B8B;
+    }
 </style>
