@@ -38,32 +38,32 @@ export default (await import('vue')).defineComponent({
 
   
     <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443378767175690/musicista1.jpeg">
-        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white text-center bg_color">
           Band i Violinisti
         </div>
     </swiper-slide>
     <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379035615372/musicista2.jpeg">
-        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white text-center bg_color">
           Band i Violinisti
         </div>
     </swiper-slide>
     <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379325030523/musicista3.jpeg">
-        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white text-center bg_color">
           Band i Violinisti
         </div>
     </swiper-slide>
     <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379597647914/musicista4.jpeg">
-        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white text-center bg_color">
           Band i Violinisti
         </div>
     </swiper-slide>
     <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379597647914/musicista4.jpeg">
-        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white text-center bg_color">
           Band i Violinisti
         </div>
     </swiper-slide>
     <swiper-slide><img src="https://cdn.discordapp.com/attachments/1143106499103694858/1146443379597647914/musicista4.jpeg">
-        <div class="col-8 rounded-4 mt-2 p-2 text-white bg_color">
+        <div class="col-8 rounded-4 mt-2 p-2 text-white text-center bg_color">
           Band i Violinisti
         </div>
     </swiper-slide>

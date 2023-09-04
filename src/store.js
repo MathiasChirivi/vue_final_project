@@ -23,7 +23,7 @@ export const store = reactive({
     steps:[
         {
             logo:"../assets/img/logo_step1.png",
-            title:"STEI 1",
+            title:"STEP 1",
             text:"Usa i nostri filtri di ricerca per trovare facilmente la musica giusta tra migliaia di proposte",
         },
         {
