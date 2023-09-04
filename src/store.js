@@ -5,6 +5,7 @@ export const store = reactive({
     apiUrl: "http://localhost:8000/api/",
     usersApi:"users/",
     genresApi:"genres/",
+    genreFromHome: "pop",
     storageUrl: "http://localhost:8000/storage/",
 
     events:[
@@ -41,6 +42,6 @@ export const store = reactive({
     ]
 
     
-    genreFromHome: "pop",
+    
 
 })
