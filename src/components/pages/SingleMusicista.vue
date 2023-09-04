@@ -116,6 +116,9 @@ export default {
                 // Gestisci la risposta dal server, ad esempio mostra un messaggio di successo
                 alert(response.data.message);
 
+                // Aggiorna il voto nel tuo componente dopo una risposta positiva
+                this.user.votes.push({ pivot: { vote_id: this.vote } });
+                
                 // Chiudi il popup dopo 2 secondi (2000 millisecondi)
                 setTimeout(() => {
                     this.closePopup();
@@ -159,8 +162,8 @@ export default {
                         <div class="col-4 d-flex flex-column justify-content-end">
                             <div class="d-flex flex-column justify-content-start ">
                                 <h5 class="mb-0">Feedback</h5>
-                                <StarItems
-                                    :itemRate="(user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0)" />
+                                <!-- <StarItems
+                                    :itemRate="(user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0)" /> -->
                                 <h3 class="mt-4">{{ user.name }} {{ user.surname }}</h3>
                             </div>
                         </div>
@@ -276,7 +279,7 @@ export default {
                                         </label>
                                         <div class="d-flex justify-content-between">
                                             <button type="submit" class="btn btn-primary">Invia recensione</button>
-                                            <button class="text-white btn " @click="closePopup">Annulla</button>
+                                            <button class="text-white btn" type="button" @click="closePopup">Annulla</button>
                                         </div>
                                     </form>
                                 </div>
@@ -313,7 +316,7 @@ export default {
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <button type="submit" class="btn btn-primary">Invia voto</button>
-                                            <button class="text-white btn " @click="closePopup">Annulla</button>
+                                            <button class="text-white btn" type="button" @click="closePopup">Annulla</button>
                                         </div>
                                     </form>
                                 </div>
