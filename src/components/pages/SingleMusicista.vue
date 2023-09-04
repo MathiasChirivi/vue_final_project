@@ -18,12 +18,16 @@ export default {
             user: null,
             selectedSection: "dettagli",
             isPopupVisible: false,
-            voto: 0,
+            vote: 0,
             formData: {
                 user_id: this.$route.params.id,
                 name: '',
                 email: '',
                 comment: ''
+            },
+            formVote: {
+                user_id: this.$route.params.id,
+                vote_id: this.vote,
             }
         }
     },
@@ -47,10 +51,10 @@ export default {
             this.isPopupVisible = false;
         },
         selectStar(n) {
-            this.voto = n;
+            this.vote = n;
         },
         deselectStar() {
-            this.voto = 0; // Imposta il voto a 0 per deselezionare tutte le stelle
+            this.vote = 0; // Imposta il voto a 0 per deselezionare tutte le stelle
         },
         submitReview() {
             // Crea un oggetto che contiene i dati da inviare
@@ -95,12 +99,48 @@ export default {
                 console.error(error);
                 alert('Si è verificato un errore durante l\'invio della recensione.');
             });
+        },
+        submitVote() {
+            // Crea un oggetto che contiene i dati da inviare
+            const voteData = {
+                user_id: this.$route.params.id,
+                vote_id: this.vote,
+            };
+
+            // Invia la recensione al server utilizzando Axios o un'altra libreria di tua scelta
+            axios.post(this.store.apiUrl + 'votes', voteData, {
+                headers: {
+                    'Content-Type': 'application/json', // Imposta l'intestazione Content-Type
+                }
+            }).then(response => {
+                // Gestisci la risposta dal server, ad esempio mostra un messaggio di successo
+                alert(response.data.message);
+
+                // Aggiungi il nuovo voto direttamente all'array dei voti
+                // const newVote = {
+                //     vote_id: this.formVote.vote_id
+                // };
+
+                // this.user.votes.push(newVote);
+                // this.formVote = { user_id: this.$route.params.id, vote_id: this.vote };
+                // Chiudi il popup dopo 2 secondi (2000 millisecondi)
+                setTimeout(() => {
+                    this.closePopup();
+                }, 200);
+
+            }).catch(error => {
+                // Gestisci gli errori qui, ad esempio mostra un messaggio di errore
+                console.error(error);
+                alert('Si è verificato un errore durante l\'invio del voto.');
+            });
         }
 
     },
     mounted() {
         this.getUser(this.$route.params.id);
-        console.log(this.$route.params.id)
+        console.log(this.$route.params.id);
+
+
     }
 }
 
@@ -204,6 +244,8 @@ export default {
                                 </div>
                             </div>
                         </div>
+
+                        <!-- RECENSIONI -->
                         <div v-else-if="selectedSection === 'recensioni'">
                             <!-- <a class="btn">
                                 <font-awesome-icon class="me-2" icon="fa-solid fa-plus" />
@@ -224,26 +266,7 @@ export default {
                                 <div class="popup-content">
                                     <form class="form" @submit.prevent="submitReview">
                                         <h2 class="text-white">Lascia una recensione</h2>
-                                        <!-- <label for="review">Nome:</label>
-                                        <input class="w-50" type="text">
-                                        <label for="review">Email:</label>
-                                        <input class="w-50" type="email">
-                                        <label for="review">Recensione:</label>
-                                        <textarea id="review" name="review" rows="4"></textarea> -->
 
-                                        <!-- <label type="button" class="mt-3">Voto</label>
-
-                                        <div>
-                                            <span class="fs-2" type="button" v-for="n in 5" :key="n"
-                                                @click="voto === n ? deselectStar() : selectStar(n)"
-                                                :class="{ 'selectedStar': n <= voto }">&#9733;</span>
-                                        </div> -->
-
-                                        <!-- <button class="w-25 m-3 btn btn-info" type="submit">Invia recensione</button> -->
-                                        <!-- <div class="form-group">
-                                            <label for="user_id">User ID</label>
-                                            <input type="text" :value="this.$route.params.id" class="form-control" id="user_id" disabled>
-                                        </div> -->
                                         <label>
                                             <input type="text" placeholder="" required="" v-model="formData.name"
                                                 class="input" id="name">
@@ -272,11 +295,53 @@ export default {
                                 <div class="fw-lighter mt-2">{{ review.comment }}</div>
                             </div>
                         </div>
+
+                        <!-- VOTI -->
                         <div v-else-if="selectedSection === 'Voti'">
-                            <div>
-                                voti
+                            <div class="containerReview d-flex align-items-center justify-content-center bg-light ">
+                                <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-dark"
+                                    @click="showPopup">
+                                    <span class="circle-icon">
+                                        <font-awesome-icon icon="fa-solid fa-plus" style="color: #000000;" />
+                                    </span>
+                                    Voti
+                                </a>
                             </div>
+
+                            <!-- Popup -->
+                            <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
+                                <div class="popup-content">
+                                    <form class="form" @submit.prevent="submitVote">
+                                        <h2 class="text-white">Lascia una recensione</h2>
+
+                                        <div class="starHover">
+                                            <label class="fs-2 star_" type="button" v-for="n in 5" :key="n"
+                                                @click="vote === n ? deselectStar() : selectStar(n)"
+                                                :class="{ 'selectedStar': n <= vote }">&#9733;</label>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <button type="submit" class="btn btn-primary">Invia voto</button>
+                                            <button class="text-white btn " @click="closePopup">Annulla</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- <div v-if="user.votes.length > 0">
+                                <h3>Voti Ricevuti</h3>
+                                <div v-for="(vote, index) in user.users_votes" :key="index">
+                                    <div>
+                                        <span>Voto {{ index + 1 }}:</span>
+                                        <StarItems :itemRate="vote.vote_id" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <p>L'utente non ha ancora ricevuto voti.</p>
+                            </div> -->
+
                         </div>
+
+                        <!-- MESSAGGI -->
                         <div v-else-if="selectedSection === 'Messaggi'">
                             <div>
                                 messaggi
@@ -563,4 +628,5 @@ export default {
 .fancy:hover .bottom-key-2 {
     right: 0;
     width: 0;
-}</style>
+}
+</style>
