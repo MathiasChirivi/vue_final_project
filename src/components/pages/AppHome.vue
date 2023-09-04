@@ -5,6 +5,7 @@ import AppEventi from '../AppEventi.vue';
 import AppCarousel from '../AppCarousel.vue';
 import AppStep from '../AppStep.vue'
 import AppNuovoProfilo from '../AppNuovoProfilo.vue';
+import AppFooter from '../AppFooter.vue'
 
 export default {
     name: "AppHome",
@@ -26,6 +27,7 @@ export default {
         AppCarousel,
         AppStep,
         AppNuovoProfilo,
+        AppFooter,
     },
     mounted() {
         this.getUser();
@@ -57,18 +59,6 @@ export default {
             <span class="visually-hidden">Next</span>
         </button>
 
-        <!-- searche musicista. -->
-        <!-- <div class="col-3 d-flex position-absolute justify-content-around rounded search  p-3">
-            <div class="col-4 me-2">
-                <input type="text" class="input" id="" placeholder="Genere">
-            </div> -->
-            <!-- <div class="col-4 me-2">
-                <input type="text" class="input" id="" placeholder="Regione">
-            </div> -->
-            <!-- <div class="col-3 me-2 pe-2 pr-2">
-                <input type="submit" class="input" id="">
-            </div> 
-        </div> -->
     </div>
     <div class="bg_img">
         <AppEventi />
@@ -76,11 +66,14 @@ export default {
     <div class="d-none d-md-block container mx-auto mt-5">
         <AppCarousel />
     </div>
-    <div class=" bg_img">
+    <div class="bg_img">
         <AppStep />
     </div>
-    <div class="">
+    <div>
         <AppNuovoProfilo />
+    </div>
+    <div class="bg_color">
+        <AppFooter />
     </div>
 </template>
 
@@ -91,9 +84,7 @@ export default {
     margin-top: -100px;
     height: 70%;
 }
-// .height_carousel{
-//     height: 700px;
-// }
+
 
 .bg_size_cover{
     background-size: cover;
@@ -125,4 +116,8 @@ export default {
 .bg_img{
     background-image: url(../../assets/img/sfondo_macchiato.png);
 }
+
+.bg_color{
+        background-color: #4B5B8B;
+    }
 </style>
