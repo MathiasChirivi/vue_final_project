@@ -23,7 +23,7 @@ export default {
             // gestione ricerca per genere
             uniqueGenres : [],
             genres : [] , 
-            choosenGenre:"",
+            choosenGenre: store.genreFromHome,
 
         }
     },
@@ -108,6 +108,7 @@ export default {
             // this.getUsersPage(this.usersCurrentPage + 1);
             if (this.currentPage < Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
                 this.currentPage++;
+                console.log(this.choosenGenre)
             }else {
                 console.error("non ci sono piu pagine");
             }
@@ -130,48 +131,51 @@ export default {
 
     computed: {
         paginatedFilteredUsers() {
-            const startIndex = (this.currentPage - 1) * this.resultsPerPage;
-            const endIndex = startIndex + this.resultsPerPage;
+  const startIndex = (this.currentPage - 1) * this.resultsPerPage;
+  const endIndex = startIndex + this.resultsPerPage;
 
-
-            if (this.choosenGenre != "") {
-                // Filtra gli utenti che hanno il genere selezionato
-                this.filteredUsers = this.users.filter((user) => {
-                    return user.genres.some((genre) => genre.name === this.choosenGenre);
-                });
-            } else {
-                // Nessun genere specifico selezionato, utilizza tutti gli utenti
-                this.filteredUsers = this.users.slice(); // Copia tutti gli utenti
-            }
-            this.filteredUsers.sort((a, b) => {
-        if (this.orderBy === 'reviews') {
-            if (a.reviews.length !== b.reviews.length) {
-                return b.reviews.length - a.reviews.length;
-            } else {
-                return a.name.localeCompare(b.name);
-            }
-        } else if (this.orderBy === 'votes') {
-            const avgVoteA = a.votes.length > 0 ? a.votes.reduce((total, vote) => total + vote.vote, 0) / a.votes.length : 0;
-            const avgVoteB = b.votes.length > 0 ? b.votes.reduce((total, vote) => total + vote.vote, 0) / b.votes.length : 0;
-        
-                // Ordina in base al voto medio
-                if (avgVoteA !== avgVoteB) {
-                return avgVoteB - avgVoteA; // Ordine decrescente per voto medio
-                } else {
-                    return a.name.localeCompare(b.name);
-                }
-        } else {
-            // Ordinamento di base (ordine alfabetico per nome)
-            return a.name.localeCompare(b.name);
-        }
+  // Aggiungi questa parte per filtrare in base al genere scelto nella route
+  if (this.choosenGenre != "") {
+    // Filtra gli utenti che hanno il genere selezionato
+    this.filteredUsers = this.users.filter((user) => {
+      return user.genres.some((genre) => genre.name === this.choosenGenre);
     });
+  } else {
+    // Nessun genere specifico selezionato, utilizza tutti gli utenti
+    this.filteredUsers = this.users.slice(); // Copia tutti gli utenti
+  }
 
-    // Restituisci solo gli utenti della pagina corrente
-    return this.filteredUsers.slice(startIndex, endIndex);
+  // Rimani con il resto del tuo metodo
+  this.filteredUsers.sort((a, b) => {
+    if (this.orderBy === 'reviews') {
+      if (a.reviews.length !== b.reviews.length) {
+        return b.reviews.length - a.reviews.length;
+      } else {
+        return a.name.localeCompare(b.name);
+      }
+    } else if (this.orderBy === 'votes') {
+      const avgVoteA = a.votes.length > 0 ? a.votes.reduce((total, vote) => total + vote.vote, 0) / a.votes.length : 0;
+      const avgVoteB = b.votes.length > 0 ? b.votes.reduce((total, vote) => total + vote.vote, 0) / b.votes.length : 0;
 
-        },
-    },
+      // Ordina in base al voto medio
+      if (avgVoteA !== avgVoteB) {
+        return avgVoteB - avgVoteA; // Ordine decrescente per voto medio
+      } else {
+        return a.name.localeCompare(b.name);
+      }
+    } else {
+      // Ordinamento di base (ordine alfabetico per nome)
+      return a.name.localeCompare(b.name);
+    }
+  });
+
+  // Restituisci solo gli utenti della pagina corrente
+  return this.filteredUsers.slice(startIndex, endIndex);
+},
+  
+},
     mounted() {
+    
     this.getUsersFirstPage();
     this.filteredUsers = this.users;
     }

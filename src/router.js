@@ -20,9 +20,9 @@ const router = createRouter({
             component: AppGeneri
         },
         {
-            path: "/Musicisti",
+            path: "/Musicisti/",
             name: "Musicisti",
-            component: AppMusicisti
+            component: AppMusicisti,
         },
         {
             path: "/Musicisti/:id",
