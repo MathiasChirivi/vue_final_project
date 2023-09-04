@@ -5,6 +5,7 @@ import axios from "axios";
 import StarItems from '../StarItems.vue'
 import AppReview from '../AppReview.vue'
 import AppVote from '../AppVote.vue'
+import AppMessage from '../AppMessage.vue'
 
 
 export default {
@@ -13,6 +14,7 @@ export default {
         StarItems,
         AppReview,
         AppVote,
+        AppMessage
     },
     data() {
         return {
@@ -21,6 +23,7 @@ export default {
             loadingError: false,
             selectedSection: "dettagli",
             isPopupVisible: false,
+            user:null,
         }
     },
     methods: {
@@ -77,8 +80,8 @@ export default {
                         <div class="col-4 d-flex flex-column justify-content-end">
                             <div class="d-flex flex-column justify-content-start ">
                                 <h5 class="mb-0">Feedback</h5>
-                                <!-- <StarItems
-                                    :itemRate="(user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0)" /> -->
+                                <StarItems
+                                    :itemRate="(user.votes.length > 0 ? user.votes.reduce((total, vote) => total + vote.vote, 0) / user.votes.length : 0)" /> 
                                 <h3 class="mt-4">{{ user.name }} {{ user.surname }}</h3>
                             </div>
                         </div>
@@ -97,10 +100,6 @@ export default {
                         <a class="text-decoration-none" href="" @click.prevent="selectedSection = 'recensioni'"
                             :class="{ 'selected': selectedSection === 'recensioni' }">
                             Recensioni
-                        </a>
-                        <a class="text-decoration-none" href="" @click.prevent="selectedSection = 'Voti'"
-                            :class="{ 'selected': selectedSection === 'Voti' }">
-                            Voti
                         </a>
                         <a class="text-decoration-none" href="" @click.prevent="selectedSection = 'Messaggi'"
                             :class="{ 'selected': selectedSection === 'Messaggi' }">
@@ -157,18 +156,20 @@ export default {
 
                         <!-- RECENSIONI -->
                         <div v-else-if="selectedSection === 'recensioni'">
-                            <AppReview />
-                        </div>
-
-                        <!-- VOTI -->
-                        <div v-else-if="selectedSection === 'Voti'">
-                            <AppVote />
+                            <div class="d-flex">
+                                <div class="d-flex flex-column w-100" >
+                                    <AppReview />
+                                </div>
+                                <div class="w-100">
+                                    <AppVote />
+                                </div>
+                            </div>
                         </div>
 
                         <!-- MESSAGGI -->
                         <div v-else-if="selectedSection === 'Messaggi'">
                             <div>
-                                messaggi
+                                <AppMessage />
                             </div>
                         </div>
                     </div>

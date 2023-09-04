@@ -35,10 +35,11 @@ export default {
             });
         },
         showPopup() {
-            console.log("davide");
+            this.vote = 0;
             this.isPopupVisible = true;
         },
         closePopup() {
+            this.vote = 0;
             this.isPopupVisible = false;
         },
         selectStar(n) {
@@ -113,9 +114,7 @@ export default {
             </form>
         </div>
     </div>
-    <div v-for="vote in user && user.votes ? user.votes : []" :key="vote.id">
-        <p>{{ vote.pivot.vote_id }}</p>
-    </div>
+
 </template>
 <style>
 
