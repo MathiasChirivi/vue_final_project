@@ -28,7 +28,7 @@ export default {
             formVote: {
                 user_id: this.$route.params.id,
                 vote_id: this.vote,
-            }
+            },
         }
     },
     methods: {
@@ -116,13 +116,6 @@ export default {
                 // Gestisci la risposta dal server, ad esempio mostra un messaggio di successo
                 alert(response.data.message);
 
-                // Aggiungi il nuovo voto direttamente all'array dei voti
-                // const newVote = {
-                //     vote_id: this.formVote.vote_id
-                // };
-
-                // this.user.votes.push(newVote);
-                // this.formVote = { user_id: this.$route.params.id, vote_id: this.vote };
                 // Chiudi il popup dopo 2 secondi (2000 millisecondi)
                 setTimeout(() => {
                     this.closePopup();
@@ -138,8 +131,7 @@ export default {
     },
     mounted() {
         this.getUser(this.$route.params.id);
-        console.log(this.$route.params.id);
-
+        // console.log(this.user.);
 
     }
 }
@@ -326,19 +318,9 @@ export default {
                                     </form>
                                 </div>
                             </div>
-                            <!-- <div v-if="user.votes.length > 0">
-                                <h3>Voti Ricevuti</h3>
-                                <div v-for="(vote, index) in user.users_votes" :key="index">
-                                    <div>
-                                        <span>Voto {{ index + 1 }}:</span>
-                                        <StarItems :itemRate="vote.vote_id" />
-                                    </div>
-                                </div>
+                            <div v-for="vote in user.votes" :key="vote.id">
+                                <p>{{ vote.pivot.vote_id }}</p>
                             </div>
-                            <div v-else>
-                                <p>L'utente non ha ancora ricevuto voti.</p>
-                            </div> -->
-
                         </div>
 
                         <!-- MESSAGGI -->
