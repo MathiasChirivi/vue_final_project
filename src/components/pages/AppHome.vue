@@ -4,6 +4,7 @@ import { store } from '../../store'
 import AppEventi from '../AppEventi.vue';
 import AppCarousel from '../AppCarousel.vue';
 import AppStep from '../AppStep.vue'
+import AppNuovoProfilo from '../AppNuovoProfilo.vue';
 
 export default {
     name: "AppHome",
@@ -24,6 +25,7 @@ export default {
         AppEventi,
         AppCarousel,
         AppStep,
+        AppNuovoProfilo,
     },
     mounted() {
         this.getUser();
@@ -76,6 +78,9 @@ export default {
     </div>
     <div class=" bg_img">
         <AppStep />
+    </div>
+    <div class="">
+        <AppNuovoProfilo />
     </div>
 </template>
 

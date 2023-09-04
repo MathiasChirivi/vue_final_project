@@ -78,5 +78,4 @@ export default (await import('vue')).defineComponent({
   background-color: #4b5b8bd5;
 }
 
-
 </style>
