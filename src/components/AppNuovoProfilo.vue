@@ -32,7 +32,7 @@ export default {
                         <!-- bottone crea profilo. -->
                         <div class="col-12 d-flex justify-content-center pt-4 ">
                             <button class="button">
-                                <a href="#" class="text-decoration-none text-white" role="" >Crea Il Tuo Profilo</a>
+                                <a href="http://localhost:8000/register" class="text-decoration-none text-white" role="" >Crea Il Tuo Profilo</a>
                             </button>
                             
                         </div>
