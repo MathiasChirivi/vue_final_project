@@ -117,7 +117,6 @@ export default {
 
         // SEARCH
         searchUsers() {
-            console.log('cacca')
         this.filteredUsers = this.users.filter(user => {
             const fullName = user.name + ' ' + user.surname;
             return fullName.toLowerCase().includes(this.searchQuery.toLowerCase());
