@@ -15,7 +15,7 @@
 <template>
     <div class="container pb-5">
 
-        <div class="row justify-content-center pt-5 pb-5 ">
+        <div class="row justify-content-center py-5">
             <!-- titolo. -->
             <div class="col-12 pt-4 pb-4">
                 <h2 class="text-center">La Giusta Musica Per I Tuoi Eventi</h2>
@@ -23,18 +23,12 @@
 
             <!-- card. -->
             <div class="col-12 d-sm-flex justify-content-center pt-4">
-                <div v-for="event in store.events" class="w-75 card pt-4 me-sm-3 mb-3 mx-auto">
-
+                <div v-for="event in store.events" class="w-75 card pt-4 p-3 me-sm-3 mb-3 mx-auto">
                     <!-- titolo. -->
-                    <div class="row justify-content-center">
-                        <h5 class="col-12 text-center">{{ event.title }}</h5>
-                    </div>
-
+                    <h5 class="col-12 text-center">{{ event.title }}</h5>
+                    
                     <!-- testo. -->
-                    <div class="row justify-content-center">
-                        <p class="col-6 text-center">{{ event.text }}</p>
-                    </div>
-
+                    <p class="col-12 text-center">{{ event.text }}</p>  
                 </div>
             </div>
         </div>
