@@ -11,6 +11,9 @@ export default {
     data() {
         return {
             store,
+            genres: [],
+            choosenGenre: "",
+            
         }
     },
     methods: {
@@ -19,7 +22,27 @@ export default {
                 this.users = response.data.results.data;
                 console.log(this.users)
             })
-        }
+        },
+        getGenresArray() {
+        this.loading = true;
+        axios.get(this.store.apiUrl + this.store.genresApi).then(response => {
+            console.log(response.data.results)
+            this.genres = response.data.results
+            // this.users = response.data.results;
+            
+            this.loading = false;
+            
+        }).catch(err => {
+            this.loading = false;
+            this.loadingError = err.message;
+            this.$router.push({ name: 'error', params: { code: 404 } })
+        })
+    },
+    redirectToMusicistiPage() {
+      // Naviga all'altra pagina passando il parametro :genre
+        this.store.genreFromHome = this.choosenGenre;
+        this.$router.push({ name: 'Musicisti'});
+    },
     },
     components: {
         AppEventi,
@@ -29,6 +52,7 @@ export default {
     },
     mounted() {
         this.getUser();
+        this.getGenresArray();
     },
 
 }
@@ -58,17 +82,21 @@ export default {
         </button>
 
         <!-- searche musicista. -->
-        <!-- <div class="col-3 d-flex position-absolute justify-content-around rounded search  p-3">
-            <div class="col-4 me-2">
-                <input type="text" class="input" id="" placeholder="Genere">
-            </div> -->
+        <div class="col-3 d-flex position-absolute justify-content-around rounded search  p-3"> 
             <!-- <div class="col-4 me-2">
-                <input type="text" class="input" id="" placeholder="Regione">
-            </div> -->
-            <!-- <div class="col-3 me-2 pe-2 pr-2">
-                <input type="submit" class="input" id="">
+                <input type="text" class="input" id="" placeholder="Genere">
+            </div>  -->
+
+            <div class="col-3 me-2 pe-2 pr-2">
+                <select v-model="choosenGenre" class="form-select">
+                    <option v-for="genre in genres" :value="genre.name">{{ genre.name }}</option>
+                </select>
+            </div>
+            
+            <div class="col-3 me-2 pe-2 pr-2">
+                <button class="input" @click="redirectToMusicistiPage">cerca</button>
             </div> 
-        </div> -->
+        </div> 
     </div>
     <div class="bg_img">
         <AppEventi />

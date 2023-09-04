@@ -20,10 +20,32 @@ export default {
             //impaginazione frontend
             resultsPerPage: 6,
             currentPage: 1,
+            // gestione ricerca per genere
+            uniqueGenres : [],
+            genres : [] , 
+            choosenGenre: store.genreFromHome,
 
         }
     },
     methods: {
+        //costruzione array genres
+        extractUniqueGenres() {
+    const uniqueGenres = [];
+    this.users.forEach((user) => {
+        user.genres.forEach((genre) => {
+            const isGenreUnique = !uniqueGenres.find((uniqueGenre) => uniqueGenre.id === genre.id);
+            if (isGenreUnique) {
+            uniqueGenres.push(genre);
+            }
+        });
+    });
+    this.uniqueGenres = uniqueGenres;
+    this.genres = uniqueGenres;
+    },
+    setGenre(clickedGenre) {
+    this.choosenGenre = clickedGenre;
+    console.log(this.choosenGenre)
+    },
 
         //calcolo media voti e bottone per orderby
 
@@ -43,12 +65,13 @@ export default {
         // CAROSELLO MUSICISTI 
         getUsersFirstPage() {
             this.loading = true;
-            axios.get(this.store.apiUrl + this.store.usersApi
-
-            ).then(response => {
-                
+            axios.get(this.store.apiUrl + this.store.usersApi).then(response => {
+                console.log(response)
                 this.users = response.data.results;
                 this.filteredUsers = response.data.results;
+                
+                this.extractUniqueGenres();
+
                 this.loading = false;
             }).catch(err => {
                 this.loading = false;
@@ -85,14 +108,16 @@ export default {
             // this.getUsersPage(this.usersCurrentPage + 1);
             if (this.currentPage < Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
                 this.currentPage++;
+                console.log(this.choosenGenre)
             }else {
                 console.error("non ci sono piu pagine");
             }
-            // this.currentPage++;
+            console.log(this.genres)
         },
 
         // SEARCH
         searchUsers() {
+            console.log('cacca')
         this.filteredUsers = this.users.filter(user => {
             const fullName = user.name + ' ' + user.surname;
             return fullName.toLowerCase().includes(this.searchQuery.toLowerCase());
@@ -106,40 +131,53 @@ export default {
 
     computed: {
         paginatedFilteredUsers() {
-            const startIndex = (this.currentPage - 1) * this.resultsPerPage;
-            const endIndex = startIndex + this.resultsPerPage;
+  const startIndex = (this.currentPage - 1) * this.resultsPerPage;
+  const endIndex = startIndex + this.resultsPerPage;
 
-            this.filteredUsers.sort((a, b) => {
-        if (this.orderBy === 'reviews') {
-            if (a.reviews.length !== b.reviews.length) {
-                return b.reviews.length - a.reviews.length;
-            } else {
-                return a.name.localeCompare(b.name);
-            }
-        } else if (this.orderBy === 'votes') {
-            const avgVoteA = a.votes.length > 0 ? a.votes.reduce((total, vote) => total + vote.vote, 0) / a.votes.length : 0;
-            const avgVoteB = b.votes.length > 0 ? b.votes.reduce((total, vote) => total + vote.vote, 0) / b.votes.length : 0;
-        
-                // Ordina in base al voto medio
-                if (avgVoteA !== avgVoteB) {
-                return avgVoteB - avgVoteA; // Ordine decrescente per voto medio
-                } else {
-                    return a.name.localeCompare(b.name);
-                }
-        } else {
-            // Ordinamento di base (ordine alfabetico per nome)
-            return a.name.localeCompare(b.name);
-        }
+  // Aggiungi questa parte per filtrare in base al genere scelto nella route
+  if (this.choosenGenre != "") {
+    // Filtra gli utenti che hanno il genere selezionato
+    this.filteredUsers = this.users.filter((user) => {
+      return user.genres.some((genre) => genre.name === this.choosenGenre);
     });
+  } else {
+    // Nessun genere specifico selezionato, utilizza tutti gli utenti
+    this.filteredUsers = this.users.slice(); // Copia tutti gli utenti
+  }
 
-    // Restituisci solo gli utenti della pagina corrente
-    return this.filteredUsers.slice(startIndex, endIndex);
+  // Rimani con il resto del tuo metodo
+  this.filteredUsers.sort((a, b) => {
+    if (this.orderBy === 'reviews') {
+      if (a.reviews.length !== b.reviews.length) {
+        return b.reviews.length - a.reviews.length;
+      } else {
+        return a.name.localeCompare(b.name);
+      }
+    } else if (this.orderBy === 'votes') {
+      const avgVoteA = a.votes.length > 0 ? a.votes.reduce((total, vote) => total + vote.vote, 0) / a.votes.length : 0;
+      const avgVoteB = b.votes.length > 0 ? b.votes.reduce((total, vote) => total + vote.vote, 0) / b.votes.length : 0;
 
-        },
-    },
+      // Ordina in base al voto medio
+      if (avgVoteA !== avgVoteB) {
+        return avgVoteB - avgVoteA; // Ordine decrescente per voto medio
+      } else {
+        return a.name.localeCompare(b.name);
+      }
+    } else {
+      // Ordinamento di base (ordine alfabetico per nome)
+      return a.name.localeCompare(b.name);
+    }
+  });
+
+  // Restituisci solo gli utenti della pagina corrente
+  return this.filteredUsers.slice(startIndex, endIndex);
+},
+  
+},
     mounted() {
-        this.getUsersFirstPage();
-        this.filteredUsers = this.users;
+    
+    this.getUsersFirstPage();
+    this.filteredUsers = this.users;
     }
 }
 </script>
@@ -155,7 +193,7 @@ export default {
         <h3 v-if="loadingError"> {{ loadingError }} </h3>
     </div>
     
-    <!-- <button v-for="genre in " class="btn badge"  v-bind:class="genres === 'votes' ? 'bg_cl_primary' : '' "  @click="genresSet('votes')">Più Voti</button> -->
+    <button v-for="genre in genres " class="btn badge"  v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : '' " @click="setGenre(genre.name)" >{{genre.name}}</button>
 
     <div class="col-12 d-flex flex-row-reverse my-3">
         <nav class="navbar bg_violet rounded-5 me-5">
