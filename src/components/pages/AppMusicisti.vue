@@ -21,47 +21,49 @@ export default {
             resultsPerPage: 6,
             currentPage: 1,
             // gestione ricerca per genere
-            uniqueGenres : [],
-            genres : [] , 
+            uniqueGenres: [],
+            genres: [],
             choosenGenre: store.genreFromHome,
+            // poupup
+            isPopupVisible: false,
 
         }
     },
     methods: {
         //costruzione array genres
         extractUniqueGenres() {
-    const uniqueGenres = [];
-    this.users.forEach((user) => {
-        user.genres.forEach((genre) => {
-            const isGenreUnique = !uniqueGenres.find((uniqueGenre) => uniqueGenre.id === genre.id);
-            if (isGenreUnique) {
-            uniqueGenres.push(genre);
-            }
-        });
-    });
-    this.uniqueGenres = uniqueGenres;
-    this.genres = uniqueGenres;
-    },
-    setGenre(clickedGenre) {
-    this.choosenGenre = clickedGenre;
-    console.log(this.choosenGenre)
-    },
+            const uniqueGenres = [];
+            this.users.forEach((user) => {
+                user.genres.forEach((genre) => {
+                    const isGenreUnique = !uniqueGenres.find((uniqueGenre) => uniqueGenre.id === genre.id);
+                    if (isGenreUnique) {
+                        uniqueGenres.push(genre);
+                    }
+                });
+            });
+            this.uniqueGenres = uniqueGenres;
+            this.genres = uniqueGenres;
+        },
+        setGenre(clickedGenre) {
+            this.choosenGenre = clickedGenre;
+            console.log(this.choosenGenre)
+        },
 
         //calcolo media voti e bottone per orderby
 
         calculateAverageVote(user) {
-    if (user.votes.length === 0) {
-        return 'N/A';
-    }
+            if (user.votes.length === 0) {
+                return 'N/A';
+            }
 
-    const totalVotes = user.votes.reduce((total, vote) => total + vote.vote, 0);
-    const averageVote = totalVotes / user.votes.length;
-    return averageVote.toFixed(2); // Mostra il voto medio con due decimali
-    },
+            const totalVotes = user.votes.reduce((total, vote) => total + vote.vote, 0);
+            const averageVote = totalVotes / user.votes.length;
+            return averageVote.toFixed(2); // Mostra il voto medio con due decimali
+        },
 
         orderingSet(orderBy) {
-    this.orderBy = orderBy;
-    },
+            this.orderBy = orderBy;
+        },
         // CAROSELLO MUSICISTI 
         getUsersFirstPage() {
             this.loading = true;
@@ -69,7 +71,7 @@ export default {
                 console.log(response)
                 this.users = response.data.results;
                 this.filteredUsers = response.data.results;
-                
+
                 this.extractUniqueGenres();
 
                 this.loading = false;
@@ -79,18 +81,19 @@ export default {
                 this.$router.push({ name: 'error', params: { code: 404 } })
             })
         },
-        getUsersPage(pageNumber) {if (pageNumber > 0 && pageNumber <= Math.ceil(this.filteredUsers.length / this.resultsPerPage)){
-            this.currentPage = pageNumber;
-            // this.loading = true;
+        getUsersPage(pageNumber) {
+            if (pageNumber > 0 && pageNumber <= Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
+                this.currentPage = pageNumber;
+                // this.loading = true;
 
-            // Calcola l'indice di inizio e fine per la pagina corrente
-            const startIndex = (this.currentPage - 1) * this.resultsPerPage;
-            const endIndex = startIndex + this.resultsPerPage;
+                // Calcola l'indice di inizio e fine per la pagina corrente
+                const startIndex = (this.currentPage - 1) * this.resultsPerPage;
+                const endIndex = startIndex + this.resultsPerPage;
 
-            // Ottieni gli utenti per la pagina corrente
-            this.paginatedUsers = this.filteredUsers.slice(startIndex, endIndex);
+                // Ottieni gli utenti per la pagina corrente
+                this.paginatedUsers = this.filteredUsers.slice(startIndex, endIndex);
 
-            this.loading = false;
+                this.loading = false;
             }
             else {
                 console.error("non ci sono piu pagine");
@@ -100,7 +103,7 @@ export default {
             // this.getUsersPage(this.usersCurrentPage - 1);
             if (this.currentPage > 1) {
                 this.currentPage--;
-            }else {
+            } else {
                 console.error("non ci sono piu pagine");
             }
         },
@@ -109,7 +112,7 @@ export default {
             if (this.currentPage < Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
                 this.currentPage++;
                 console.log(this.choosenGenre)
-            }else {
+            } else {
                 console.error("non ci sono piu pagine");
             }
             console.log(this.genres)
@@ -117,66 +120,72 @@ export default {
 
         // SEARCH
         searchUsers() {
-        this.filteredUsers = this.users.filter(user => {
-            const fullName = user.name + ' ' + user.surname;
-            return fullName.toLowerCase().includes(this.searchQuery.toLowerCase());
-        });
-        this.currentPage = 1; // Reset to first page after new search
-        
+            this.filteredUsers = this.users.filter(user => {
+                const fullName = user.name + ' ' + user.surname;
+                return fullName.toLowerCase().includes(this.searchQuery.toLowerCase());
+            });
+            this.currentPage = 1; // Reset to first page after new search
+
+        },
+        showPopup() {
+            this.isPopupVisible = true;
+        },
+        closePopup() {
+            this.isPopupVisible = false;
         },
     },
-            // Ricerca Utenti
+    // Ricerca Utenti
 
 
     computed: {
         paginatedFilteredUsers() {
-  const startIndex = (this.currentPage - 1) * this.resultsPerPage;
-  const endIndex = startIndex + this.resultsPerPage;
+            const startIndex = (this.currentPage - 1) * this.resultsPerPage;
+            const endIndex = startIndex + this.resultsPerPage;
 
-  // Aggiungi questa parte per filtrare in base al genere scelto nella route
-  if (this.choosenGenre != "") {
-    // Filtra gli utenti che hanno il genere selezionato
-    this.filteredUsers = this.users.filter((user) => {
-      return user.genres.some((genre) => genre.name === this.choosenGenre);
-    });
-  } else {
-    // Nessun genere specifico selezionato, utilizza tutti gli utenti
-    this.filteredUsers = this.users.slice(); // Copia tutti gli utenti
-  }
+            // Aggiungi questa parte per filtrare in base al genere scelto nella route
+            if (this.choosenGenre != "") {
+                // Filtra gli utenti che hanno il genere selezionato
+                this.filteredUsers = this.users.filter((user) => {
+                    return user.genres.some((genre) => genre.name === this.choosenGenre);
+                });
+            } else {
+                // Nessun genere specifico selezionato, utilizza tutti gli utenti
+                this.filteredUsers = this.users.slice(); // Copia tutti gli utenti
+            }
 
-  // Rimani con il resto del tuo metodo
-  this.filteredUsers.sort((a, b) => {
-    if (this.orderBy === 'reviews') {
-      if (a.reviews.length !== b.reviews.length) {
-        return b.reviews.length - a.reviews.length;
-      } else {
-        return a.name.localeCompare(b.name);
-      }
-    } else if (this.orderBy === 'votes') {
-      const avgVoteA = a.votes.length > 0 ? a.votes.reduce((total, vote) => total + vote.vote, 0) / a.votes.length : 0;
-      const avgVoteB = b.votes.length > 0 ? b.votes.reduce((total, vote) => total + vote.vote, 0) / b.votes.length : 0;
+            // Rimani con il resto del tuo metodo
+            this.filteredUsers.sort((a, b) => {
+                if (this.orderBy === 'reviews') {
+                    if (a.reviews.length !== b.reviews.length) {
+                        return b.reviews.length - a.reviews.length;
+                    } else {
+                        return a.name.localeCompare(b.name);
+                    }
+                } else if (this.orderBy === 'votes') {
+                    const avgVoteA = a.votes.length > 0 ? a.votes.reduce((total, vote) => total + vote.vote, 0) / a.votes.length : 0;
+                    const avgVoteB = b.votes.length > 0 ? b.votes.reduce((total, vote) => total + vote.vote, 0) / b.votes.length : 0;
 
-      // Ordina in base al voto medio
-      if (avgVoteA !== avgVoteB) {
-        return avgVoteB - avgVoteA; // Ordine decrescente per voto medio
-      } else {
-        return a.name.localeCompare(b.name);
-      }
-    } else {
-      // Ordinamento di base (ordine alfabetico per nome)
-      return a.name.localeCompare(b.name);
-    }
-  });
+                    // Ordina in base al voto medio
+                    if (avgVoteA !== avgVoteB) {
+                        return avgVoteB - avgVoteA; // Ordine decrescente per voto medio
+                    } else {
+                        return a.name.localeCompare(b.name);
+                    }
+                } else {
+                    // Ordinamento di base (ordine alfabetico per nome)
+                    return a.name.localeCompare(b.name);
+                }
+            });
 
-  // Restituisci solo gli utenti della pagina corrente
-  return this.filteredUsers.slice(startIndex, endIndex);
-},
-  
-},
+            // Restituisci solo gli utenti della pagina corrente
+            return this.filteredUsers.slice(startIndex, endIndex);
+        },
+
+    },
     mounted() {
-    
-    this.getUsersFirstPage();
-    this.filteredUsers = this.users;
+
+        this.getUsersFirstPage();
+        this.filteredUsers = this.users;
     }
 }
 </script>
@@ -191,45 +200,100 @@ export default {
         </h3>
         <h3 v-if="loadingError"> {{ loadingError }} </h3>
     </div>
-    
-    <div class="col-6 d-flex mb-3 ms-3">
-        <nav class="navbar bg_violet rounded-5 me-5">
-            <div class="d-flex justify-content-center align-items-center p-3">
-                <button v-for="genre in genres " class="btn badge "  v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : '' " @click="setGenre(genre.name)" >{{genre.name}}</button>
+
+    <div class="container pb-4">
+
+        <!-- filtro per generi musicali. -->
+        <div class="row justify-content-center border-bottom d-none d-sm-block">
+            <div class="col-8 col-sm-12">
+                <div
+                    class="col-12  rounded-4 d-flex flex-column flex-sm-row justify-content-center justify-content-sm-between p-2 p-sm-3">
+                    <button v-for="genre in genres " class="btn badge text-white col-12 col-sm-1  "
+                        v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : ''" @click="setGenre(genre.name)">{{
+                            genre.name }}
+                    </button>
+                </div>
             </div>
-        </nav>
+        </div>
+
+        
+
+        <!-- filtro per ordine alfabetico,recensioni,voti. -->
+        <div class="row justify-content-center pt-4 border-bottom d-none d-sm-block">
+            <div class="col-8 col-sm-12 d-flex justify-content-sm-center">
+                <div
+                    class="col-12 col-sm-8 col-12-md rounded-4 d-flex flex-column flex-sm-row  justify-content-sm-around">
+                    <button class="btn badge text-white rounded-3 pt-3" v-bind:class="orderBy === 'null' ? 'bg_cl_primary' : ''"
+                        @click="orderingSet('null')">Ordine Alfabetico</button>
+                    <button class="btn badge text-white rounded-2"
+                        v-bind:class="orderBy === 'reviews' ? 'bg_cl_primary' : ''" @click="orderingSet('reviews')">Più
+                        Recensioni</button>
+                    <button class="btn badge text-white rounded-2" v-bind:class="orderBy === 'votes' ? 'bg_cl_primary' : ''"
+                        @click="orderingSet('votes')">Più Voti</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="col-6 d-flex mb-5 ms-3">
-        <nav class="navbar bg_violet rounded-5 me-5">    
-            <div class="d-flex justify-content-center p-3">
-                <button class="btn badge"  v-bind:class="orderBy === 'null' ? 'bg_cl_primary' : '' "  @click="orderingSet('null')">Ordine Alfabetico</button>
-                <button class="btn badge"  v-bind:class="orderBy === 'reviews' ? 'bg_cl_primary' : '' "  @click="orderingSet('reviews')">Più Recensioni</button>
-                <button class="btn badge"  v-bind:class="orderBy === 'votes' ? 'bg_cl_primary' : '' "  @click="orderingSet('votes')">Più Voti</button>
-            </div>
-        </nav>
-    </div>
-    <div class="container mx-auto">
+    <!-- contenitore card musicisti. -->
+    <div class="container pt-4">
         <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
             <div v-for="user in paginatedFilteredUsers" :key="user.id">
                 <!-- Mostra i dettagli del musicista della search qui -->
-                <div class="card" style="width:20rem;">
+                <div class="card mb-4 me-4" style="width:20rem;">
                     <img v-if="user.img" class="card-img-top" :src="store.storageUrl + user.img" />
-                    <img v-else class="card-img-top" src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
+                    <img v-else class="card-img-top"
+                        src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
                     <div class="card-body">
-                        <h3 class="card-title">{{ user.name }}</h3>
-                        <h3 class="card-title">{{ user.surname }}</h3>
-                        <p>Recensioni: {{ user.reviews.length }}</p>
-                            <!-- Visualizza il voto medio -->
-                        <p>Voto Medio: {{ calculateAverageVote(user) }}</p>
-                        <div class="card-text text-truncate">{{ user.experience }}</div>
-                        <div class="card-text"><font-awesome-icon icon="fa-solid fa-location-dot " class="me-3"
-                                style="color: #5d96f8;" /> {{ user.region }}</div>
-                        <div class="card-text"><font-awesome-icon icon="fa-solid fa-music" class="me-3"
-                                style="color: #5d96f8;" /> {{ user.genres.map(genre => genre.name).join(', ') }}</div>
-                        <div class="card-text"><font-awesome-icon icon="fa-solid fa-money-bill" class="me-3"
-                                style="color: #5d96f8;" /> {{ user.cachet }}</div>
-                        <router-link class="btn text-decoration-none my-3" :to="{ name:'SingleMusicista', params: {id: user.id}}">Vedi i dettagli</router-link>
+                        <h5 class="card-title">{{ user.name }} {{ user.surname }}</h5>
+
+                        <!-- descrizione. -->
+                        <div class="row pt-2 pb-3">
+                            <div class="col-12">
+                                <div class="card-text text-truncate">{{ user.experience }}</div>
+                            </div>
+                        </div>
+
+
+                        <!-- voto medio e recensioni. -->
+                        <div class="row">
+                            <div class="col-6">
+                                <p>N. Recensioni: {{ user.reviews.length }}</p>
+                            </div>
+                            <div class="col-6">
+                                <p>Media Stelle: {{ calculateAverageVote(user) }}</p>
+                            </div>
+                        </div>
+                        <!-- regione e cache. -->
+                        <div class="row">
+                            <div class="col-6 card-text text-center"><font-awesome-icon icon="fa-solid fa-location-dot "
+                                    class="me-1" style="color: #00000098;" /> {{ user.region }}
+                            </div>
+                            <div class="col-6 card-text text-center"><font-awesome-icon icon="fa-solid fa-money-bill"
+                                    class="me-1" style="color: #00000094;" /> {{ user.cachet }}
+                            </div>
+
+                        </div>
+
+                        <!-- genere. -->
+                        <div class="row pt-3 pb-3">
+                            <div class="col-12 card-text text-center d-flex justify-content-center">
+                                <font-awesome-icon icon="fa-solid fa-music" class="me-2"
+                                    style="color: #050407a1; padding-top: 5px;" /> {{ user.genres.map(genre =>
+                                        genre.name).join(', ') }}
+                            </div>
+                        </div>
+
+                        <!-- bottone dettagli musicista. -->
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <router-link class="btn text-decoration-none my-3"
+                                    :to="{ name: 'SingleMusicista', params: { id: user.id } }">Vedi i dettagli
+                                </router-link>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -249,9 +313,9 @@ export default {
                         <div class="card-text"><font-awesome-icon icon="fa-solid fa-money-bill" class="me-3"
                                 style="color: #5d96f8;" /> {{ user.cachet }}</div>
                     </div>
-
                 </div>
             </div> -->
+
         </div>
     </div>
     <div class="d-flex justify-content-center gap-4 mt-5">
@@ -260,7 +324,9 @@ export default {
                 <font-awesome-icon icon="fa-solid fa-arrow-left" />
             </span>
         </a>
-        <a class="btn text-black rounded-circle" :class="{ 'bg_violet': pageNumber === currentPage }" @click="getUsersPage(pageNumber)" v-for="pageNumber in  Math.ceil(filteredUsers.length / resultsPerPage)">{{ pageNumber }}</a>
+        <a class="btn text-black rounded-circle" :class="{ 'bg_violet': pageNumber === currentPage }"
+            @click="getUsersPage(pageNumber)" v-for="pageNumber in  Math.ceil(filteredUsers.length / resultsPerPage)">{{
+                pageNumber }}</a>
         <a class="btn" @click="getUsersNextPage">
             <span class="me-3">
                 <font-awesome-icon icon="fa-solid fa-arrow-right" />
@@ -271,12 +337,62 @@ export default {
 
 
 <style scoped lang="scss">
+
 .bg_violet {
     background-color: #8999da;
 }
 
-.bg_cl_primary{
-    background-color:#5c75d1e0 ;
+.bg_cl_primary {
+    // background-color: #5c75d1e0;
+    border-top: solid 1px white;
+    border-left: solid 1px white;
+    border-right: solid 1px white;
+    
+}
+
+
+.card {
+    background-color: #ffffff;
+    transition: all 0.5s;
+
+    box-shadow: 12px 17px 51px rgba(194, 191, 191, 0.603);
+    backdrop-filter: blur(6px);
+    background: #ffffffb9;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+}
+
+.popup{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.popup-content {
+    width: 50%;
+    /* min-height: 50%; */
+    /* background: #9496ff; */
+    /* background: -webkit-linear-gradient(173deg, #9496ff 0%, #ffffff 100%); */
+    /* background: linear-gradient(173deg, #9496ff 0%, #ffffff 100%); */
+    /* background-repeat: no-repeat; */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(30%);
 }
 
 </style>

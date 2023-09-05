@@ -43,17 +43,17 @@ export default {
                     <div class="offcanvas-body">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li v-for="navLink in navLinks" class="nav-item my-2">
-                                <router-link class="nav-link  fs-5 me-3" :to="{ name: navLink.name }">{{
+                                <router-link class="nav-link fs-5 me-3 text-white" :to="{ name: navLink.name }">{{
                                     navLink.label }}</router-link>
                             </li>
 
                             <!-- login/register. -->
                             <li>
-                                <a class="nav-link fs-5 my-2 me-2" href="http://localhost:8000/login">Login</a>
+                                <a class="nav-link fs-5 my-2 me-2 text-white" href="http://localhost:8000/login">Login</a>
                             </li>
 
                             <li>
-                                <a class="nav-link fs-5 my-2" href="http://localhost:8000/register">Register</a>
+                                <a class="nav-link fs-5 my-2 text-white" href="http://localhost:8000/register">Register</a>
                             </li>
                         </ul>
                     </div>
@@ -90,11 +90,11 @@ export default {
   padding: 10px;
   outline: none;
   border: none;
-  color: #00000056;
+  color: #fffcfcb7;
   font-size: 1em;
   background: transparent;
-  border-left: 2px solid #00000057;
-  border-bottom: 2px solid #00000065;
+  border-left: 2px solid #fffffffa;
+  border-bottom: 2px solid #ffffffe5;
   transition: 0.1s;
   border-bottom-left-radius: 8px;
 }

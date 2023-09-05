@@ -24,7 +24,7 @@ export default (await import('vue')).defineComponent({
 <template>  
 
   <div class="col-12 d-flex justify-content-center mb-4 pb-4 ">
-    <h2 class="text-center">Scopri I Musicisti In Evidenza</h2>
+    <h2 class="text-center text-white">Scopri I Musicisti In Evidenza</h2>
   </div>
   <swiper
     ref="{swiperRef}"
