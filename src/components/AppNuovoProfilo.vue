@@ -26,7 +26,7 @@ export default {
                     <div class="col-11 col-sm-7 d-sm-flex flex-sm-column justify-content-sm-evenly">
                         <!-- titolo crea profilo. -->
                         <div class="col-12 col-sm-11 text-center pb-4 pt-4">
-                            <h2 class="text-white">Amplifica Le Tue Note In Una Melodia Di Opportunità Con Il Nostro Straordinario Servizio Per Musicisti.</h2>
+                            <h2>Amplifica Le Tue Note In Una Melodia Di Opportunità Con Il Nostro Straordinario Servizio Per Musicisti.</h2>
                         </div>
 
                         <!-- bottone crea profilo. -->
