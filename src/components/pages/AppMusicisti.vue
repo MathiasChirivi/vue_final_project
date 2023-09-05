@@ -192,20 +192,17 @@ export default {
         <h3 v-if="loadingError"> {{ loadingError }} </h3>
     </div>
     
-    <button v-for="genre in genres " class="btn badge"  v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : '' " @click="setGenre(genre.name)" >{{genre.name}}</button>
-
-    <div class="col-12 d-flex flex-row-reverse my-3">
+    <div class="col-6 d-flex mb-3 ms-3">
         <nav class="navbar bg_violet rounded-5 me-5">
-            <div class="container mx-3">
-                <form class="d-flex" @submit.prevent="searchUsers">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="searchQuery" @input="searchUsers">
-                    <button class="btn" type="submit">
-                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                    </button>
-                </form>
+            <div class="d-flex justify-content-center align-items-center p-3">
+                <button v-for="genre in genres " class="btn badge "  v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : '' " @click="setGenre(genre.name)" >{{genre.name}}</button>
             </div>
-            
-            <div class="d-flex justify-content-center gap-4 mt-3 p-3">
+        </nav>
+    </div>
+
+    <div class="col-6 d-flex mb-5 ms-3">
+        <nav class="navbar bg_violet rounded-5 me-5">    
+            <div class="d-flex justify-content-center p-3">
                 <button class="btn badge"  v-bind:class="orderBy === 'null' ? 'bg_cl_primary' : '' "  @click="orderingSet('null')">Ordine Alfabetico</button>
                 <button class="btn badge"  v-bind:class="orderBy === 'reviews' ? 'bg_cl_primary' : '' "  @click="orderingSet('reviews')">Più Recensioni</button>
                 <button class="btn badge"  v-bind:class="orderBy === 'votes' ? 'bg_cl_primary' : '' "  @click="orderingSet('votes')">Più Voti</button>
