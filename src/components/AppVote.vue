@@ -20,6 +20,8 @@ export default {
                 user_id: this.$route.params.id,
                 vote_id: this.vote,
             },
+            emailSent: false,
+
         }
     },
     methods: {
@@ -62,7 +64,12 @@ export default {
                 }
             }).then(response => {
                 // Gestisci la risposta dal server, ad esempio mostra un messaggio di successo
-                alert(response.data.message);
+                this.emailSent = true;
+
+                // Dopo 3 sec sparisce
+                setTimeout(() => {
+                    this.emailSent = false;
+                }, 3000);
 
                 // Aggiorna il voto nel tuo componente dopo una risposta positiva
                 this.user.votes.push({ pivot: { vote_id: this.vote } });
@@ -114,7 +121,10 @@ export default {
             </form>
         </div>
     </div>
-
+    <!-- Success Banner Transition -->
+    <transition name="fade">
+        <div v-show="emailSent" class="success-banner">Voto inviato con successo!</div>
+    </transition>
 </template>
 <style>
 
@@ -254,5 +264,17 @@ export default {
 
 .form label .input01:valid+span {
     color: green;
+}
+
+.success-banner {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
 }
 </style>

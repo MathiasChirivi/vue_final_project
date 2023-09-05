@@ -60,8 +60,8 @@ export default {
 </script>
 
 <template>
-    <section>
-        <div v-if="user" class="vh-100">
+    <section class="bg_gradient">
+        <div v-if="user" class="p-5">
             <div class="container mt-5">
                 <a class="text-decoration-none">
                     <router-link class="text-decoration-none textLink" :to="{ name: 'Musicisti' }">
@@ -185,6 +185,10 @@ export default {
     </section>
 </template>
 <style lang="scss" scoped>
+
+section{
+    background-color: violet;
+}
 .btnCall {
     background-color: #001580;
 }

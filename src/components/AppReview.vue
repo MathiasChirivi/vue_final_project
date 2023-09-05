@@ -19,6 +19,7 @@ export default {
                 email: '',
                 comment: ''
             },
+            emailSent: false,
         }
     },
     methods: {
@@ -56,7 +57,13 @@ export default {
                 }
             }).then(response => {
                 // Gestisci la risposta dal server, ad esempio mostra un messaggio di successo
-                alert(response.data.message);
+                this.emailSent = true;
+
+                // Dopo 3 sec sparisce
+                setTimeout(() => {
+                    this.emailSent = false;
+                }, 3000);
+                
                 // Puoi anche reimpostare il formData se necessario
                 const newReview = {
                     name: this.formData.name, // Aggiungi il nome
@@ -91,7 +98,7 @@ export default {
 }
 </script>
 <template>
-    <div class="containerReview d-flex align-items-center justify-content-center bg-light ">
+    <div class="containerReview d-flex align-items-center justify-content-center bg-light">
         <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-dark"
             @click="showPopup">
             <span class="circle-icon">
@@ -132,6 +139,11 @@ export default {
         <div class="fw-light">{{ review.date }}</div>
         <div class="fw-lighter mt-2">{{ review.comment }}</div>
     </div>
+
+     <!-- Success Banner Transition -->
+    <transition name="fade">
+        <div v-show="emailSent" class="success-banner">Recensione inviata con successo!</div>
+    </transition>
 </template>
 <style lang="scss" scoped>
 .popup {
@@ -262,5 +274,17 @@ export default {
 
 .form label .input01:valid+span {
     color: green;
+}
+
+.success-banner {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
 }
 </style>

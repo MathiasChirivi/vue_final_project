@@ -17,6 +17,8 @@ export default {
                 email: '',
                 message: ''
             },
+            emailSent: false,
+
         }
     },
     methods: {
@@ -27,8 +29,8 @@ export default {
                 this.loading = false;
 
                 if (!this.user.messages) {
-                this.user.messages = [];
-            }
+                    this.user.messages = [];
+                }
             }).catch(err => {
                 this.loading = false;
                 this.loadingError = err.message;
@@ -43,7 +45,7 @@ export default {
                 name: '',
                 email: '',
                 message: ''
-            };      
+            };
         },
         closePopup() {
             this.isPopupVisible = false;
@@ -52,7 +54,7 @@ export default {
                 name: '',
                 email: '',
                 message: ''
-            };    
+            };
         },
         submitMessage() {
             // Crea un oggetto che contiene i dati da inviare
@@ -70,9 +72,14 @@ export default {
                 }
             }).then(response => {
                 // Gestisci la risposta dal server, ad esempio mostra un messaggio di successo
-                alert(response.data.message);
-                // Puoi anche reimpostare il formData se necessario
+                this.emailSent = true;
 
+                // Dopo 3 sec sparisce
+                setTimeout(() => {
+                    this.emailSent = false;
+                }, 3000);
+
+                // Puoi anche reimpostare il formData se necessario
                 const newMessage = {
                     name: this.formData.name, // Aggiungi il nome
                     // email:this.formData.email,
@@ -136,9 +143,12 @@ export default {
             </form>
         </div>
     </div>
+    <!-- Success Banner Transition -->
+    <transition name="fade">
+        <div v-show="emailSent" class="success-banner">Messaggio inviato con successo!</div>
+    </transition>
 </template>
 <style lang="scss" scoped>
-
 .popup {
     display: none;
     position: fixed;
@@ -267,5 +277,17 @@ export default {
 
 .form label .input01:valid+span {
     color: green;
+}
+
+.success-banner {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
 }
 </style>

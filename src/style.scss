@@ -16,3 +16,10 @@ body{
 .bg_cl_primary{
     background-color:#5c75d1e0 ;
 }
+
+.bg_gradient{
+    background: #9496ff;
+    background: -webkit-linear-gradient(173deg, #9496ff 0%, #ffffff 100%);
+    background: linear-gradient(173deg, #9496ff 0%, #ffffff 100%);
+    background-repeat: no-repeat;
+}
