@@ -100,7 +100,7 @@ export default {
 }
 @media (max-width: 425px) {
   .bgHeaderSm{
-    background-color: #2222; /* Colore per i telefoni */
+    background-color: rgba(11, 11, 11, 0.823) !important; //Ricorda di usare RGBA perchè il colore con # non lo prende 
   }
 }
 
