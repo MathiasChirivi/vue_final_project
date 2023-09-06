@@ -23,7 +23,7 @@ export default {
                 <!-- logo. -->
                 <div class="col-lg-3 mx-4">
                     <a class="navbar-brand" href="#">
-                        <img src="../assets/img/logo_1.png" alt="Logo" class="d-inline-block align-text-top">
+                        <img src="../assets/img/logoProva.png" alt="Logo" class="d-inline-block align-text-top">
                     </a>
                 </div>
                 <!-- hamburger. -->

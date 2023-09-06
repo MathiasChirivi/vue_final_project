@@ -68,7 +68,7 @@ export default {
                     <img src="../../assets/img/jumbo_uno.png" class="d-block w-100 bg_size_cover" alt="...">
                 </div>
             <div class="carousel-item">
-                <img src="../../assets/img/jumbo_due.png" class="d-block w-100 bg_size_cover" alt="...">
+                <img src="../../assets/img/jumbo_Due.png" class="d-block w-100 bg_size_cover" alt="...">
             </div>
             <div class="carousel-item">
                 <img  src="../../assets/img/jumbo_tre.png" class="d-block w-100 bg_size_cover" alt="...">

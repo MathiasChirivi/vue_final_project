@@ -127,11 +127,9 @@ export default {
             this.currentPage = 1; // Reset to first page after new search
 
         },
-        showPopup() {
-            this.isPopupVisible = true;
-        },
-        closePopup() {
-            this.isPopupVisible = false;
+        updateGenre() {
+            // Chiamare la funzione setGenre con il genere selezionato
+            this.setGenre(this.choosenGenre);
         },
     },
     // Ricerca Utenti
@@ -203,12 +201,12 @@ export default {
 
     <div class="container pb-4">
 
-        <!-- filtro per generi musicali. -->
+        <!-- filtro per genere musicali. -->
         <div class="row justify-content-center border-bottom d-none d-sm-block">
             <div class="col-8 col-sm-12">
                 <div
                     class="col-12  rounded-4 d-flex flex-column flex-sm-row justify-content-center justify-content-sm-between p-2 p-sm-3">
-                    <button v-for="genre in genres " class="btn badge text-white col-12 col-sm-1  "
+                    <button v-for="genre in genres" class="btn badge text-white col-12 col-sm-1  "
                         v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : ''" @click="setGenre(genre.name)">{{
                             genre.name }}
                     </button>
@@ -216,15 +214,28 @@ export default {
             </div>
         </div>
 
-        
+        <!-- filto per genere musicale phone. -->
+        <div class="row d-sm-none justify-content-center">
+            <div class="col-8">
+                <h6 class="text-white">filtra per genere</h6>
+            </div>
+            
+            <div class="col-8 d-flex justify-content-center ">
+                <select class="form-select p-1" v-model="choosenGenre" @change="updateGenre">
+                    <option v-for="genre in genres" :key="genre.name" :value="genre.name">{{ genre.name }}</option>
+                </select>
+            </div>
+        </div>
+
+
 
         <!-- filtro per ordine alfabetico,recensioni,voti. -->
         <div class="row justify-content-center pt-4 border-bottom d-none d-sm-block">
             <div class="col-8 col-sm-12 d-flex justify-content-sm-center">
-                <div
-                    class="col-12 col-sm-8 col-12-md rounded-4 d-flex flex-column flex-sm-row  justify-content-sm-around">
-                    <button class="btn badge text-white rounded-3 pt-3" v-bind:class="orderBy === 'null' ? 'bg_cl_primary' : ''"
-                        @click="orderingSet('null')">Ordine Alfabetico</button>
+                <div class="col-12 col-sm-8 col-12-md rounded-4 d-flex flex-column flex-sm-row  justify-content-sm-around">
+                    <button class="btn badge text-white rounded-3 pt-3"
+                        v-bind:class="orderBy === 'null' ? 'bg_cl_primary' : ''" @click="orderingSet('null')">Ordine
+                        Alfabetico</button>
                     <button class="btn badge text-white rounded-2"
                         v-bind:class="orderBy === 'reviews' ? 'bg_cl_primary' : ''" @click="orderingSet('reviews')">Più
                         Recensioni</button>
@@ -337,7 +348,6 @@ export default {
 
 
 <style scoped lang="scss">
-
 .bg_violet {
     background-color: #8999da;
 }
@@ -347,7 +357,7 @@ export default {
     border-top: solid 1px white;
     border-left: solid 1px white;
     border-right: solid 1px white;
-    
+
 }
 
 
@@ -368,7 +378,7 @@ export default {
     transform: scale(0.95) rotateZ(1.7deg);
 }
 
-.popup{
+.popup {
     display: none;
     position: fixed;
     top: 0;
@@ -380,6 +390,7 @@ export default {
     justify-content: center;
     z-index: 9999;
 }
+
 .popup-content {
     width: 50%;
     /* min-height: 50%; */
@@ -394,5 +405,4 @@ export default {
     margin-right: auto;
     transform: translateY(30%);
 }
-
 </style>
