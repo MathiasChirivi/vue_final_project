@@ -20,6 +20,7 @@
                         <a href="#" class="link">Generi</a>
                         <a href="#" class="link">Eventi</a>
                         <a href="#" class="link">Blog</a>
+                        <a href="#" class="link">Linkedin</a>
                     </div>
                 </div>
 
