@@ -32,15 +32,15 @@ export default {
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
 
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel">Tutto Quello Che Ti Serve</h5>
+                    <div class="offcanvas-header bg-dark">
+                        <h5 class="offcanvas-title text-white" id="offcanvasRightLabel">Tutto Quello Che Ti Serve</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
 
-                    <div class="offcanvas-body">
+                    <div class="offcanvas-body bg-dark">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li v-for="navLink in navLinks" class="nav-item my-2">
                                 <router-link class="nav-link fs-5 me-3 text-white" :to="{ name: navLink.name }">{{
