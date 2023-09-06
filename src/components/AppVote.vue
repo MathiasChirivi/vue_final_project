@@ -2,6 +2,7 @@
 
 import { store } from '../store';
 import axios from "axios";
+import moment from 'moment';
 
 
 export default {
@@ -51,11 +52,15 @@ export default {
             this.vote = 0; // Imposta il voto a 0 per deselezionare tutte le stelle
         },
         submitVote() {
+            
+           
             // Crea un oggetto che contiene i dati da inviare
             const voteData = {
                 user_id: this.$route.params.id,
                 vote_id: this.vote,
+                date: moment().format('YYYY-MM-DD')
             };
+
 
             // Invia la recensione al server utilizzando Axios o un'altra libreria di tua scelta
             axios.post(this.store.apiUrl + 'votes', voteData, {
@@ -72,7 +77,8 @@ export default {
                 }, 3000);
 
                 // Aggiorna il voto nel tuo componente dopo una risposta positiva
-                this.user.votes.push({ pivot: { vote_id: this.vote } });
+                
+                this.user.votes.push({ pivot: { vote_id: this.vote}, date: moment().format('YYYY-MM-DD')  });
 
                 // Chiudi il popup dopo 2 secondi (2000 millisecondi)
                 setTimeout(() => {
@@ -125,6 +131,7 @@ export default {
     <transition name="fade">
         <div v-show="emailSent" class="success-banner">Voto inviato con successo!</div>
     </transition>
+    
 </template>
 <style>
 
