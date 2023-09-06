@@ -27,7 +27,7 @@ export default {
                     </a>
                 </div>
                 <!-- hamburger. -->
-                <button class="bg-transparent btn btn-light d-sm-none me-2" type="button" data-bs-toggle="offcanvas"
+                <button class="bg-transparent btn btn-light d-md-none me-4" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <span class="navbar-toggler-icon"></span>
                 </button>

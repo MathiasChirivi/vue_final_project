@@ -206,7 +206,7 @@ export default {
             <div class="col-8 col-sm-12">
                 <div
                     class="col-12  rounded-4 d-flex flex-column flex-sm-row justify-content-center justify-content-sm-between p-2 p-sm-3">
-                    <button v-for="genre in genres" class="btn badge text-white col-12 col-sm-1  "
+                    <button v-for="genre in genres" class="btn badge text-white  col-sm-1  "
                         v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : ''" @click="setGenre(genre.name)">{{
                             genre.name }}
                     </button>
@@ -219,7 +219,7 @@ export default {
             <div class="col-8">
                 <h6 class="text-white">filtra per genere</h6>
             </div>
-            
+
             <div class="col-8 d-flex justify-content-center ">
                 <select class="form-select p-1" v-model="choosenGenre" @change="updateGenre">
                     <option v-for="genre in genres" :key="genre.name" :value="genre.name">{{ genre.name }}</option>
@@ -230,16 +230,20 @@ export default {
 
 
         <!-- filtro per ordine alfabetico,recensioni,voti. -->
-        <div class="row justify-content-center pt-4 border-bottom d-none d-sm-block">
-            <div class="col-8 col-sm-12 d-flex justify-content-sm-center">
-                <div class="col-12 col-sm-8 col-12-md rounded-4 d-flex flex-column flex-sm-row  justify-content-sm-around">
-                    <button class="btn badge text-white rounded-3 pt-3"
-                        v-bind:class="orderBy === 'null' ? 'bg_cl_primary' : ''" @click="orderingSet('null')">Ordine
+        <div class="row justify-content-center pt-4 d-sm-block">
+
+            <div class="col-8 col-sm-12 d-flex justify-content-sm-center border-bottom">
+                <div class="col-12 col-sm-8 col-12-md rounded-4 d-flex flex-column flex-sm-row  justify-content-sm-around ">
+                    <div class="col-4 d-flex justify-content-center d-sm-none">
+                        <h6 class="text-white">Filtra Per:</h6>
+                    </div>
+                    <button class="btn badge text-white rounded-3 pt-2" v-bind:class="orderBy === 'null' ? '' : ''"
+                        @click="orderingSet('null')">Ordine
                         Alfabetico</button>
-                    <button class="btn badge text-white rounded-2"
-                        v-bind:class="orderBy === 'reviews' ? 'bg_cl_primary' : ''" @click="orderingSet('reviews')">Più
+                    <button class="btn badge text-white rounded-2 pt-2" v-bind:class="orderBy === 'reviews' ? '' : ''"
+                        @click="orderingSet('reviews')">Più
                         Recensioni</button>
-                    <button class="btn badge text-white rounded-2" v-bind:class="orderBy === 'votes' ? 'bg_cl_primary' : ''"
+                    <button class="btn badge text-white rounded-2 pt-2 pb-2 pb-sm-0" v-bind:class="orderBy === 'votes' ? '' : ''"
                         @click="orderingSet('votes')">Più Voti</button>
                 </div>
             </div>
@@ -299,8 +303,8 @@ export default {
                         <!-- bottone dettagli musicista. -->
                         <div class="row">
                             <div class="col-12 d-flex justify-content-center">
-                                <router-link class="btn text-decoration-none my-3"
-                                    :to="{ name: 'SingleMusicista', params: { id: user.id } }">Vedi i dettagli
+                                <router-link class="btn text-decoration-none my-3 buttonMusicista"
+                                    :to="{ name: 'SingleMusicista', params: { id: user.id } }">Scopri Musicista
                                 </router-link>
                             </div>
                         </div>
@@ -378,31 +382,34 @@ export default {
     transform: scale(0.95) rotateZ(1.7deg);
 }
 
-.popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+.buttonMusicista{
+    width: 165px;
+  height: 42px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 17px;
+  border-radius: 1rem;
+  border: none;
+  position: relative;
+  background: #28244b;
+  transition: 0.1s;
 }
 
-.popup-content {
-    width: 50%;
-    /* min-height: 50%; */
-    /* background: #9496ff; */
-    /* background: -webkit-linear-gradient(173deg, #9496ff 0%, #ffffff 100%); */
-    /* background: linear-gradient(173deg, #9496ff 0%, #ffffff 100%); */
-    /* background-repeat: no-repeat; */
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    margin-left: auto;
-    margin-right: auto;
-    transform: translateY(30%);
+.buttonMusicista::after{
+    content: '';
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(255,94,247,1) 17.8%, rgb(97, 41, 228) 100.2% );
+  filter: blur(15px);
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.buttonMusicista:active{
+    transform: scale(0.9) rotate(3deg);
+  background: radial-gradient( circle farthest-corner at 10% 20%,  rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2% );
+  transition: 0.5s;
 }
 </style>
