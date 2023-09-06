@@ -35,12 +35,12 @@ export default {
                 <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
 
-                    <div class="offcanvas-header bg-dark">
+                    <div class="offcanvas-header bgHeaderSm">
                         <h5 class="offcanvas-title text-white" id="offcanvasRightLabel">Tutto Quello Che Ti Serve</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
 
-                    <div class="offcanvas-body bg-dark">
+                    <div class="offcanvas-body bgHeaderSm">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li v-for="navLink in navLinks" class="nav-item my-2">
                                 <router-link class="nav-link fs-5 me-3 text-white" :to="{ name: navLink.name }">{{
@@ -98,4 +98,10 @@ export default {
   transition: 0.1s;
   border-bottom-left-radius: 8px;
 }
+@media (max-width: 425px) {
+  .bgHeaderSm{
+    background-color: #2222; /* Colore per i telefoni */
+  }
+}
+
 </style>
