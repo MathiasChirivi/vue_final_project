@@ -1,9 +1,13 @@
 <script>
 import axios from 'axios';
 import { store } from '../../store';
+import StarItems from '../StarItems.vue'
 
 export default {
     name: 'AppMusicisti',
+    components: {
+        StarItems,
+    },
     data() {
         return {
 
@@ -277,7 +281,7 @@ export default {
                                 <p>N. Recensioni: {{ user.reviews.length }}</p>
                             </div>
                             <div class="col-6">
-                                <p>Media Stelle: {{ calculateAverageVote(user) }}</p>
+                                <StarItems :itemRate="calculateAverageVote(user)" />
                             </div>
                         </div>
                         <!-- regione e cache. -->
