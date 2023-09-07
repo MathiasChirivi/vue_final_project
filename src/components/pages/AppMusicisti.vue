@@ -276,12 +276,10 @@ export default {
 
 
                         <!-- voto medio e recensioni. -->
-                        <div class="row">
-                            <div class="col-6">
-                                <p>N. Recensioni: {{ user.reviews.length }}</p>
-                            </div>
-                            <div class="col-6">
-                                <StarItems :itemRate="calculateAverageVote(user)" />
+                        <div class="row mb-3">
+                            <div class="col-12 d-flex align-items-center justify-content-center">
+                                <StarItems class="me-1" :itemRate="calculateAverageVote(user)" />
+                                <p class="m-0">({{ user.reviews.length }})</p>
                             </div>
                         </div>
                         <!-- regione e cache. -->
