@@ -27,12 +27,12 @@ export default {
                     </a>
                 </div>
                 <!-- hamburger. -->
-                <button class="bg-transparent btn btn-light d-md-none me-4" type="button" data-bs-toggle="offcanvas"
+                <button class="bg-transparent btn btn-light d-lg-none me-4" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasRight"
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
 
                     <div class="offcanvas-header bgHeaderSm">
@@ -40,8 +40,8 @@ export default {
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
 
-                    <div class="offcanvas-body bgHeaderSm">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <div class="offcanvas-body bgHeaderSm d-flex justify-content-lg-end">
+                        <ul class="navbar-nav mb-2 mb-lg-0">
                             <li v-for="navLink in navLinks" class="nav-item my-2">
                                 <router-link class="nav-link fs-5 me-3 text-white" :to="{ name: navLink.name }">{{
                                     navLink.label }}</router-link>
@@ -57,26 +57,13 @@ export default {
                             </li>
                         </ul>
                     </div>
-
                 </div>
-
-                <!-- search. -->
-                <div class="inputBox1 d-flex d-none d-md-block">
-                    <input type="search" required="required" placeholder="Cerca Musicista">
-                    <!-- <button class="btn btn-outline-light" type="submit">Search</button> -->
-                </div>
-
             </div>
         </nav>
     </div>
 </template>
 
 <style scoped lang="scss">
-.titolo {
-    display: flex;
-    justify-content: flex-start;
-    height: 100px;
-}
 
 .header_bg {
     background-color: #00000000;
@@ -84,24 +71,12 @@ export default {
     z-index: 999;
 }
 
-
-.inputBox1 input {
-  width: 100%;
-  padding: 10px;
-  outline: none;
-  border: none;
-  color: #fffcfcb7;
-  font-size: 1em;
-  background: transparent;
-  border-left: 2px solid #fffffffa;
-  border-bottom: 2px solid #ffffffe5;
-  transition: 0.1s;
-  border-bottom-left-radius: 8px;
-}
-@media (max-width: 425px) {
+@media (max-width: 992px) {
   .bgHeaderSm{
     background-color: rgba(11, 11, 11, 0.823) !important; //Ricorda di usare RGBA perchè il colore con # non lo prende 
   }
 }
+
+
 
 </style>

@@ -120,18 +120,14 @@ export default {
 
 
 <style scoped lang="scss">
+
 #carouselExampleControls {
     margin-top: -100px;
     height: 70%;
 }
 
-
 .bg_size_cover {
     background-size: cover;
-}
-
-.search {
-    // background-color: #4b5b8b;
 }
 
 .input {
@@ -145,10 +141,6 @@ export default {
     padding: 0.4vw;
     max-width: 190px;
 
-}
-
-.mtCarousel {
-    margin-top: 10%;
 }
 
 .bg_img {
