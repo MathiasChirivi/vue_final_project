@@ -99,11 +99,11 @@ export default {
 }
 </script>
 <template>
-    <div class="containerReview d-flex align-items-center justify-content-center bg-light ">
-        <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-dark"
+    <div class="containerReview d-flex align-items-center justify-content-center rounded-4">
+        <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-white"
             @click="showPopup">
             <span class="circle-icon">
-                <font-awesome-icon icon="fa-solid fa-plus" style="color: #000000;" />
+                <font-awesome-icon icon="fa-solid fa-plus" style="color: #f7efef;" />
             </span>
             Voti
         </a>
@@ -121,8 +121,8 @@ export default {
                         :class="{ 'selectedStar': n <= vote }">&#9733;</label>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Invia voto</button>
-                    <button class="text-white btn" type="button" @click="closePopup">Annulla</button>
+                    <button type="submit" class="btn btn-secondary">Invia voto</button>
+                    <button class="text-white btn btn-secondary" type="button" @click="closePopup">Annulla</button>
                 </div>
             </form>
         </div>
@@ -182,13 +182,14 @@ export default {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 1px solid black;
+    border: 1px solid rgb(252, 248, 248);
     color: #ffffff;
     margin-right: 5px;
 }
 
 .containerReview {
-    height: 75px;
+    background-color: #355891d3;
+    height: 55px;
     width: 50%;
     margin: auto;
 }

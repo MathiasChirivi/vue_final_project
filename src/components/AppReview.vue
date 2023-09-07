@@ -98,11 +98,11 @@ export default {
 }
 </script>
 <template>
-    <div class="containerReview d-flex align-items-center justify-content-center bg-light">
-        <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-dark"
+    <div class="containerReview d-flex align-items-center justify-content-center  rounded-4">
+        <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-white"
             @click="showPopup">
             <span class="circle-icon">
-                <font-awesome-icon icon="fa-solid fa-plus" style="color: #000000;" />
+                <font-awesome-icon icon="fa-solid fa-plus" style="color: #ffffff;" />
             </span>
             Aggiungi una recensione
         </a>
@@ -128,13 +128,13 @@ export default {
                     <span>Commento</span>
                 </label>
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Invia recensione</button>
-                    <button class="text-white btn" type="button" @click="closePopup">Annulla</button>
+                    <button type="submit" class="btn btn-secondary">Invia recensione</button>
+                    <button class="btn btn-secondary" type="button" @click="closePopup">Annulla</button>
                 </div>
             </form>
         </div>
     </div>
-    <div v-for="review in user && user.reviews ? user.reviews : []" :key="review.id">
+    <div v-for="review in user && user.reviews ? user.reviews : []" :key="review.id" class="pb-4 pt-4 mt-4 ">
         <h5 class="m-0">{{ review.name }}</h5>
         <div class="fw-light">{{ review.date }}</div>
         <div class="fw-lighter mt-2">{{ review.comment }}</div>
@@ -177,13 +177,14 @@ export default {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 1px solid black;
+    border: 1px solid rgb(250, 248, 248);
     color: #ffffff;
     margin-right: 5px;
 }
 
 .containerReview {
-    height: 75px;
+    background-color: #355891d3;
+    height: 55px;
     width: 50%;
     margin: auto;
 }
@@ -198,7 +199,7 @@ export default {
     flex-direction: column;
     gap: 10px;
     width: 90%;
-    background-color: #355891;
+    background-color: #42548b;
     padding: 20px;
     border-radius: 10px;
     position: relative;
@@ -287,4 +288,5 @@ export default {
   right: 0;
   z-index: 999;
 }
+
 </style>

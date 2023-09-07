@@ -25,7 +25,7 @@
                 </div>
 
                 <!-- altre info. -->
-                <div class="col-4">
+                <div class="col-4 pe-2 pe-sm-0">
                     <h6 class="text-white">Altre Info</h6>
 
                     <div class="d-flex flex-column pt-4">
