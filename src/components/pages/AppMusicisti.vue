@@ -264,14 +264,10 @@ export default {
 
                         <!-- voto medio e recensioni. -->
                         <div class="row mb-3">
-                            <div class="col-12 d-flex align-items-center justify-content-center">
-                                <StarItems class="me-1" :itemRate="parseFloat(calculateAverageVote(user))" />
-                                <p class="m-0">({{ user.reviews.length }})</p>
                             <div class="col-12 d-flex align-items-center justify-content-center flex-wrap">
-                                <StarItems class="me-1" :itemRate="calculateAverageVote(user)" />
+                                <StarItems class="me-1" :itemRate="parseFloat(calculateAverageVote(user))" />
                                 <p class="my-3">Numero recensioni: ({{ user.reviews.length }})</p>
                             </div>
-                        </div>
                         <!-- regione e cache. -->
                         <div class="row">
                             <div class="col-6 card-text text-center"><font-awesome-icon icon="fa-solid fa-location-dot "
