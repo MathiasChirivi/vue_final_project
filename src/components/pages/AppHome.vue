@@ -21,13 +21,11 @@ export default {
         getUser() {
             axios.get(this.store.apiUrl + this.store.usersApi).then(response => {
                 this.users = response.data.results.data;
-                console.log(this.users)
             })
         },
         getGenresArray() {
             this.loading = true;
             axios.get(this.store.apiUrl + this.store.genresApi).then(response => {
-                console.log(response.data.results)
                 this.genres = response.data.results
                 // this.users = response.data.results;
 
@@ -83,17 +81,19 @@ export default {
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+    
     <!-- searche musicista. -->
     <div class="col-12 d-flex">
         <div class="col-3"></div>
         <div class="col-6 d-flex justify-content-center">
-            <div class="d-flex align-items-center bgSelect rounded p-3">
-                <div class="me-2 pe-2 pr-2">
+            <div class="d-flex align-items-end bgSelect rounded p-3">
+                <div class="me-2 pe-2 pr-2 d-flex align-items-center flex-wrap">
+                    <label class="text-white mb-3" for="genre">Scegli il tuo Musicista in base al genere</label>
                     <select v-model="choosenGenre" class="form-select">
                         <option v-for="genre in genres" :value="genre.name">{{ genre.name }}</option>
                     </select>
                 </div>
-                <div class="me-2 pe-2 pr-2">
+                <div class="me-2 pe-2 pr-2 d-flex align-items-center">
                     <button class="input" @click="redirectToMusicistiPage">cerca</button>
                 </div>
             </div>

@@ -50,7 +50,6 @@ export default {
         },
         setGenre(clickedGenre) {
             this.choosenGenre = clickedGenre;
-            console.log(this.choosenGenre)
         },
 
         //calcolo media voti e bottone per orderby
@@ -72,7 +71,6 @@ export default {
         getUsersFirstPage() {
             this.loading = true;
             axios.get(this.store.apiUrl + this.store.usersApi).then(response => {
-                console.log(response)
                 this.users = response.data.results;
                 this.filteredUsers = response.data.results;
 
@@ -88,7 +86,6 @@ export default {
         getUsersPage(pageNumber) {
             if (pageNumber > 0 && pageNumber <= Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
                 this.currentPage = pageNumber;
-                // this.loading = true;
 
                 // Calcola l'indice di inizio e fine per la pagina corrente
                 const startIndex = (this.currentPage - 1) * this.resultsPerPage;
@@ -104,7 +101,6 @@ export default {
             }
         },
         getUsersPrevPage() {
-            // this.getUsersPage(this.usersCurrentPage - 1);
             if (this.currentPage > 1) {
                 this.currentPage--;
             } else {
@@ -112,10 +108,8 @@ export default {
             }
         },
         getUsersNextPage() {
-            // this.getUsersPage(this.usersCurrentPage + 1);
             if (this.currentPage < Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
                 this.currentPage++;
-                console.log(this.choosenGenre)
             } else {
                 console.error("non ci sono piu pagine");
             }
@@ -136,9 +130,8 @@ export default {
             this.setGenre(this.choosenGenre);
         },
     },
+
     // Ricerca Utenti
-
-
     computed: {
         paginatedFilteredUsers() {
             const startIndex = (this.currentPage - 1) * this.resultsPerPage;
@@ -185,13 +178,11 @@ export default {
 
     },
     mounted() {
-
         this.getUsersFirstPage();
         this.filteredUsers = this.users;
     }
 }
 </script>
-
 
 
 <template>
@@ -231,11 +222,8 @@ export default {
             </div>
         </div>
 
-
-
         <!-- filtro per ordine alfabetico,recensioni,voti. -->
         <div class="row justify-content-center pt-4 d-sm-block">
-
             <div class="col-8 col-sm-12 d-flex justify-content-sm-center border-bottom">
                 <div class="col-12 col-sm-8 col-12-md rounded-4 d-flex flex-column flex-sm-row  justify-content-sm-around ">
                     <div class="col-4 d-flex justify-content-center d-sm-none">
@@ -252,7 +240,6 @@ export default {
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- contenitore card musicisti. -->
@@ -277,9 +264,9 @@ export default {
 
                         <!-- voto medio e recensioni. -->
                         <div class="row mb-3">
-                            <div class="col-12 d-flex align-items-center justify-content-center">
+                            <div class="col-12 d-flex align-items-center justify-content-center flex-wrap">
                                 <StarItems class="me-1" :itemRate="calculateAverageVote(user)" />
-                                <p class="m-0">({{ user.reviews.length }})</p>
+                                <p class="my-3">Numero recensioni: ({{ user.reviews.length }})</p>
                             </div>
                         </div>
                         <!-- regione e cache. -->
@@ -290,7 +277,6 @@ export default {
                             <div class="col-6 card-text text-center"><font-awesome-icon icon="fa-solid fa-money-bill"
                                     class="me-1" style="color: #00000094;" /> {{ user.cachet }}
                             </div>
-
                         </div>
 
                         <!-- genere. -->
@@ -310,29 +296,10 @@ export default {
                                 </router-link>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
             </div>
-            <!-- <div v-for="user in users">
-                <div class="card" style="width:20rem;">
-                    <img v-if="user.img" class="card-img-top" :src="store.storageUrl + user.img" />
-                    <img v-else class="card-img-top" src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
-                    <div class="card-body">
-                        <h3 class="card-title">{{ user.name }}</h3>
-                        <h3 class="card-title">{{ user.surname }}</h3>
-                        <div class="card-text text-truncate">{{ user.experience }}</div>
-                        <div class="card-text"><font-awesome-icon icon="fa-solid fa-location-dot " class="me-3"
-                                style="color: #5d96f8;" /> {{ user.region }}</div>
-                        <div class="card-text"><font-awesome-icon icon="fa-solid fa-music" class="me-3"
-                                style="color: #5d96f8;" /> {{ user.genres.map(genre => genre.name).join(', ') }}</div>
-                        <div class="card-text"><font-awesome-icon icon="fa-solid fa-money-bill" class="me-3"
-                                style="color: #5d96f8;" /> {{ user.cachet }}</div>
-                    </div>
-                </div>
-            </div> -->
-
         </div>
     </div>
     <div class="d-flex justify-content-center gap-4 mt-5">
@@ -357,15 +324,6 @@ export default {
 .bg_violet {
     background-color: #8999da;
 }
-
-.bg_cl_primary {
-    // background-color: #5c75d1e0;
-    border-top: solid 1px white;
-    border-left: solid 1px white;
-    border-right: solid 1px white;
-
-}
-
 
 .card {
     background-color: #ffffff;

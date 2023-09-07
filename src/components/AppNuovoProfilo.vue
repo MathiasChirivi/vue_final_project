@@ -13,7 +13,6 @@ export default {
 
 <template>
     <div class="container pt-4 pb-4 mt-4 mb-4">
-
         <div class="row justify-content-center">
             <div class="col-11 col-sm-12 d-flex rounded-4 pt-4 pb-4 card">
 
@@ -38,10 +37,8 @@ export default {
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
 </template>
 
@@ -63,7 +60,6 @@ export default {
 .card:active {
     transform: scale(0.95) rotateZ(1.7deg);
 }
-
 
 button {
  --glow-color: rgb(217, 176, 255);
