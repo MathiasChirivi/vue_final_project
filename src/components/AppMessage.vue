@@ -38,7 +38,6 @@ export default {
             });
         },
         showPopup() {
-            console.log("davide");
             this.isPopupVisible = true;
             this.formData = {
                 user_id: this.$route.params.id,

@@ -35,7 +35,6 @@ export default {
             });
         },
         showPopup() {
-            console.log("davide");
             this.isPopupVisible = true;
         },
         closePopup() {

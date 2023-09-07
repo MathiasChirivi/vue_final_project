@@ -14,7 +14,6 @@
 
 <template>
     <div class="container pb-5">
-
         <div class="row justify-content-center py-5">
             <!-- titolo. -->
             <div class="col-12 pt-4 pb-4">
@@ -32,7 +31,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
