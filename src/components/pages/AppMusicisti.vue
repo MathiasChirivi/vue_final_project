@@ -278,7 +278,7 @@ export default {
                         <!-- voto medio e recensioni. -->
                         <div class="row mb-3">
                             <div class="col-12 d-flex align-items-center justify-content-center">
-                                <StarItems class="me-1" :itemRate="calculateAverageVote(user)" />
+                                <StarItems class="me-1" :itemRate="parseFloat(calculateAverageVote(user))" />
                                 <p class="m-0">({{ user.reviews.length }})</p>
                             </div>
                         </div>
