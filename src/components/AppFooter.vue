@@ -1,4 +1,12 @@
 <script>
+export default{
+    name: "AppFooter",
+    data(){
+        return{
+
+        }
+    }
+}
 </script>
 
 <template>
@@ -48,10 +56,23 @@
                         </div>
 
                         <!-- icone linkedin. -->
-                        <div>
-                            <span class="text-white pe-2"><i class="fa-brands fa-linkedin-in"></i></span>
-                            <span class="text-white pe-2"><i class="fa-brands fa-linkedin"></i></span>
-                            <span class="text-white pe-2"><i class="fa-brands fa-linkedin"></i></span>
+                        <div class="d-flex flex-wrap flex-column">
+                            <span class="text-white pe-2 me-3">
+                                <a class="me-2 text-white" target="_blank" href= "https://www.linkedin.com/in/davidetaribelli">Davide</a>
+                                <font-awesome-icon icon="fa-brands fa-linkedin" />
+                            </span>
+                            <span class="text-white pe-2 me-3">
+                                <a class="me-2 text-white" target="_blank" href="https://www.linkedin.com/in/mathias-chirivi/">Mathias</a>
+                                <font-awesome-icon icon="fa-brands fa-linkedin" />
+                            </span>
+                            <span class="text-white pe-2 me-3">
+                                <a class="me-2 text-white" target="_blank" href="https://www.linkedin.com/in/giadapirone/">Giada</a>
+                                <font-awesome-icon icon="fa-brands fa-linkedin" />
+                            </span>
+                            <span class="text-white pe-2 me-3">
+                                <a class="me-2 text-white" target="_blank" href="https://www.linkedin.com/in/federico-finco/">Federico</a>
+                                <font-awesome-icon icon="fa-brands fa-linkedin" />
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -61,7 +82,7 @@
 
         <div class="row">
             <div class="col-12 d-flex justify-content-center pt-4">               
-                <p class="text-white text-center"><small>Copyright <span><i class="fa-solid fa-copyright" style="color: #ededed;"></i></span> 2023 BoolMusic | All rights reserved</small></p>                
+                <p class="text-white text-center"><small>Copyright <span><font-awesome-icon icon="fa-solid fa-copyright" /></span> 2023 BoolMusic | All rights reserved</small></p>                
             </div>
         </div>
 
