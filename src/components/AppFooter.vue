@@ -6,7 +6,7 @@
         <div class="row">
             <!-- logo footer. -->
             <div class="d-none d-md-block col-md-4 pt-4">
-                <img src="../assets/img/logo_1.png" alt="">
+                <img src="../assets/img/logoProva.png" alt="">
             </div>
 
             <!-- link footer. -->
