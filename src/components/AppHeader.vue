@@ -5,7 +5,6 @@ export default {
         return {
             navLinks: [
                 { label: "Home", name: "Home" },
-                { label: "Generi", name: "Generi" },
                 { label: "Musicisti", name: "Musicisti" },
             ]
         }
