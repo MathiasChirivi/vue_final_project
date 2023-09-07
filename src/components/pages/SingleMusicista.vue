@@ -65,7 +65,7 @@ export default {
             <div class="container mt-5">
                 <a class="text-decoration-none">
                     <router-link class="text-decoration-none textLink" :to="{ name: 'Musicisti' }">
-                        <font-awesome-icon icon="fa-solid fa-arrow-left" style="color: #003ca3;" />
+                        <font-awesome-icon icon="fa-solid fa-arrow-left" style="color: #2b1d6b;" />
                         Torna ai Musicisti
                     </router-link>
                 </a>
@@ -186,15 +186,13 @@ export default {
 </template>
 <style lang="scss" scoped>
 
-section{
-    background-color: violet;
-}
+
 .btnCall {
-    background-color: #001580;
+    background-color: #5544b4;
 }
 
 .btnWhats {
-    background-color: #0d8000
+    background-color: #70539e
 }
 
 </style>
