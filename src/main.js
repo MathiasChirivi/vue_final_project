@@ -44,4 +44,10 @@ library.add(faArrowLeftLong)
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 library.add(faPlus)
 
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
+library.add(faLinkedin)
+
+import { faCopyright } from '@fortawesome/free-solid-svg-icons';
+library.add(faCopyright)
+
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

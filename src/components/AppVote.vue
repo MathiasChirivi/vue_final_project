@@ -53,14 +53,12 @@ export default {
         },
         submitVote() {
             
-           
             // Crea un oggetto che contiene i dati da inviare
             const voteData = {
                 user_id: this.$route.params.id,
                 vote_id: this.vote,
                 date: moment().format('YYYY-MM-DD')
             };
-
 
             // Invia la recensione al server utilizzando Axios o un'altra libreria di tua scelta
             axios.post(this.store.apiUrl + 'votes', voteData, {
@@ -162,11 +160,6 @@ export default {
 
 .popup-content {
     width: 50%;
-    /* min-height: 50%; */
-    /* background: #9496ff; */
-    /* background: -webkit-linear-gradient(173deg, #9496ff 0%, #ffffff 100%); */
-    /* background: linear-gradient(173deg, #9496ff 0%, #ffffff 100%); */
-    /* background-repeat: no-repeat; */
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);

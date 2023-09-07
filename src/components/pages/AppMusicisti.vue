@@ -50,7 +50,6 @@ export default {
         },
         setGenre(clickedGenre) {
             this.choosenGenre = clickedGenre;
-            console.log(this.choosenGenre)
         },
 
         //calcolo media voti e bottone per orderby
@@ -72,7 +71,6 @@ export default {
         getUsersFirstPage() {
             this.loading = true;
             axios.get(this.store.apiUrl + this.store.usersApi).then(response => {
-                console.log(response)
                 this.users = response.data.results;
                 this.filteredUsers = response.data.results;
 
@@ -88,7 +86,6 @@ export default {
         getUsersPage(pageNumber) {
             if (pageNumber > 0 && pageNumber <= Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
                 this.currentPage = pageNumber;
-                // this.loading = true;
 
                 // Calcola l'indice di inizio e fine per la pagina corrente
                 const startIndex = (this.currentPage - 1) * this.resultsPerPage;
@@ -104,7 +101,6 @@ export default {
             }
         },
         getUsersPrevPage() {
-            // this.getUsersPage(this.usersCurrentPage - 1);
             if (this.currentPage > 1) {
                 this.currentPage--;
             } else {
@@ -112,10 +108,8 @@ export default {
             }
         },
         getUsersNextPage() {
-            // this.getUsersPage(this.usersCurrentPage + 1);
             if (this.currentPage < Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
                 this.currentPage++;
-                console.log(this.choosenGenre)
             } else {
                 console.error("non ci sono piu pagine");
             }
@@ -136,9 +130,8 @@ export default {
             this.setGenre(this.choosenGenre);
         },
     },
+
     // Ricerca Utenti
-
-
     computed: {
         paginatedFilteredUsers() {
             const startIndex = (this.currentPage - 1) * this.resultsPerPage;
@@ -185,13 +178,11 @@ export default {
 
     },
     mounted() {
-
         this.getUsersFirstPage();
         this.filteredUsers = this.users;
     }
 }
 </script>
-
 
 
 <template>
@@ -231,11 +222,8 @@ export default {
             </div>
         </div>
 
-
-
         <!-- filtro per ordine alfabetico,recensioni,voti. -->
         <div class="row justify-content-center pt-4 d-sm-block">
-
             <div class="col-8 col-sm-12 d-flex justify-content-sm-center border-bottom">
                 <div class="col-12 col-sm-8 col-12-md rounded-4 d-flex flex-column flex-sm-row  justify-content-sm-around ">
                     <div class="col-4 d-flex justify-content-center d-sm-none">
@@ -247,12 +235,11 @@ export default {
                     <button class="btn badge text-white rounded-2 pt-2" v-bind:class="orderBy === 'reviews' ? '' : ''"
                         @click="orderingSet('reviews')">Più
                         Recensioni</button>
-                    <button class="btn badge text-white rounded-2 pt-2 pb-2 pb-sm-0" v-bind:class="orderBy === 'votes' ? '' : ''"
-                        @click="orderingSet('votes')">Più Voti</button>
+                    <button class="btn badge text-white rounded-2 pt-2 pb-2 pb-sm-0"
+                        v-bind:class="orderBy === 'votes' ? '' : ''" @click="orderingSet('votes')">Più Voti</button>
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- contenitore card musicisti. -->
@@ -260,93 +247,66 @@ export default {
         <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
             <div v-for="user in paginatedFilteredUsers" :key="user.id">
                 <!-- Mostra i dettagli del musicista della search qui -->
-                <div class="card mb-4 me-4" style="width:20rem;">
-                    <img v-if="user.img" class="card-img-top" :src="store.storageUrl + user.img" />
-                    <img v-else class="card-img-top"
+                <div class="card-container">
+                    <span class="pro">PRO</span>
+                    <img v-if="user.img" class="round" :src="store.storageUrl + user.img" />
+                    <img v-else class="round"
                         src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
-                    <div class="card-body">
-                        <h5 class="card-title">{{ user.name }} {{ user.surname }}</h5>
+                    <h3>{{ user.name }} {{ user.surname }}</h3>
+                    <!-- descrizione. -->
+                    <h6 class="text-truncate ms-3 me-3">{{ user.experience }}</h6>
 
-                        <!-- descrizione. -->
-                        <div class="row pt-2 pb-3">
-                            <div class="col-12">
-                                <div class="card-text text-truncate">{{ user.experience }}</div>
-                            </div>
+                    <!-- voto medio e recensioni. -->
+                    <StarItems class="me-1 mt-2 d-flex justify-content-center"
+                        :itemRate="parseFloat(calculateAverageVote(user))" />
+                    <p>Numero recensioni: ({{ user.reviews.length }})</p>
+                    <!-- regione e cache. -->
+                    <div class="row">
+                        <div class="col-6 card-text text-center"><font-awesome-icon icon="fa-solid fa-location-dot "
+                                class="me-1" style="color: white;" /> {{ user.region }}
                         </div>
-
-
-                        <!-- voto medio e recensioni. -->
-                        <div class="row mb-3">
-                            <div class="col-12 d-flex align-items-center justify-content-center">
-                                <StarItems class="me-1" :itemRate="calculateAverageVote(user)" />
-                                <p class="m-0">({{ user.reviews.length }})</p>
-                            </div>
+                        <div class="col-6 card-text text-center"><font-awesome-icon icon="fa-solid fa-money-bill"
+                                class="me-1" style="color: white;" /> {{ user.cachet }}
                         </div>
-                        <!-- regione e cache. -->
-                        <div class="row">
-                            <div class="col-6 card-text text-center"><font-awesome-icon icon="fa-solid fa-location-dot "
-                                    class="me-1" style="color: #00000098;" /> {{ user.region }}
-                            </div>
-                            <div class="col-6 card-text text-center"><font-awesome-icon icon="fa-solid fa-money-bill"
-                                    class="me-1" style="color: #00000094;" /> {{ user.cachet }}
-                            </div>
-
-                        </div>
-
-                        <!-- genere. -->
-                        <div class="row pt-3 pb-3">
-                            <div class="col-12 card-text text-center d-flex justify-content-center">
-                                <font-awesome-icon icon="fa-solid fa-music" class="me-2"
-                                    style="color: #050407a1; padding-top: 5px;" /> {{ user.genres.map(genre =>
-                                        genre.name).join(', ') }}
-                            </div>
-                        </div>
-
-                        <!-- bottone dettagli musicista. -->
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <router-link class="btn text-decoration-none my-3 buttonMusicista"
-                                    :to="{ name: 'SingleMusicista', params: { id: user.id } }">Scopri Musicista
-                                </router-link>
-                            </div>
-                        </div>
-
                     </div>
 
+                    <!-- bottone dettagli musicista. -->
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center box-3">
+                            <router-link class="text-decoration-none my-3 btnScopri btn-1 d-flex justify-content-center m-0 align-items-center" :to="{ name: 'SingleMusicista', params: { id: user.id } }">
+                                <svg>
+                                    <rect x="0" y="0" fill="none" width="100%" height="100%" />
+                                </svg>
+                                Scopri Musicista
+                            </router-link>
+                        </div>
+                    </div>
+
+                    <!-- genere. -->
+                    <div class="skills">
+                        <h6>Genere</h6>
+                        <font-awesome-icon icon="fa-solid fa-music" class="me-2" style="color: white; padding-top: 5px;" />
+                        {{ user.genres.map(genre =>
+                            genre.name).join(', ') }}
+                    </div>
                 </div>
             </div>
-            <!-- <div v-for="user in users">
-                <div class="card" style="width:20rem;">
-                    <img v-if="user.img" class="card-img-top" :src="store.storageUrl + user.img" />
-                    <img v-else class="card-img-top" src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
-                    <div class="card-body">
-                        <h3 class="card-title">{{ user.name }}</h3>
-                        <h3 class="card-title">{{ user.surname }}</h3>
-                        <div class="card-text text-truncate">{{ user.experience }}</div>
-                        <div class="card-text"><font-awesome-icon icon="fa-solid fa-location-dot " class="me-3"
-                                style="color: #5d96f8;" /> {{ user.region }}</div>
-                        <div class="card-text"><font-awesome-icon icon="fa-solid fa-music" class="me-3"
-                                style="color: #5d96f8;" /> {{ user.genres.map(genre => genre.name).join(', ') }}</div>
-                        <div class="card-text"><font-awesome-icon icon="fa-solid fa-money-bill" class="me-3"
-                                style="color: #5d96f8;" /> {{ user.cachet }}</div>
-                    </div>
-                </div>
-            </div> -->
-
         </div>
     </div>
+
+
     <div class="d-flex justify-content-center gap-4 mt-5">
         <a class="btn" @click="getUsersPrevPage">
             <span class="ms-3">
-                <font-awesome-icon icon="fa-solid fa-arrow-left" />
+                <font-awesome-icon icon="fa-solid fa-arrow-left" style="color: white;" />
             </span>
         </a>
-        <a class="btn text-black rounded-circle" :class="{ 'bg_violet': pageNumber === currentPage }"
+        <a class="btn text-black rounded-circle text-white" :class="{ 'bg_violet': pageNumber === currentPage }"
             @click="getUsersPage(pageNumber)" v-for="pageNumber in  Math.ceil(filteredUsers.length / resultsPerPage)">{{
                 pageNumber }}</a>
         <a class="btn" @click="getUsersNextPage">
             <span class="me-3">
-                <font-awesome-icon icon="fa-solid fa-arrow-right" />
+                <font-awesome-icon icon="fa-solid fa-arrow-right" style="color: white;" />
             </span>
         </a>
     </div>
@@ -357,15 +317,6 @@ export default {
 .bg_violet {
     background-color: #8999da;
 }
-
-.bg_cl_primary {
-    // background-color: #5c75d1e0;
-    border-top: solid 1px white;
-    border-left: solid 1px white;
-    border-right: solid 1px white;
-
-}
-
 
 .card {
     background-color: #ffffff;
@@ -384,34 +335,129 @@ export default {
     transform: scale(0.95) rotateZ(1.7deg);
 }
 
-.buttonMusicista{
-    width: 165px;
-  height: 42px;
-  cursor: pointer;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #28223F;
+    font-family: Montserrat, sans-serif;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;
+}
+
+h3 {
+    margin: 10px 0;
+}
+
+h6 {
+    margin: 5px 0;
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.card-container {
+    background-color: #231E39;
+    border-radius: 5px;
+    box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
+    color: #B3B8CD;
+    padding-top: 30px;
+    position: relative;
+    width: 320px;
+    max-width: 100%;
+    text-align: center;
+}
+
+.card-container .pro {
+    color: #231E39;
+    background-color: #FEBB0B;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 3px 7px;
+    position: absolute;
+    top: 25px;
+    left: 20px;
+}
+
+.card-container .round {
+    border: 1px solid #03BFCB;
+    border-radius: 50%;
+    padding: 7px;
+    width: 75%;
+}
+
+.skills {
+    background-color: #1F1A36;
+    text-align: left;
+    padding: 15px;
+    margin-top: 25px;
+}
+
+.skills ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.skills ul li {
+    border: 1px solid #2D2747;
+    border-radius: 2px;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0 7px 7px 0;
+    padding: 7px;
+}
+
+.btnScopri{
   color: #fff;
-  font-size: 17px;
-  border-radius: 1rem;
-  border: none;
+  cursor: pointer;
+  font-size:16px;
+  max-width: 160px; 
   position: relative;
-  background: #28244b;
-  transition: 0.1s;
+  text-decoration: none;
+  width: 100%; 
+  height: 75%;
 }
 
-.buttonMusicista::after{
-    content: '';
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(255,94,247,1) 17.8%, rgb(97, 41, 228) 100.2% );
-  filter: blur(15px);
-  z-index: -1;
-  position: absolute;
-  left: 0;
-  top: 0;
+.btn-1 {
+  font-weight: 100;
+  
+  svg {
+    height: 45px;
+    left: 0;
+    position: absolute;
+    top: 0; 
+    width: 100%; 
+  }
+  
+  rect {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-dasharray: 422, 0;
+    transition: all 0.35s linear;
+  }
 }
 
-.buttonMusicista:active{
-    transform: scale(0.9) rotate(3deg);
-  background: radial-gradient( circle farthest-corner at 10% 20%,  rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2% );
-  transition: 0.5s;
+.btn-1:hover {
+  letter-spacing: 1px;
+  
+  rect {
+    stroke-width: 5;
+    stroke-dasharray: 15, 310;
+    stroke-dashoffset: 48;
+    transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+  }
 }
 </style>
