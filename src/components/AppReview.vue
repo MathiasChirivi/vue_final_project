@@ -99,7 +99,7 @@ export default {
 <template>
     <div class="row pt-5 mt-5 pb-4">
         <div class=" col-12 d-flex align-items-center justify-content-center  ">
-        <a class="btnLink col-lg-5 bgReview text-decoration-none d-flex align-items-center justify-content-center rounded-4 text-white p-2"
+        <a class="btnLink col-lg-6 bgReview text-decoration-none d-flex align-items-center justify-content-center rounded-4 text-white p-2"
             @click="showPopup">
             <span class="circle-icon">
                 <font-awesome-icon icon="fa-solid fa-plus" style="color: #ffffff;" />
