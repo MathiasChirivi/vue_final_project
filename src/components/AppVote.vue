@@ -98,9 +98,9 @@ export default {
 </script>
 <template>
 
-    <div class="row pt-5 mt-5">
+    <div class="row pt-5 mt-5 ">
 
-        <div class="containerReview d-flex align-items-center justify-content-center ">
+        <div class="containerReview d-flex align-items-center justify-content-center">
             <a class="btnLink col-lg-5 bgVote text-decoration-none d-flex align-items-center justify-content-center text-white rounded-4 p-2"
                 @click="showPopup">
                 <span class="circle-icon">
@@ -113,8 +113,8 @@ export default {
 
 
     <!-- Popup -->
-    <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
-        <div class="popup-content">
+    <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup col-12">
+        <div class="popup-content w-100">
             <form class="form" @submit.prevent="submitVote">
                 <h2 class="text-white">Lascia una recensione</h2>
 

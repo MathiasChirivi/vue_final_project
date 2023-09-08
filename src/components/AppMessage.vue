@@ -106,7 +106,8 @@ export default {
 }
 </script>
 <template>
-    <div class="row pt-5 pb-5 justify-content-center">
+    <div class="container">
+        <div class="row pt-5 pb-5 justify-content-center">
         <div class="col-6 col-lg-2 d-flex align-items-center justify-content-center bgMess rounded-4 p-2 ">
             <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-white"
                 @click="showPopup">
@@ -120,8 +121,8 @@ export default {
 
 
     <!-- Popup -->
-    <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
-        <div class="popup-content">
+    <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup col-sm-12 col-lg-6">
+        <div class="popup-content w-100">
             <form class="form" @submit.prevent="submitMessage">
                 <h2 class="text-white">Invia un messaggio</h2>
 
@@ -149,6 +150,8 @@ export default {
     <transition name="fade">
         <div v-show="emailSent" class="success-banner">Messaggio inviato con successo!</div>
     </transition>
+    </div>
+    
 </template>
 <style lang="scss" scoped>
 .popup {

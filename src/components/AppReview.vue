@@ -111,8 +111,8 @@ export default {
   
 
     <!-- Popup -->
-    <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
-        <div class="popup-content">
+    <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup col-sm-12">
+        <div class="popup-content w-100">
             <form class="form" @submit.prevent="submitReview">
                 <h2 class="text-white">Lascia una recensione</h2>
 
