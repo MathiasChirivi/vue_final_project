@@ -106,15 +106,18 @@ export default {
 }
 </script>
 <template>
-    <div class="containerReview d-flex align-items-center justify-content-center bg-light ">
-        <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-dark"
-            @click="showPopup">
-            <span class="circle-icon">
-                <font-awesome-icon icon="fa-solid fa-plus" style="color: #000000;" />
-            </span>
-            Invia un messaggio
-        </a>
+    <div class="row pt-5 pb-5 justify-content-center">
+        <div class="col-6 col-lg-2 d-flex align-items-center justify-content-center bgMess rounded-4 p-2 ">
+            <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-white"
+                @click="showPopup">
+                <span class="circle-icon">
+                    <font-awesome-icon icon="fa-solid fa-plus" style="color: #fffdfd;" />
+                </span>
+                Invia un messaggio
+            </a>
+        </div>
     </div>
+
 
     <!-- Popup -->
     <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
@@ -179,15 +182,13 @@ export default {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     color: #ffffff;
     margin-right: 5px;
 }
 
-.containerReview {
-    height: 75px;
-    width: 50%;
-    margin: auto;
+.bgMess{
+    background-color: #a79ddb98;
 }
 
 .btnLink {

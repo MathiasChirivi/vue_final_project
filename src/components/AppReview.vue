@@ -97,8 +97,9 @@ export default {
 }
 </script>
 <template>
-    <div class="containerReview d-flex align-items-center justify-content-center  rounded-4">
-        <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-white"
+    <div class="row pt-5 mt-5 pb-4">
+        <div class=" col-12 d-flex align-items-center justify-content-center  ">
+        <a class="btnLink col-lg-5 bgReview text-decoration-none d-flex align-items-center justify-content-center rounded-4 text-white p-2"
             @click="showPopup">
             <span class="circle-icon">
                 <font-awesome-icon icon="fa-solid fa-plus" style="color: #ffffff;" />
@@ -106,6 +107,8 @@ export default {
             Aggiungi una recensione
         </a>
     </div>
+    </div>
+  
 
     <!-- Popup -->
     <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
@@ -134,9 +137,9 @@ export default {
         </div>
     </div>
     <div v-for="review in user && user.reviews ? user.reviews : []" :key="review.id" class="pb-4 pt-4 mt-4 ">
-        <h5 class="m-0">{{ review.name }}</h5>
-        <div class="fw-light">{{ review.date }}</div>
-        <div class="fw-lighter mt-2">{{ review.comment }}</div>
+        <h5 class="m-0 text-white">{{ review.name }}</h5>
+        <div class="fw-light text-white">{{ review.date }}</div>
+        <div class="fw-lighter mt-2 text-white">{{ review.comment }}</div>
     </div>
 
      <!-- Success Banner Transition -->
@@ -181,11 +184,8 @@ export default {
     margin-right: 5px;
 }
 
-.containerReview {
-    background-color: #355891d3;
-    height: 55px;
-    width: 50%;
-    margin: auto;
+.bgReview {
+    background-color: #a79ddb98;
 }
 
 .btnLink {

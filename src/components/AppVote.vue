@@ -52,7 +52,7 @@ export default {
             this.vote = 0; // Imposta il voto a 0 per deselezionare tutte le stelle
         },
         submitVote() {
-            
+
             // Crea un oggetto che contiene i dati da inviare
             const voteData = {
                 user_id: this.$route.params.id,
@@ -75,8 +75,8 @@ export default {
                 }, 3000);
 
                 // Aggiorna il voto nel tuo componente dopo una risposta positiva
-                
-                this.user.votes.push({ pivot: { vote_id: this.vote}, date: moment().format('YYYY-MM-DD')  });
+
+                this.user.votes.push({ pivot: { vote_id: this.vote }, date: moment().format('YYYY-MM-DD') });
 
                 // Chiudi il popup dopo 2 secondi (2000 millisecondi)
                 setTimeout(() => {
@@ -97,15 +97,20 @@ export default {
 }
 </script>
 <template>
-    <div class="containerReview d-flex align-items-center justify-content-center rounded-4">
-        <a class="btnLink text-decoration-none d-flex align-items-center justify-content-center text-white"
-            @click="showPopup">
-            <span class="circle-icon">
-                <font-awesome-icon icon="fa-solid fa-plus" style="color: #f7efef;" />
-            </span>
-            Voti
-        </a>
+
+    <div class="row pt-5 mt-5">
+
+        <div class="containerReview d-flex align-items-center justify-content-center ">
+            <a class="btnLink col-lg-5 bgVote text-decoration-none d-flex align-items-center justify-content-center text-white rounded-4 p-2"
+                @click="showPopup">
+                <span class="circle-icon">
+                    <font-awesome-icon icon="fa-solid fa-plus" style="color: #f7efef;" />
+                </span>
+                Voti
+            </a>
+        </div>
     </div>
+
 
     <!-- Popup -->
     <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup">
@@ -129,10 +134,8 @@ export default {
     <transition name="fade">
         <div v-show="emailSent" class="success-banner">Voto inviato con successo!</div>
     </transition>
-    
 </template>
 <style>
-
 .selectedStar {
     color: gold;
     /* Puoi personalizzare il colore qui */
@@ -168,6 +171,7 @@ export default {
     transform: translateY(30%);
 
 }
+
 .circle-icon {
     display: inline-flex;
     align-items: center;
@@ -180,11 +184,9 @@ export default {
     margin-right: 5px;
 }
 
-.containerReview {
-    background-color: #355891d3;
-    height: 55px;
-    width: 50%;
-    margin: auto;
+.bgVote {
+    background-color: #a79ddb98;
+
 }
 
 .btnLink {
@@ -241,6 +243,7 @@ export default {
 .form label .input:valid+span {
     color: green;
 }
+
 .form label .input01+span {
     position: absolute;
     left: 10px;
@@ -268,14 +271,14 @@ export default {
 }
 
 .success-banner {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 999;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
 }
 </style>
