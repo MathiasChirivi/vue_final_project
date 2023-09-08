@@ -106,7 +106,7 @@ export default {
                             <!-- generi. -->
                             <div class="col-4 d-md-flex flex-md-column align-items-md-center pt-4">
                                 <h3 class="text-white">Generi</h3>
-                                <div class="col-6 d-flex fs-5 fw-normal badge btnCall me-3 mt-2"
+                                <div class="d-flex fs-5 fw-normal badge btnCall me-3 mt-2"
                                     v-for="genre in user.genres">
                                     {{ genre.name }}
                                 </div>
