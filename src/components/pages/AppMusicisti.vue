@@ -57,8 +57,20 @@ export default {
             })
         },
         
-        setGenre(clickedGenre) {
-            this.choosenGenre = clickedGenre;
+        
+        getUsersByGenre(genre) {
+            this.loading = true;
+            axios.get(this.store.apiUrl + `users/genre/${genre}`).then(response => {
+                this.users = response.data.results.data;
+                this.currentPage = response.data.results.current_page
+                this.totalPages = response.data.results.last_page
+
+                this.loading = false;
+            }).catch(err => {
+                this.loading = false;
+                this.loadingError = err.message;
+                this.$router.push({ name: 'error', params: { code: 404 } })
+            });
         },
 
         //calcolo media voti e bottone per orderby
@@ -138,7 +150,7 @@ export default {
                 <div
                     class="col-12  rounded-4 d-flex flex-column flex-sm-row justify-content-center justify-content-sm-between p-2 p-sm-3">
                     <button v-for="genre in genres" class="btn badge text-white  col-sm-1  "
-                        v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : ''" @click="setGenre(genre.name)">{{
+                        v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : ''" @click="getUsersByGenre(genre.name)">{{
                             genre.name }}
                     </button>
                 </div>
@@ -183,6 +195,7 @@ export default {
 
                 <div class="card-container">
                     <span v-if="user.has_active_sponsorship === 1" class="pro">PRO</span>
+                    
                     <img v-if="user.img" class="round" :src="store.storageUrl + user.img" />
                     <img v-else class="round"
                         src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
