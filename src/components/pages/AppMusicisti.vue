@@ -203,7 +203,10 @@ export default {
                     this.loadingError = err.message;
                     this.$router.push({ name: 'error', params: { code: 404 } })
                 });
-        }
+        }else {
+                this.minReviewCount = null;
+                this.getUsersByGenre(this.choosenGenre);
+            }
 
 
     } 
@@ -552,44 +555,44 @@ p {
 }
 
 .btnScopri{
-  color: #fff;
-  cursor: pointer;
-  font-size:16px;
-  max-width: 160px; 
-  position: relative;
-  text-decoration: none;
-  width: 100%; 
-  height: 75%;
+    color: #fff;
+    cursor: pointer;
+    font-size:16px;
+    max-width: 160px; 
+    position: relative;
+    text-decoration: none;
+    width: 100%; 
+    height: 75%;
 }
 
 .btn-1 {
-  font-weight: 100;
-  
-  svg {
+    font-weight: 100;
+
+    svg {
     height: 45px;
     left: 0;
     position: absolute;
     top: 0; 
     width: 100%; 
-  }
-  
-  rect {
+    }
+    
+    rect {
     fill: none;
     stroke: #fff;
     stroke-width: 2;
     stroke-dasharray: 422, 0;
     transition: all 0.35s linear;
-  }
+    }
 }
 
 .btn-1:hover {
-  letter-spacing: 1px;
-  
-  rect {
+    letter-spacing: 1px;
+
+    rect {
     stroke-width: 5;
     stroke-dasharray: 15, 310;
     stroke-dashoffset: 48;
     transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
-  }
+    }
 }
 </style>
