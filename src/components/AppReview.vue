@@ -198,7 +198,7 @@ export default {
     flex-direction: column;
     gap: 10px;
     width: 90%;
-    background-color: #42548b;
+    background-color: #5d5583;
     padding: 20px;
     border-radius: 10px;
     position: relative;
@@ -212,7 +212,7 @@ export default {
     width: 100%;
     padding: 10px 10px 20px 10px;
     outline: 0;
-    border: 1px solid #355891;
+    border: 1px solid #5d5583;
     border-radius: 5px;
 }
 

@@ -254,14 +254,14 @@ export default {
                         src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
                     <h3>{{ user.name }} {{ user.surname }}</h3>
                     <!-- descrizione. -->
-                    <h6 class="text-truncate ms-3 me-3">{{ user.experience }}</h6>
+                    <h6 class="text-truncate ms-3 me-3 pt-3 pb-3">{{ user.experience }}</h6>
 
                     <!-- voto medio e recensioni. -->
                     <StarItems class="me-1 mt-2 d-flex justify-content-center"
                         :itemRate="parseFloat(calculateAverageVote(user))" />
                     <p>Numero recensioni: ({{ user.reviews.length }})</p>
                     <!-- regione e cache. -->
-                    <div class="row">
+                    <div class="row pb-3">
                         <div class="col-6 card-text text-center"><font-awesome-icon icon="fa-solid fa-location-dot "
                                 class="me-1" style="color: white;" /> {{ user.region }}
                         </div>
@@ -379,8 +379,8 @@ p {
 }
 
 .card-container .pro {
-    color: #231E39;
-    background-color: #FEBB0B;
+    color: #2b2449;
+    background-color: #03BFCB;
     border-radius: 3px;
     font-size: 14px;
     font-weight: bold;

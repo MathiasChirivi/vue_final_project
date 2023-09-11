@@ -123,7 +123,7 @@ export default {
     <!-- Popup -->
     <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup col-sm-12 col-lg-6">
         <div class="popup-content w-100">
-            <form class="form" @submit.prevent="submitMessage">
+            <form class="form " @submit.prevent="submitMessage">
                 <h2 class="text-white">Invia un messaggio</h2>
 
                 <label>
@@ -140,8 +140,8 @@ export default {
                     <span>Messaggio</span>
                 </label>
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Invia messaggio</button>
-                    <button class="text-white btn" type="button" @click="closePopup">Annulla</button>
+                    <button type="submit" class="btn btn-secondary">Invia messaggio</button>
+                    <button class="text-white btn btn-secondary" type="button" @click="closePopup">Annulla</button>
                 </div>
             </form>
         </div>
@@ -204,7 +204,7 @@ export default {
     flex-direction: column;
     gap: 10px;
     width: 90%;
-    background-color: #355891;
+    background-color: #5d5583;
     padding: 20px;
     border-radius: 10px;
     position: relative;
@@ -218,7 +218,7 @@ export default {
     width: 100%;
     padding: 10px 10px 20px 10px;
     outline: 0;
-    border: 1px solid #355891;
+    border: 1px solid #5d5583;
     border-radius: 5px;
 }
 

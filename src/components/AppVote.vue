@@ -199,7 +199,7 @@ export default {
     flex-direction: column;
     gap: 10px;
     width: 90%;
-    background-color: #355891;
+    background-color: #5d5583;
     padding: 20px;
     border-radius: 10px;
     position: relative;
