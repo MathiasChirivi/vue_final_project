@@ -121,7 +121,7 @@ export default {
 
 
     <!-- Popup -->
-    <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup col-sm-12 col-lg-6">
+    <div v-bind:class="isPopupVisible === true ? 'd-block' : ''" id="reviewPopup" class="popup col-sm-12 col-lg-12">
         <div class="popup-content w-100">
             <form class="form " @submit.prevent="submitMessage">
                 <h2 class="text-white">Invia un messaggio</h2>
@@ -159,7 +159,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    // width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     align-items: center;
