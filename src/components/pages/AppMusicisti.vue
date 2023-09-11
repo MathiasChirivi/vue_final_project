@@ -20,8 +20,11 @@ export default {
             totalPages: 0,
             genres: [],
             users: [],
+            minReviewCount:null,
             choosenGenre: "",
             currentPage: 1,
+            selectedAverageVote: "0",
+            selectedFilter : null, 
             
             
             // poupup
@@ -42,6 +45,71 @@ export default {
             const averageVote = totalVotes / user.votes.length;
             return averageVote.toFixed(2); // Mostra il voto medio con due decimali
         },
+
+        setGenre(clickedGenre) {
+            if (this.selectedFilter === 'vote') {
+                console.log("selezionato voto")
+                if(this.selectedAverageVote === 0){
+                    if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    this.getUsersFirstPage();
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                        this.getUsersByGenre(clickedGenre);
+                    }
+                }else {
+                    if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                    }
+                    this.searchUsersByAverageVote();
+                }
+                
+            }else if (this.selectedFilter === 'reviews'){
+                console.log("selezionato reviews")
+                if(this.minReviewCount == null || this.minReviewCount == ""){
+                    console.log("review voto")
+                    if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    this.getUsersFirstPage();
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                        this.getUsersByGenre(clickedGenre);
+                    }
+                }else {
+                    console.log("review pieno")
+                    console.log(this.minReviewCount)
+                    if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                    }
+                    this.searchUsersByReviewCount();
+                }
+
+            }else{
+                console.log("selezionato nu cazz")
+                if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    this.getUsersFirstPage();
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                        this.getUsersByGenre(clickedGenre);
+                    }
+
+            }
+            
+        },
+
+        resetVote(){
+            if(this.choosenGenre === ""){
+                this.getUsersFirstPage();
+            }else{
+                this.getUsersByGenre(this.choosenGenre);
+            }
+        },
+
         getGenresArray() {
             this.loading = true;
             axios.get(this.store.apiUrl + this.store.genresApi).then(response => {
@@ -56,9 +124,95 @@ export default {
                 this.$router.push({ name: 'error', params: { code: 404 } })
             })
         },
+
+        searchUsersByAverageVote() {
+            // Esegui la ricerca basata sul voto medio (this.selectedAverageVote)
+            // Chiamando la tua API con il valore selezionato
+            // Fai la chiamata API con il voto medio selezionato
+            if (this.choosenGenre === "") {
+                axios.get(this.store.apiUrl + `users/search/${this.selectedAverageVote}`)
+                .then((response) => {
+                // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
+                    this.users = response.data.results.data;
+                    this.currentPage = response.data.results.current_page;
+                    this.totalPages = response.data.results.last_page;
+                })
+                .catch((err) => {
+                    this.loading = false;
+                    this.loadingError = err.message;
+                    this.$router.push({ name: 'error', params: { code: 404 } })
+                });
+            }else{
+                //contatta l'Api nel nuvovo metodo che prima filtra per genere sleezionato e poi per il voto medio selezionato 
+                // http://localhost:8000/api/users/search/genre/Rock/average_vote/3
+                axios.get(this.store.apiUrl + `users/search/genre/${this.choosenGenre}/average_vote/${this.selectedAverageVote}`)
+                .then((response) => {
+                // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
+                    this.users = response.data.results.data;
+                    this.currentPage = response.data.results.current_page;
+                    this.totalPages = response.data.results.last_page;
+                })
+                .catch((err) => {
+                    this.loading = false;
+                    this.loadingError = err.message;
+                    this.$router.push({ name: 'error', params: { code: 404 } })
+                });
+            }
+            
+        },
+
+        onMinReviewCountInput() {
+
+        this.searchUsersByReviewCount();
+    
+},
+
+        searchUsersByReviewCount() {
+    // Verifica se l'input è vuoto o nullo
+    
+    if (this.choosenGenre === "") {
+        if (this.minReviewCount !== null && this.minReviewCount !== "") {
+                axios.get(this.store.apiUrl + `users/search/review/${this.minReviewCount}`).then(response => {
+                    this.users = response.data.results.data;
+                    this.currentPage = response.data.results.current_page;
+                    this.totalPages = response.data.results.last_page;
+                    this.loading = false;
+                }).catch(err => {
+                    this.loading = false;
+                    this.loadingError = err.message;
+                    this.$router.push({ name: 'error', params: { code: 404 } });
+                });
+            } else {
+                this.minReviewCount = null;
+                this.getUsersFirstPage();
+            }
+
+    }else{
+        //contatta l'Api nel nuvovo metodo che prima filtra per genere sleezionato e poi per recensioni minime
+                // http://localhost:8000/api/users/search/genre/classical/reviews/1
+        if (this.minReviewCount !== null && this.minReviewCount !== ""){
+            axios.get(this.store.apiUrl + `users/search/genre/${this.choosenGenre}/reviews/${this.minReviewCount}`)
+                .then((response) => {
+                // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
+                    this.users = response.data.results.data;
+                    this.currentPage = response.data.results.current_page;
+                    this.totalPages = response.data.results.last_page;
+                })
+                .catch((err) => {
+                    this.loading = false;
+                    this.loadingError = err.message;
+                    this.$router.push({ name: 'error', params: { code: 404 } })
+                });
+        }
+
+
+    } 
+
+        },
         
         
         getUsersByGenre(genre) {
+            
             this.loading = true;
             axios.get(this.store.apiUrl + `users/genre/${genre}`).then(response => {
                 this.users = response.data.results.data;
@@ -150,7 +304,7 @@ export default {
                 <div
                     class="col-12  rounded-4 d-flex flex-column flex-sm-row justify-content-center justify-content-sm-between p-2 p-sm-3">
                     <button v-for="genre in genres" class="btn badge text-white  col-sm-1  "
-                        v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : ''" @click="getUsersByGenre(genre.name)">{{
+                        v-bind:class="choosenGenre === genre.name ? 'bg-danger' : ''"  @click="setGenre(genre.name)">{{
                             genre.name }}
                     </button>
                 </div>
@@ -177,11 +331,42 @@ export default {
                     <div class="col-4 d-flex justify-content-center d-sm-none">
                         <h6 class="text-white">Filtra Per:</h6>
                     </div>
-                    <button class="btn badge text-white rounded-3 pt-2" >Ordine
-                        Alfabetico</button>
-                    <button class="btn badge text-white rounded-2 pt-2">Più
-                        Recensioni</button>
-                    <button class="btn badge text-white rounded-2 pt-2 pb-2 pb-sm-0">Più Voti</button>
+                    <div>
+                        <select name="" id="" v-model="selectedFilter">
+                            <option value="reviews">Numero di recensioni</option>
+                            <option value="vote">Voto Medio Minimo</option>
+                        </select>
+                    </div>
+                    <div v-if="selectedFilter === 'reviews' ">
+
+                    <label for="minReviewCount">Inserisci il numero minimo di recensioni:</label>
+                    <input
+                        type="number"
+                        id="minReviewCount"
+                        v-model="minReviewCount"
+                        @input="onMinReviewCountInput"
+                    />
+                    </div>
+                    <!-- <div>
+                        <label for="averageVote">Seleziona il voto medio:</label>
+                        <select id="averageVote" v-model="selectedAverageVote" @change="searchUsersByAverageVote">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div> -->
+                    <div v-if="selectedFilter === 'vote' ">
+                    <label for="averageVote">Seleziona il voto medio:</label>
+                    <div v-if="selectedFilter === 'vote' " class="rating">
+                        <input v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :value="rating" name="rating" :id="'star' + rating" type="radio" v-model="selectedAverageVote" @change="searchUsersByAverageVote">
+                        <label v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :for="'star' + rating"></label>
+
+                        <input value="0" name="rating" id="no-rating" type="radio" class="ms-3" v-model="selectedAverageVote" @click="resetVote()"> 
+                        <label for="no-rating">Senza voto medio</label>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

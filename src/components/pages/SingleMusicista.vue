@@ -203,6 +203,10 @@ export default {
                         </a>
                     </div>
                 </div> -->
+                <a class="text-decoration-none" href="" @click.prevent="selectedSection = 'recensioni'"
+                            :class="{ 'selected': selectedSection === 'recensioni' }">
+                            Recensioni
+                        </a>
 
 
 
@@ -260,7 +264,7 @@ export default {
 
 
             <!-- RECENSIONI -->
-            <!-- <div v-else-if="selectedSection === 'recensioni'">
+            <div v-if="selectedSection === 'recensioni'">
                             <div class="d-flex">
                                 <div class="d-flex flex-column w-100">
                                     <AppReview />
@@ -269,7 +273,7 @@ export default {
                                     <AppVote />
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
 
             <!-- MESSAGGI -->
             <!-- <div v-else-if="selectedSection === 'Messaggi'">
