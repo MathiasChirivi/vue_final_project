@@ -186,15 +186,49 @@ export default {
 
 
 <template>
-    <div class="mb-5 mt-4">
-        <h3 v-if="loading">
-            <div class="spinner"></div>
-            Caricameto dati
-        </h3>
-        <h3 v-if="loadingError"> {{ loadingError }} </h3>
-    </div>
-
     <div class="container pb-4">
+
+        <!-- INPUT NUMBER PER FILTRARE PER N DI RECENSIONI. -->
+        <!-- <div class="row">
+            <div class="col-12">
+
+                <div class="form-controls col-12">
+                    <input type="number" required="">
+                    <label>
+                        <span style="transition-delay:0ms">F</span>
+                        <span style="transition-delay:50ms">i</span>
+                        <span style="transition-delay:100ms">l</span>
+                        <span style="transition-delay:150ms">t</span>
+                        <span style="transition-delay:200ms">r</span>
+                        <span style="transition-delay:250ms">a</span>
+                        <span style="transition-delay:300ms"> </span>
+                        <span style="transition-delay:300ms">P</span>
+                        <span style="transition-delay:350ms">e</span>
+                        <span style="transition-delay:350ms">r</span>
+                        <span style="transition-delay:300ms"> </span>
+                        <span style="transition-delay:300ms">N</span>
+                        <span style="transition-delay:300ms">u</span>
+                        <span style="transition-delay:300ms">m</span>
+                        <span style="transition-delay:300ms">e</span>
+                        <span style="transition-delay:300ms">r</span>
+                        <span style="transition-delay:300ms">o</span>
+                        <span style="transition-delay:300ms"> </span>
+                        <span style="transition-delay:300ms">R</span>
+                        <span style="transition-delay:300ms">e</span>
+                        <span style="transition-delay:300ms">c</span>
+                        <span style="transition-delay:300ms">e</span>
+                        <span style="transition-delay:300ms">n</span>
+                        <span style="transition-delay:300ms">s</span>
+                        <span style="transition-delay:300ms">i</span>
+                        <span style="transition-delay:300ms">o</span>
+                        <span style="transition-delay:300ms">n</span>
+                        <span style="transition-delay:300ms">i</span>
+                    </label>
+                </div>
+
+            </div>
+        </div> -->
+
 
         <!-- filtro per genere musicali. -->
         <div class="row justify-content-center border-bottom d-none d-sm-block">
@@ -244,6 +278,24 @@ export default {
 
     <!-- contenitore card musicisti. -->
     <div class="container pt-4">
+
+        <!-- CARICAMNETO DATI IN CORSO. -->
+        <div class="d-flex justify-content-center">
+            <h3 v-if="loading">
+
+                <section class="dots-container">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </section>
+
+            </h3>
+            <h3 v-if="loadingError"> {{ loadingError }} </h3>
+        </div>
+
+
         <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
             <div v-for="user in paginatedFilteredUsers" :key="user.id">
                 <!-- Mostra i dettagli del musicista della search qui -->
@@ -273,7 +325,9 @@ export default {
                     <!-- bottone dettagli musicista. -->
                     <div class="row">
                         <div class="col-12 d-flex justify-content-center box-3">
-                            <router-link class="text-decoration-none my-3 btnScopri btn-1 d-flex justify-content-center m-0 align-items-center" :to="{ name: 'SingleMusicista', params: { id: user.id } }">
+                            <router-link
+                                class="text-decoration-none my-3 btnScopri btn-1 d-flex justify-content-center m-0 align-items-center"
+                                :to="{ name: 'SingleMusicista', params: { id: user.id } }">
                                 <svg>
                                     <rect x="0" y="0" fill="none" width="100%" height="100%" />
                                 </svg>
@@ -419,45 +473,145 @@ p {
     padding: 7px;
 }
 
-.btnScopri{
-  color: #fff;
-  cursor: pointer;
-  font-size:16px;
-  max-width: 160px; 
-  position: relative;
-  text-decoration: none;
-  width: 100%; 
-  height: 75%;
+.btnScopri {
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    max-width: 160px;
+    position: relative;
+    text-decoration: none;
+    width: 100%;
+    height: 75%;
 }
 
 .btn-1 {
-  font-weight: 100;
-  
-  svg {
-    height: 45px;
-    left: 0;
-    position: absolute;
-    top: 0; 
-    width: 100%; 
-  }
-  
-  rect {
-    fill: none;
-    stroke: #fff;
-    stroke-width: 2;
-    stroke-dasharray: 422, 0;
-    transition: all 0.35s linear;
-  }
+    font-weight: 100;
+
+    svg {
+        height: 45px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    rect {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2;
+        stroke-dasharray: 422, 0;
+        transition: all 0.35s linear;
+    }
 }
 
 .btn-1:hover {
-  letter-spacing: 1px;
-  
-  rect {
-    stroke-width: 5;
-    stroke-dasharray: 15, 310;
-    stroke-dashoffset: 48;
-    transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
-  }
+    letter-spacing: 1px;
+
+    rect {
+        stroke-width: 5;
+        stroke-dasharray: 15, 310;
+        stroke-dashoffset: 48;
+        transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+}
+
+// CARICAMENTO DATI.
+.dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.dot {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #b3d4fc;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dot:last-child {
+    margin-right: 0;
+}
+
+.dot:nth-child(1) {
+    animation-delay: -0.3s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.1s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        background-color: #b3d4fc;
+        box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color: #6793fb;
+        box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+    }
+
+    100% {
+        transform: scale(0.8);
+        background-color: #b3d4fc;
+        box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+}
+
+// input number filtro..
+.form-controls {
+    position: relative;
+    margin: 20px 0 40px;
+    width: 190px;
+}
+
+.form-controls input {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px #fff solid;
+    display: block;
+    width: 300px;
+    padding: 15px 0;
+    font-size: 18px;
+    color: #fff;
+}
+
+.form-controls input:focus,
+.form-controls input:valid {
+    outline: 0;
+    border-bottom-color: lightblue;
+}
+
+.form-controls label {
+    width: 500px;
+    position: absolute;
+    top: 15px;
+    left: 0;
+    pointer-events: none;
+}
+
+.form-controls label span {
+    display: inline-block;
+    font-size: 18px;
+    min-width: 5px;
+    color: #fff;
+    transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.form-controls input:focus+label span,
+.form-controsl input:valid+label span {
+    color: lightblue;
+    transform: translateY(-30px);
 }
 </style>
