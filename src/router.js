@@ -17,11 +17,18 @@ const router = createRouter({
             path: "/Musicisti/",
             name: "Musicisti",
             component: AppMusicisti,
+            props: (route) => ({ genre: route.query.genre }),
         },
         {
             path: "/Musicisti/:id",
             name: "SingleMusicista",
             component: SingleMusicista
+        },
+        {
+            path: "/Musicisti/:genre?", // Il "?" indica che il parametro "genre" è opzionale
+            name: "Musicisti",
+            component: AppMusicisti,
+            props: true, // Abilita la trasmissione automatica delle props dai parametri dell'URL
         }
 
     ]

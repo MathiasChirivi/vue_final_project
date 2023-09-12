@@ -13,7 +13,7 @@ export default {
         return {
             store,
             genres: [],
-            choosenGenre: "",
+            selectedGenre: "",
 
         }
     },
@@ -38,9 +38,14 @@ export default {
             })
         },
         redirectToMusicistiPage() {
-            // Naviga all'altra pagina passando il parametro :genre
-            this.store.genreFromHome = this.choosenGenre;
-            this.$router.push({ name: 'Musicisti'});
+            if (this.selectedGenre) {
+    // Effettua il reindirizzamento alla pagina dei musicisti con il genere come parte del percorso URL
+    this.$router.push({ name: 'Musicisti', params: { genre: this.selectedGenre } });
+  } else {
+    // In questo caso, potresti gestire una ricerca generale senza specificare il genere
+    // this.$router.push('/Musicisti'); // Reindirizzamento senza genere
+    console.log("bubu")
+  }
         },
     },
     components: {
@@ -89,8 +94,8 @@ export default {
             <div class="d-flex align-items-end bgSelect rounded p-3">
                 <div class="me-2 pe-2 pr-2 d-flex align-items-center flex-wrap">
                     <label class="text-white mb-3" for="genre">Scegli il tuo Musicista in base al genere</label>
-                    <select v-model="choosenGenre" class="form-select">
-                        <option v-for="genre in genres" :value="genre.name">{{ genre.name }}</option>
+                    <select v-model="selectedGenre" class="form-select" >
+                        <option v-for="genre in genres" :value="genre.name" >{{ genre.name }}</option>
                     </select>
                 </div>
                 <div class="me-2 pe-2 pr-2 d-flex align-items-center">

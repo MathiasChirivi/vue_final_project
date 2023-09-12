@@ -32,6 +32,9 @@ export default {
 
         }
     },
+    props: {
+    genre: String 
+    },
     methods: {
 
         // calcolo media voto 
@@ -285,6 +288,12 @@ export default {
     mounted() {
         this.getGenresArray()
         this.getUsersFirstPage();
+        const genre = this.$route.params.genre; // Ottieni il parametro "genre" dall'URL
+        if (genre) {
+            // Qui puoi usare "genre" per eseguire la ricerca in base al genere
+            this.getUsersByGenre(genre); // Chiama il metodo per la ricerca
+            this.choosenGenre = genre
+        }
     }
 }
 </script>
