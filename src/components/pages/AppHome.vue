@@ -91,15 +91,15 @@ export default {
     <div class="col-12 d-flex">
         <div class="col-3"></div>
         <div class="col-6 d-flex justify-content-center">
-            <div class="d-flex align-items-end bgSelect rounded p-3">
+            <div class="d-flex align-items-center flex-column  bgSelect rounded p-3">
                 <div class="me-2 pe-2 pr-2 d-flex align-items-center flex-wrap">
                     <label class="text-white mb-3" for="genre">Scegli il tuo Musicista in base al genere</label>
                     <select v-model="selectedGenre" class="form-select" >
                         <option v-for="genre in genres" :value="genre.name" >{{ genre.name }}</option>
                     </select>
                 </div>
-                <div class="me-2 pe-2 pr-2 d-flex align-items-center">
-                    <button class="input" @click="redirectToMusicistiPage">cerca</button>
+                <div class="me-2 pe-2 pr-2">
+                    <button class="input fs-4 px-3 my-2" @click="redirectToMusicistiPage">cerca</button>
                 </div>
             </div>
         </div>
