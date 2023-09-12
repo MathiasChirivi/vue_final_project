@@ -16,43 +16,28 @@ export default {
             loading: false,
             loadingError: false,
             // per gestire carosello
-            users: [],
-            // search
-            searchQuery: '',
-            filteredUsers: [],
-            orderBy: 'null',
-            //impaginazione frontend
-            resultsPerPage: 6,
-            currentPage: 1,
-            // gestione ricerca per genere
-            uniqueGenres: [],
+            currentPage: 0,
+            totalPages: 0,
             genres: [],
-            choosenGenre: store.genreFromHome,
+            users: [],
+            minReviewCount:null,
+            choosenGenre: "",
+            currentPage: 1,
+            selectedAverageVote: "0",
+            selectedFilter : null, 
+            
+            
             // poupup
             isPopupVisible: false,
 
         }
     },
+    props: {
+    genre: String 
+    },
     methods: {
-        //costruzione array genres
-        extractUniqueGenres() {
-            const uniqueGenres = [];
-            this.users.forEach((user) => {
-                user.genres.forEach((genre) => {
-                    const isGenreUnique = !uniqueGenres.find((uniqueGenre) => uniqueGenre.id === genre.id);
-                    if (isGenreUnique) {
-                        uniqueGenres.push(genre);
-                    }
-                });
-            });
-            this.uniqueGenres = uniqueGenres;
-            this.genres = uniqueGenres;
-        },
-        setGenre(clickedGenre) {
-            this.choosenGenre = clickedGenre;
-        },
 
-        //calcolo media voti e bottone per orderby
+        // calcolo media voto 
 
         calculateAverageVote(user) {
             if (user.votes.length === 0) {
@@ -64,17 +49,198 @@ export default {
             return averageVote.toFixed(2); // Mostra il voto medio con due decimali
         },
 
-        orderingSet(orderBy) {
-            this.orderBy = orderBy;
+        setGenre(clickedGenre) {
+            if (this.selectedFilter === 'vote') {
+                console.log("selezionato voto")
+                if(this.selectedAverageVote === 0){
+                    if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    this.getUsersFirstPage();
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                        this.getUsersByGenre(clickedGenre);
+                    }
+                }else {
+                    if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                    }
+                    this.searchUsersByAverageVote();
+                }
+                
+            }else if (this.selectedFilter === 'reviews'){
+                console.log("selezionato reviews")
+                if(this.minReviewCount == null || this.minReviewCount == ""){
+                    console.log("review voto")
+                    if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    this.getUsersFirstPage();
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                        this.getUsersByGenre(clickedGenre);
+                    }
+                }else {
+                    console.log("review pieno")
+                    console.log(this.minReviewCount)
+                    if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                    }
+                    this.searchUsersByReviewCount();
+                }
+
+            }else{
+                console.log("selezionato nu cazz")
+                if (clickedGenre === this.choosenGenre) {
+                    this.choosenGenre = "";
+                    this.getUsersFirstPage();
+                    }else{
+                        this.choosenGenre = clickedGenre;
+                        this.getUsersByGenre(clickedGenre);
+                    }
+
+            }
+            
         },
-        // CAROSELLO MUSICISTI 
+
+        resetVote(){
+            if(this.choosenGenre === ""){
+                this.getUsersFirstPage();
+            }else{
+                this.getUsersByGenre(this.choosenGenre);
+            }
+        },
+
+        getGenresArray() {
+            this.loading = true;
+            axios.get(this.store.apiUrl + this.store.genresApi).then(response => {
+                this.genres = response.data.results
+                // this.users = response.data.results;
+
+                this.loading = false;
+
+            }).catch(err => {
+                this.loading = false;
+                this.loadingError = err.message;
+                this.$router.push({ name: 'error', params: { code: 404 } })
+            })
+        },
+
+        searchUsersByAverageVote() {
+            // Esegui la ricerca basata sul voto medio (this.selectedAverageVote)
+            // Chiamando la tua API con il valore selezionato
+            // Fai la chiamata API con il voto medio selezionato
+            if (this.choosenGenre === "") {
+                axios.get(this.store.apiUrl + `users/search/${this.selectedAverageVote}`)
+                .then((response) => {
+                // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
+                    this.users = response.data.results.data;
+                    this.currentPage = response.data.results.current_page;
+                    this.totalPages = response.data.results.last_page;
+                })
+                .catch((err) => {
+                    this.loading = false;
+                    this.loadingError = err.message;
+                    this.$router.push({ name: 'error', params: { code: 404 } })
+                });
+            }else{
+                //contatta l'Api nel nuvovo metodo che prima filtra per genere sleezionato e poi per il voto medio selezionato 
+                // http://localhost:8000/api/users/search/genre/Rock/average_vote/3
+                axios.get(this.store.apiUrl + `users/search/genre/${this.choosenGenre}/average_vote/${this.selectedAverageVote}`)
+                .then((response) => {
+                // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
+                    this.users = response.data.results.data;
+                    this.currentPage = response.data.results.current_page;
+                    this.totalPages = response.data.results.last_page;
+                })
+                .catch((err) => {
+                    this.loading = false;
+                    this.loadingError = err.message;
+                    this.$router.push({ name: 'error', params: { code: 404 } })
+                });
+            }
+            
+        },
+
+        onMinReviewCountInput() {
+
+        this.searchUsersByReviewCount();
+    
+},
+
+        searchUsersByReviewCount() {
+    // Verifica se l'input è vuoto o nullo
+    
+    if (this.choosenGenre === "") {
+        if (this.minReviewCount !== null && this.minReviewCount !== "") {
+                axios.get(this.store.apiUrl + `users/search/review/${this.minReviewCount}`).then(response => {
+                    this.users = response.data.results.data;
+                    this.currentPage = response.data.results.current_page;
+                    this.totalPages = response.data.results.last_page;
+                    this.loading = false;
+                }).catch(err => {
+                    this.loading = false;
+                    this.loadingError = err.message;
+                    this.$router.push({ name: 'error', params: { code: 404 } });
+                });
+            } else {
+                this.minReviewCount = null;
+                this.getUsersFirstPage();
+            }
+
+    }else{
+        //contatta l'Api nel nuvovo metodo che prima filtra per genere sleezionato e poi per recensioni minime
+                // http://localhost:8000/api/users/search/genre/classical/reviews/1
+        if (this.minReviewCount !== null && this.minReviewCount !== ""){
+            axios.get(this.store.apiUrl + `users/search/genre/${this.choosenGenre}/reviews/${this.minReviewCount}`)
+                .then((response) => {
+                // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
+                    this.users = response.data.results.data;
+                    this.currentPage = response.data.results.current_page;
+                    this.totalPages = response.data.results.last_page;
+                })
+                .catch((err) => {
+                    this.loading = false;
+                    this.loadingError = err.message;
+                    this.$router.push({ name: 'error', params: { code: 404 } })
+                });
+        }else {
+                this.minReviewCount = null;
+                this.getUsersByGenre(this.choosenGenre);
+            }
+
+
+    } 
+
+        },
+        
+        
+        getUsersByGenre(genre) {
+            
+            this.loading = true;
+            axios.get(this.store.apiUrl + `users/genre/${genre}`).then(response => {
+                this.users = response.data.results.data;
+                this.currentPage = response.data.results.current_page
+                this.totalPages = response.data.results.last_page
+
+                this.loading = false;
+            }).catch(err => {
+                this.loading = false;
+                this.loadingError = err.message;
+                this.$router.push({ name: 'error', params: { code: 404 } })
+            });
+        },
+
+        //calcolo media voti e bottone per orderby
+
         getUsersFirstPage() {
             this.loading = true;
             axios.get(this.store.apiUrl + this.store.usersApi).then(response => {
-                this.users = response.data.results;
-                this.filteredUsers = response.data.results;
-
-                this.extractUniqueGenres();
+                this.users = response.data.results.data;
+                this.currentPage = response.data.results.current_page
+                this.totalPages = response.data.results.last_page
 
                 this.loading = false;
             }).catch(err => {
@@ -84,102 +250,50 @@ export default {
             })
         },
         getUsersPage(pageNumber) {
-            if (pageNumber > 0 && pageNumber <= Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
-                this.currentPage = pageNumber;
+            if (pageNumber && pageNumber > 0 && pageNumber <= this.totalPages) {
+                    let config = {
+                        params:{
+                            page: pageNumber
+                        }
+                    };
 
-                // Calcola l'indice di inizio e fine per la pagina corrente
-                const startIndex = (this.currentPage - 1) * this.resultsPerPage;
-                const endIndex = startIndex + this.resultsPerPage;
+                    this.loading = true;
+                    axios.get(this.store.apiUrl + this.store.usersApi, config).then(response=> {
+                        this.users = response.data.results.data;
+                    this.currentPage = response.data.results.current_page
+                    this.totalPages = response.data.results.last_page
 
-                // Ottieni gli utenti per la pagina corrente
-                this.paginatedUsers = this.filteredUsers.slice(startIndex, endIndex);
-
-                this.loading = false;
-            }
-            else {
+                    this.loading = false; 
+                    }).catch(err => {
+                    this.loading = false;
+                    this.loadingError = err.message;
+                    this.$router.push({ name: 'error', params: { code: 404 } })
+                });
+            }else {
                 console.error("non ci sono piu pagine");
             }
         },
         getUsersPrevPage() {
-            if (this.currentPage > 1) {
-                this.currentPage--;
-            } else {
-                console.error("non ci sono piu pagine");
-            }
+            this.getUsersPage(this.currentPage - 1 );
         },
         getUsersNextPage() {
-            if (this.currentPage < Math.ceil(this.filteredUsers.length / this.resultsPerPage)) {
-                this.currentPage++;
-            } else {
-                console.error("non ci sono piu pagine");
-            }
-            console.log(this.genres)
-        },
-
-        // SEARCH
-        searchUsers() {
-            this.filteredUsers = this.users.filter(user => {
-                const fullName = user.name + ' ' + user.surname;
-                return fullName.toLowerCase().includes(this.searchQuery.toLowerCase());
-            });
-            this.currentPage = 1; // Reset to first page after new search
-
-        },
-        updateGenre() {
-            // Chiamare la funzione setGenre con il genere selezionato
-            this.setGenre(this.choosenGenre);
+            this.getUsersPage(this.currentPage + 1 );
         },
     },
 
     // Ricerca Utenti
     computed: {
-        paginatedFilteredUsers() {
-            const startIndex = (this.currentPage - 1) * this.resultsPerPage;
-            const endIndex = startIndex + this.resultsPerPage;
-
-            // Aggiungi questa parte per filtrare in base al genere scelto nella route
-            if (this.choosenGenre != "") {
-                // Filtra gli utenti che hanno il genere selezionato
-                this.filteredUsers = this.users.filter((user) => {
-                    return user.genres.some((genre) => genre.name === this.choosenGenre);
-                });
-            } else {
-                // Nessun genere specifico selezionato, utilizza tutti gli utenti
-                this.filteredUsers = this.users.slice(); // Copia tutti gli utenti
-            }
-
-            // Rimani con il resto del tuo metodo
-            this.filteredUsers.sort((a, b) => {
-                if (this.orderBy === 'reviews') {
-                    if (a.reviews.length !== b.reviews.length) {
-                        return b.reviews.length - a.reviews.length;
-                    } else {
-                        return a.name.localeCompare(b.name);
-                    }
-                } else if (this.orderBy === 'votes') {
-                    const avgVoteA = a.votes.length > 0 ? a.votes.reduce((total, vote) => total + vote.vote, 0) / a.votes.length : 0;
-                    const avgVoteB = b.votes.length > 0 ? b.votes.reduce((total, vote) => total + vote.vote, 0) / b.votes.length : 0;
-
-                    // Ordina in base al voto medio
-                    if (avgVoteA !== avgVoteB) {
-                        return avgVoteB - avgVoteA; // Ordine decrescente per voto medio
-                    } else {
-                        return a.name.localeCompare(b.name);
-                    }
-                } else {
-                    // Ordinamento di base (ordine alfabetico per nome)
-                    return a.name.localeCompare(b.name);
-                }
-            });
-
-            // Restituisci solo gli utenti della pagina corrente
-            return this.filteredUsers.slice(startIndex, endIndex);
-        },
 
     },
     mounted() {
+        this.getGenresArray()
         this.getUsersFirstPage();
-        this.filteredUsers = this.users;
+        const genre = this.$route.params.genre; // Ottieni il parametro "genre" dall'URL
+        if (genre) {
+            // Qui puoi usare "genre" per eseguire la ricerca in base al genere
+            this.getUsersByGenre(genre); // Chiama il metodo per la ricerca
+            this.choosenGenre = genre
+        }
     }
 }
 </script>
@@ -236,7 +350,7 @@ export default {
                 <div
                     class="col-12  rounded-4 d-flex flex-column flex-sm-row justify-content-center justify-content-sm-between p-2 p-sm-3">
                     <button v-for="genre in genres" class="btn badge text-white  col-sm-1  "
-                        v-bind:class="choosenGenre === genre.name ? 'bg_cl_primary' : ''" @click="setGenre(genre.name)">{{
+                        v-bind:class="choosenGenre === genre.name ? 'bg-danger' : ''"  @click="setGenre(genre.name)">{{
                             genre.name }}
                     </button>
                 </div>
@@ -263,14 +377,42 @@ export default {
                     <div class="col-4 d-flex justify-content-center d-sm-none">
                         <h6 class="text-white">Filtra Per:</h6>
                     </div>
-                    <button class="btn badge text-white rounded-3 pt-2" v-bind:class="orderBy === 'null' ? '' : ''"
-                        @click="orderingSet('null')">Ordine
-                        Alfabetico</button>
-                    <button class="btn badge text-white rounded-2 pt-2" v-bind:class="orderBy === 'reviews' ? '' : ''"
-                        @click="orderingSet('reviews')">Più
-                        Recensioni</button>
-                    <button class="btn badge text-white rounded-2 pt-2 pb-2 pb-sm-0"
-                        v-bind:class="orderBy === 'votes' ? '' : ''" @click="orderingSet('votes')">Più Voti</button>
+                    <div>
+                        <select name="" id="" v-model="selectedFilter">
+                            <option value="reviews">Numero di recensioni</option>
+                            <option value="vote">Voto Medio Minimo</option>
+                        </select>
+                    </div>
+                    <div v-if="selectedFilter === 'reviews' ">
+
+                    <label for="minReviewCount">Inserisci il numero minimo di recensioni:</label>
+                    <input
+                        type="number"
+                        id="minReviewCount"
+                        v-model="minReviewCount"
+                        @input="onMinReviewCountInput"
+                    />
+                    </div>
+                    <!-- <div>
+                        <label for="averageVote">Seleziona il voto medio:</label>
+                        <select id="averageVote" v-model="selectedAverageVote" @change="searchUsersByAverageVote">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div> -->
+                    <div v-if="selectedFilter === 'vote' ">
+                    <label for="averageVote">Seleziona il voto medio:</label>
+                    <div v-if="selectedFilter === 'vote' " class="rating">
+                        <input v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :value="rating" name="rating" :id="'star' + rating" type="radio" v-model="selectedAverageVote" @change="searchUsersByAverageVote">
+                        <label v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :for="'star' + rating"></label>
+
+                        <input value="0" name="rating" id="no-rating" type="radio" class="ms-3" v-model="selectedAverageVote" @click="resetVote()"> 
+                        <label for="no-rating">Senza voto medio</label>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -297,10 +439,12 @@ export default {
 
 
         <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
-            <div v-for="user in paginatedFilteredUsers" :key="user.id">
+            <div v-for="user in users" :key="user.id">
                 <!-- Mostra i dettagli del musicista della search qui -->
+
                 <div class="card-container">
-                    <span class="pro">PRO</span>
+                    <span v-if="user.has_active_sponsorship === 1" class="pro">PRO</span>
+                    
                     <img v-if="user.img" class="round" :src="store.storageUrl + user.img" />
                     <img v-else class="round"
                         src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
@@ -356,7 +500,7 @@ export default {
             </span>
         </a>
         <a class="btn text-black rounded-circle text-white" :class="{ 'bg_violet': pageNumber === currentPage }"
-            @click="getUsersPage(pageNumber)" v-for="pageNumber in  Math.ceil(filteredUsers.length / resultsPerPage)">{{
+            @click="getUsersPage(pageNumber)" v-for="pageNumber in  totalPages">{{
                 pageNumber }}</a>
         <a class="btn" @click="getUsersNextPage">
             <span class="me-3">
