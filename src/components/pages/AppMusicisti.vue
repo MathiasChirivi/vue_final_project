@@ -731,7 +731,7 @@ p {
 .rating label {
     float: left;
     cursor: pointer;
-    color: #ccc;
+    color: #f8f7f7;
     transition: color 0.3s;
 }
 
@@ -742,19 +742,19 @@ p {
 
 /* Rimuovi il selettore generale e usa uno specifico per ciascun input radio */
 .rating input:checked+label {
-    color: #6f00ff;
+    color: #113996;
     transition: color 0.3s;
 }
 
 .rating .selected {
-    color: #6f00ff;
+    color:#a79ff5 ; 
     transition: color 0.3s;
 }
 
 
 /* Rimuovi il colore dalle stelle precedenti in caso di unhover */
 .rating input:checked~label:hover {
-    color: #ccc;
+    color: #32387c;
     transition: color 0.3s;
 }
 </style>
