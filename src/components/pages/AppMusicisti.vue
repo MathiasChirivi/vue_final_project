@@ -98,7 +98,9 @@ export default {
                     this.getUsersFirstPage();
                     }else{
                         this.choosenGenre = clickedGenre;
+                        console.log(clickedGenre)
                         this.getUsersByGenre(clickedGenre);
+                        console.log("prova 123")
                     }
 
             }
@@ -250,28 +252,179 @@ export default {
             })
         },
         getUsersPage(pageNumber) {
-            if (pageNumber && pageNumber > 0 && pageNumber <= this.totalPages) {
-                    let config = {
-                        params:{
-                            page: pageNumber
-                        }
-                    };
+            console.log(this.currentPage + "currPag inizio ")
+            console.log(this.totalPages + "totPag inizio ")
+            console.log(this.choosenGenre + "choosen genere inizio ")
+            console.log(pageNumber + "pagina richiesta inizio ")
 
-                    this.loading = true;
-                    axios.get(this.store.apiUrl + this.store.usersApi, config).then(response=> {
+            if (this.choosenGenre!= "") {
+                
+                if (this.selectedAverageVote != 0 ) {
+                    
+                    if (pageNumber && pageNumber > 0 && pageNumber <= this.totalPages) {
+                        
+                        let config = {
+                            params:{
+                                page: pageNumber
+                            }
+                        };
+
+                        this.loading = true;
+                        axios.get(this.store.apiUrl + `users/search/genre/${this.choosenGenre}/average_vote/${this.selectedAverageVote}`, config).then(response => {
                         this.users = response.data.results.data;
-                    this.currentPage = response.data.results.current_page
-                    this.totalPages = response.data.results.last_page
+                        this.currentPage = response.data.results.current_page
+                        this.totalPages = response.data.results.last_page
+                        console.log(this.currentPage , response.data.results.current_page + " genere + voti ")
 
-                    this.loading = false; 
+                        this.loading = false;
+                        }).catch(err => {
+                        this.loading = false;
+                        this.loadingError = err.message;
+                        this.$router.push({ name: 'error', params: { code: 404 } })
+                        });
+                    }else {
+                        console.error("non ci sono piu pagine");
+                        console.log("no pag genere + voti ")
+                    }
+                    
+                } else if (this.minReviewCount !== null && this.minReviewCount !== "") {
+                    if (pageNumber && pageNumber > 0 && pageNumber <= this.totalPages) {
+                        
+                        let config = {
+                            params:{
+                                page: pageNumber
+                            }
+                        };
+
+                        this.loading = true;
+                        axios.get(this.store.apiUrl + `users/search/genre/${this.choosenGenre}/reviews/${this.minReviewCount}`, config).then(response => {
+                        this.users = response.data.results.data;
+                        this.currentPage = response.data.results.current_page
+                        this.totalPages = response.data.results.last_page
+                        console.log(this.currentPage , response.data.results.current_page + " genere + reviews ")
+
+                        this.loading = false;
+                        }).catch(err => {
+                        this.loading = false;
+                        this.loadingError = err.message;
+                        this.$router.push({ name: 'error', params: { code: 404 } })
+                        });
+                    }else {
+                        console.error("non ci sono piu pagine");
+                        console.log("no pag genere + reviws ")
+                    }
+                } else if (this.selectedAverageVote == 0 && this.minReviewCount == null || this.selectedAverageVote == 0 && this.minReviewCount == "") {
+                    
+                    if (pageNumber && pageNumber > 0 && pageNumber <= this.totalPages) {
+                            let config = {
+                                params:{
+                                    page: pageNumber
+                                }
+                            };
+    
+                            this.loading = true;
+                            axios.get(this.store.apiUrl + `users/genre/${this.choosenGenre}`, config).then(response => {
+                        this.users = response.data.results.data;
+                        this.currentPage = response.data.results.current_page
+                        this.totalPages = response.data.results.last_page
+                        console.log(this.currentPage , response.data.results.current_page + " genere solo ")
+    
+                        this.loading = false;
                     }).catch(err => {
-                    this.loading = false;
-                    this.loadingError = err.message;
-                    this.$router.push({ name: 'error', params: { code: 404 } })
-                });
+                        this.loading = false;
+                        this.loadingError = err.message;
+                        this.$router.push({ name: 'error', params: { code: 404 } })
+                    });
+                    }else {
+                        console.error("non ci sono piu pagine");
+                        console.log("no pag senza nulla solo genere")
+                    }
+                }
             }else {
-                console.error("non ci sono piu pagine");
+                if (this.selectedAverageVote != 0 ) {
+                    
+                    if (pageNumber && pageNumber > 0 && pageNumber <= this.totalPages) {
+                        
+                        let config = {
+                            params:{
+                                page: pageNumber
+                            }
+                        };
+
+                        this.loading = true;
+                        axios.get(this.store.apiUrl + `users/search/${this.selectedAverageVote}`, config).then(response => {
+                        this.users = response.data.results.data;
+                        this.currentPage = response.data.results.current_page
+                        this.totalPages = response.data.results.last_page
+                        console.log(this.currentPage , response.data.results.current_page + "no genere voto solo ")
+
+                        this.loading = false;
+                        }).catch(err => {
+                        this.loading = false;
+                        this.loadingError = err.message;
+                        this.$router.push({ name: 'error', params: { code: 404 } })
+                        });
+                    }else {
+                        console.error("non ci sono piu pagine");
+                        console.log("no pag no genere solo voti ")
+                    }
+                    
+                }else if (this.minReviewCount !== null && this.minReviewCount !== "") {
+                    if (pageNumber && pageNumber > 0 && pageNumber <= this.totalPages) {
+                        
+                        let config = {
+                            params:{
+                                page: pageNumber
+                            }
+                        };
+
+                        this.loading = true;
+                        axios.get(this.store.apiUrl + `users/search/review/${this.minReviewCount}`, config).then(response => {
+                        this.users = response.data.results.data;
+                        this.currentPage = response.data.results.current_page
+                        this.totalPages = response.data.results.last_page
+                        console.log(this.currentPage , response.data.results.current_page + " no genere solo reviews ")
+
+                        this.loading = false;
+                        }).catch(err => {
+                        this.loading = false;
+                        this.loadingError = err.message;
+                        this.$router.push({ name: 'error', params: { code: 404 } })
+                        });
+                    }else {
+                        console.error("non ci sono piu pagine");
+                        console.log("no pag solo reviws ")
+                    }
+                }else if (this.selectedAverageVote == 0 && this.minReviewCount == null || this.selectedAverageVote == 0 && this.minReviewCount == "") {
+                    if (pageNumber && pageNumber > 0 && pageNumber <= this.totalPages) {
+                        let config = {
+                            params: {
+                                page: pageNumber
+                            }
+                        };
+
+                        this.loading = true;
+                        axios.get(this.store.apiUrl + this.store.usersApi, config).then(response => {
+                            this.users = response.data.results.data;
+                            this.currentPage = response.data.results.current_page
+                            this.totalPages = response.data.results.last_page
+                            console.log(this.currentPage , response.data.results.current_page + " no filtri ")
+
+
+                            this.loading = false;
+                        }).catch(err => {
+                            this.loading = false;
+                            this.loadingError = err.message;
+                            this.$router.push({ name: 'error', params: { code: 404 } })
+                        });
+                    } else {
+                        console.error("non ci sono piu pagine");
+                        console.log("no pag NO FILTRI ")
+                    }
+                }
+
             }
+
         },
         getUsersPrevPage() {
             this.getUsersPage(this.currentPage - 1 );
