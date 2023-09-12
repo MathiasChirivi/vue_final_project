@@ -20,20 +20,20 @@ export default {
             totalPages: 0,
             genres: [],
             users: [],
-            minReviewCount:null,
+            minReviewCount: null,
             choosenGenre: "",
             currentPage: 1,
             selectedAverageVote: "0",
-            selectedFilter : null, 
-            
-            
+            selectedFilter: null,
+
+
             // poupup
             isPopupVisible: false,
 
         }
     },
     props: {
-    genre: String 
+        genre: String
     },
     methods: {
 
@@ -52,63 +52,63 @@ export default {
         setGenre(clickedGenre) {
             if (this.selectedFilter === 'vote') {
                 console.log("selezionato voto")
-                if(this.selectedAverageVote === 0){
+                if (this.selectedAverageVote === 0) {
                     if (clickedGenre === this.choosenGenre) {
-                    this.choosenGenre = "";
-                    this.getUsersFirstPage();
-                    }else{
+                        this.choosenGenre = "";
+                        this.getUsersFirstPage();
+                    } else {
                         this.choosenGenre = clickedGenre;
                         this.getUsersByGenre(clickedGenre);
                     }
-                }else {
+                } else {
                     if (clickedGenre === this.choosenGenre) {
-                    this.choosenGenre = "";
-                    }else{
+                        this.choosenGenre = "";
+                    } else {
                         this.choosenGenre = clickedGenre;
                     }
                     this.searchUsersByAverageVote();
                 }
-                
-            }else if (this.selectedFilter === 'reviews'){
+
+            } else if (this.selectedFilter === 'reviews') {
                 console.log("selezionato reviews")
-                if(this.minReviewCount == null || this.minReviewCount == ""){
+                if (this.minReviewCount == null || this.minReviewCount == "") {
                     console.log("review voto")
                     if (clickedGenre === this.choosenGenre) {
-                    this.choosenGenre = "";
-                    this.getUsersFirstPage();
-                    }else{
+                        this.choosenGenre = "";
+                        this.getUsersFirstPage();
+                    } else {
                         this.choosenGenre = clickedGenre;
                         this.getUsersByGenre(clickedGenre);
                     }
-                }else {
+                } else {
                     console.log("review pieno")
                     console.log(this.minReviewCount)
                     if (clickedGenre === this.choosenGenre) {
-                    this.choosenGenre = "";
-                    }else{
+                        this.choosenGenre = "";
+                    } else {
                         this.choosenGenre = clickedGenre;
                     }
                     this.searchUsersByReviewCount();
                 }
 
-            }else{
+            } else {
                 console.log("selezionato nu cazz")
                 if (clickedGenre === this.choosenGenre) {
                     this.choosenGenre = "";
                     this.getUsersFirstPage();
-                    }else{
-                        this.choosenGenre = clickedGenre;
-                        this.getUsersByGenre(clickedGenre);
-                    }
+                } else {
+                    this.choosenGenre = clickedGenre;
+                    this.getUsersByGenre(clickedGenre);
+                }
 
             }
-            
+
         },
 
-        resetVote(){
-            if(this.choosenGenre === ""){
+        resetVote() {
+            if (this.choosenGenre === "") {
                 this.getUsersFirstPage();
-            }else{
+            } else {
                 this.getUsersByGenre(this.choosenGenre);
             }
         },
@@ -134,91 +134,91 @@ export default {
             // Fai la chiamata API con il voto medio selezionato
             if (this.choosenGenre === "") {
                 axios.get(this.store.apiUrl + `users/search/${this.selectedAverageVote}`)
-                .then((response) => {
-                // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
-                    this.users = response.data.results.data;
-                    this.currentPage = response.data.results.current_page;
-                    this.totalPages = response.data.results.last_page;
-                })
-                .catch((err) => {
-                    this.loading = false;
-                    this.loadingError = err.message;
-                    this.$router.push({ name: 'error', params: { code: 404 } })
-                });
-            }else{
+                    .then((response) => {
+                        // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
+                        this.users = response.data.results.data;
+                        this.currentPage = response.data.results.current_page;
+                        this.totalPages = response.data.results.last_page;
+                    })
+                    .catch((err) => {
+                        this.loading = false;
+                        this.loadingError = err.message;
+                        this.$router.push({ name: 'error', params: { code: 404 } })
+                    });
+            } else {
                 //contatta l'Api nel nuvovo metodo che prima filtra per genere sleezionato e poi per il voto medio selezionato 
                 // http://localhost:8000/api/users/search/genre/Rock/average_vote/3
                 axios.get(this.store.apiUrl + `users/search/genre/${this.choosenGenre}/average_vote/${this.selectedAverageVote}`)
-                .then((response) => {
-                // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
-                    this.users = response.data.results.data;
-                    this.currentPage = response.data.results.current_page;
-                    this.totalPages = response.data.results.last_page;
-                })
-                .catch((err) => {
-                    this.loading = false;
-                    this.loadingError = err.message;
-                    this.$router.push({ name: 'error', params: { code: 404 } })
-                });
+                    .then((response) => {
+                        // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
+                        this.users = response.data.results.data;
+                        this.currentPage = response.data.results.current_page;
+                        this.totalPages = response.data.results.last_page;
+                    })
+                    .catch((err) => {
+                        this.loading = false;
+                        this.loadingError = err.message;
+                        this.$router.push({ name: 'error', params: { code: 404 } })
+                    });
             }
-            
+
         },
 
         onMinReviewCountInput() {
 
-        this.searchUsersByReviewCount();
-    
-},
-
-        searchUsersByReviewCount() {
-    // Verifica se l'input è vuoto o nullo
-    
-    if (this.choosenGenre === "") {
-        if (this.minReviewCount !== null && this.minReviewCount !== "") {
-                axios.get(this.store.apiUrl + `users/search/review/${this.minReviewCount}`).then(response => {
-                    this.users = response.data.results.data;
-                    this.currentPage = response.data.results.current_page;
-                    this.totalPages = response.data.results.last_page;
-                    this.loading = false;
-                }).catch(err => {
-                    this.loading = false;
-                    this.loadingError = err.message;
-                    this.$router.push({ name: 'error', params: { code: 404 } });
-                });
-            } else {
-                this.minReviewCount = null;
-                this.getUsersFirstPage();
-            }
-
-    }else{
-        //contatta l'Api nel nuvovo metodo che prima filtra per genere sleezionato e poi per recensioni minime
-                // http://localhost:8000/api/users/search/genre/classical/reviews/1
-        if (this.minReviewCount !== null && this.minReviewCount !== ""){
-            axios.get(this.store.apiUrl + `users/search/genre/${this.choosenGenre}/reviews/${this.minReviewCount}`)
-                .then((response) => {
-                // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
-                    this.users = response.data.results.data;
-                    this.currentPage = response.data.results.current_page;
-                    this.totalPages = response.data.results.last_page;
-                })
-                .catch((err) => {
-                    this.loading = false;
-                    this.loadingError = err.message;
-                    this.$router.push({ name: 'error', params: { code: 404 } })
-                });
-        }else {
-                this.minReviewCount = null;
-                this.getUsersByGenre(this.choosenGenre);
-            }
-
-
-    } 
+            this.searchUsersByReviewCount();
 
         },
-        
-        
+
+        searchUsersByReviewCount() {
+            // Verifica se l'input è vuoto o nullo
+
+            if (this.choosenGenre === "") {
+                if (this.minReviewCount !== null && this.minReviewCount !== "") {
+                    axios.get(this.store.apiUrl + `users/search/review/${this.minReviewCount}`).then(response => {
+                        this.users = response.data.results.data;
+                        this.currentPage = response.data.results.current_page;
+                        this.totalPages = response.data.results.last_page;
+                        this.loading = false;
+                    }).catch(err => {
+                        this.loading = false;
+                        this.loadingError = err.message;
+                        this.$router.push({ name: 'error', params: { code: 404 } });
+                    });
+                } else {
+                    this.minReviewCount = null;
+                    this.getUsersFirstPage();
+                }
+
+            } else {
+                //contatta l'Api nel nuvovo metodo che prima filtra per genere sleezionato e poi per recensioni minime
+                // http://localhost:8000/api/users/search/genre/classical/reviews/1
+                if (this.minReviewCount !== null && this.minReviewCount !== "") {
+                    axios.get(this.store.apiUrl + `users/search/genre/${this.choosenGenre}/reviews/${this.minReviewCount}`)
+                        .then((response) => {
+                            // Aggiorna i risultati utenti con i nuovi dati ricevuti dalla chiamata API
+                            this.users = response.data.results.data;
+                            this.currentPage = response.data.results.current_page;
+                            this.totalPages = response.data.results.last_page;
+                        })
+                        .catch((err) => {
+                            this.loading = false;
+                            this.loadingError = err.message;
+                            this.$router.push({ name: 'error', params: { code: 404 } })
+                        });
+                } else {
+                    this.minReviewCount = null;
+                    this.getUsersByGenre(this.choosenGenre);
+                }
+
+
+            }
+
+        },
+
+
         getUsersByGenre(genre) {
-            
+
             this.loading = true;
             axios.get(this.store.apiUrl + `users/genre/${genre}`).then(response => {
                 this.users = response.data.results.data;
@@ -251,33 +251,33 @@ export default {
         },
         getUsersPage(pageNumber) {
             if (pageNumber && pageNumber > 0 && pageNumber <= this.totalPages) {
-                    let config = {
-                        params:{
-                            page: pageNumber
-                        }
-                    };
+                let config = {
+                    params: {
+                        page: pageNumber
+                    }
+                };
 
-                    this.loading = true;
-                    axios.get(this.store.apiUrl + this.store.usersApi, config).then(response=> {
-                        this.users = response.data.results.data;
+                this.loading = true;
+                axios.get(this.store.apiUrl + this.store.usersApi, config).then(response => {
+                    this.users = response.data.results.data;
                     this.currentPage = response.data.results.current_page
                     this.totalPages = response.data.results.last_page
 
-                    this.loading = false; 
-                    }).catch(err => {
+                    this.loading = false;
+                }).catch(err => {
                     this.loading = false;
                     this.loadingError = err.message;
                     this.$router.push({ name: 'error', params: { code: 404 } })
                 });
-            }else {
+            } else {
                 console.error("non ci sono piu pagine");
             }
         },
         getUsersPrevPage() {
-            this.getUsersPage(this.currentPage - 1 );
+            this.getUsersPage(this.currentPage - 1);
         },
         getUsersNextPage() {
-            this.getUsersPage(this.currentPage + 1 );
+            this.getUsersPage(this.currentPage + 1);
         },
     },
 
@@ -350,7 +350,7 @@ export default {
                 <div
                     class="col-12  rounded-4 d-flex flex-column flex-sm-row justify-content-center justify-content-sm-between p-2 p-sm-3">
                     <button v-for="genre in genres" class="btn badge text-white  col-sm-1  "
-                        v-bind:class="choosenGenre === genre.name ? 'bg-danger' : ''"  @click="setGenre(genre.name)">{{
+                        v-bind:class="choosenGenre === genre.name ? 'bg-danger' : ''" @click="setGenre(genre.name)">{{
                             genre.name }}
                     </button>
                 </div>
@@ -383,15 +383,10 @@ export default {
                             <option value="vote">Voto Medio Minimo</option>
                         </select>
                     </div>
-                    <div v-if="selectedFilter === 'reviews' ">
+                    <div v-if="selectedFilter === 'reviews'">
 
-                    <label for="minReviewCount">Inserisci il numero minimo di recensioni:</label>
-                    <input
-                        type="number"
-                        id="minReviewCount"
-                        v-model="minReviewCount"
-                        @input="onMinReviewCountInput"
-                    />
+                        <label for="minReviewCount">Inserisci il numero minimo di recensioni:</label>
+                        <input type="number" id="minReviewCount" v-model="minReviewCount" @input="onMinReviewCountInput" />
                     </div>
                     <!-- <div>
                         <label for="averageVote">Seleziona il voto medio:</label>
@@ -403,16 +398,22 @@ export default {
                             <option value="5">5</option>
                         </select>
                     </div> -->
-                    <div v-if="selectedFilter === 'vote' ">
-                    <label for="averageVote">Seleziona il voto medio:</label>
-                    <div v-if="selectedFilter === 'vote' " class="rating">
-                        <input v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :value="rating" name="rating" :id="'star' + rating" type="radio" v-model="selectedAverageVote" @change="searchUsersByAverageVote">
-                        <label v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :for="'star' + rating"></label>
+                    <div v-if="selectedFilter === 'vote'">
+                        <label for="rating">Seleziona il voto medio:</label>
+                        <div v-if="selectedFilter === 'vote'" class="rating">
+                            <input v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :value="rating" name="rating"
+                                :id="'star' + rating" type="radio" v-model="selectedAverageVote"
+                                @change="searchUsersByAverageVote">
+                            <label v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :for="'star' + rating"
+                                :class="{ 'selected': rating <= selectedAverageVote }"></label>
+                        </div>
 
-                        <input value="0" name="rating" id="no-rating" type="radio" class="ms-3" v-model="selectedAverageVote" @click="resetVote()"> 
+                        <!-- radio no voto medio. -->
+                        <input value="0" name="no-rating" id="no-rating" type="radio" class="ms-3"
+                            v-model="selectedAverageVote" @click="resetVote()">
                         <label for="no-rating">Senza voto medio</label>
+
                     </div>
-                </div>
                 </div>
             </div>
         </div>
@@ -444,7 +445,7 @@ export default {
 
                 <div class="card-container">
                     <span v-if="user.has_active_sponsorship === 1" class="pro">PRO</span>
-                    
+
                     <img v-if="user.img" class="round" :src="store.storageUrl + user.img" />
                     <img v-else class="round"
                         src="https://media.istockphoto.com/id/1147544807/it/vettoriale/la-commissione-per-la-immagine-di-anteprima-grafica-vettoriale.jpg?s=612x612&w=0&k=20&c=gsxHNYV71DzPuhyg-btvo-QhhTwWY0z4SGCSe44rvg4=" />
@@ -713,49 +714,42 @@ p {
     }
 }
 
-// input number filtro..
-.form-controls {
-    position: relative;
-    margin: 20px 0 40px;
-    width: 190px;
-}
-
-.form-controls input {
-    background-color: transparent;
-    border: 0;
-    border-bottom: 2px #fff solid;
-    display: block;
-    width: 300px;
-    padding: 15px 0;
-    font-size: 18px;
-    color: #fff;
-}
-
-.form-controls input:focus,
-.form-controls input:valid {
-    outline: 0;
-    border-bottom-color: lightblue;
-}
-
-.form-controls label {
-    width: 500px;
-    position: absolute;
-    top: 15px;
-    left: 0;
-    pointer-events: none;
-}
-
-.form-controls label span {
+// filtro per voto medio(stelline)
+.rating {
     display: inline-block;
-    font-size: 18px;
-    min-width: 5px;
-    color: #fff;
-    transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.form-controls input:focus+label span,
-.form-controsl input:valid+label span {
-    color: lightblue;
-    transform: translateY(-30px);
+.rating input {
+    display: none;
+}
+
+.rating label {
+    float: left;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.rating label:before {
+    content: '\2605';
+    font-size: 30px;
+}
+
+/* Rimuovi il selettore generale e usa uno specifico per ciascun input radio */
+.rating input:checked+label {
+    color: #6f00ff;
+    transition: color 0.3s;
+}
+
+.rating .selected {
+    color: #6f00ff;
+    transition: color 0.3s;
+}
+
+
+/* Rimuovi il colore dalle stelle precedenti in caso di unhover */
+.rating input:checked~label:hover {
+    color: #ccc;
+    transition: color 0.3s;
 }
 </style>
