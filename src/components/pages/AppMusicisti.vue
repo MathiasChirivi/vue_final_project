@@ -371,21 +371,23 @@ export default {
         </div>
 
         <!-- filtro per ordine alfabetico,recensioni,voti. -->
-        <div class="row justify-content-center pt-4 d-sm-block">
+        <div class="row justify-content-center pt-4 d-lg-block">
             <div class="col-8 col-sm-12 d-flex justify-content-sm-center border-bottom">
-                <div class="col-12 col-sm-8 col-12-md rounded-4 d-flex flex-column flex-sm-row  justify-content-sm-around ">
-                    <div class="col-4 d-flex justify-content-center d-sm-none">
-                        <h6 class="text-white">Filtra Per:</h6>
+                <div
+                    class="col-sm-12 col-12-md rounded-4 d-flex flex-column flex-lg-row align-items-center">
+                    <div class="col-12 col-xl-6">
+                        <div class="col-12 col-xl-4 d-flex d-lg-none d-xl-flex me-3">
+                            <h6 class="text-white">Filtra Per:</h6>
+                        </div>
+                        <div class="my-3">
+                            <select name="" id="" v-model="selectedFilter">
+                                <option value="reviews">Numero di recensioni</option>
+                                <option value="vote">Voto Medio Minimo</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <select name="" id="" v-model="selectedFilter">
-                            <option value="reviews">Numero di recensioni</option>
-                            <option value="vote">Voto Medio Minimo</option>
-                        </select>
-                    </div>
-                    <div v-if="selectedFilter === 'reviews'">
-
-                        <label for="minReviewCount">Inserisci il numero minimo di recensioni:</label>
+                    <div v-if="selectedFilter === 'reviews'" class="col-12 col-xl-6">
+                        <label class="text-white me-3" for="minReviewCount">Inserisci il numero minimo di recensioni:</label>
                         <input type="number" id="minReviewCount" v-model="minReviewCount" @input="onMinReviewCountInput" />
                     </div>
                     <!-- <div>
@@ -398,21 +400,24 @@ export default {
                             <option value="5">5</option>
                         </select>
                     </div> -->
-                    <div v-if="selectedFilter === 'vote'">
-                        <label for="rating">Seleziona il voto medio:</label>
-                        <div v-if="selectedFilter === 'vote'" class="rating">
-                            <input v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :value="rating" name="rating"
-                                :id="'star' + rating" type="radio" v-model="selectedAverageVote"
-                                @change="searchUsersByAverageVote">
-                            <label v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :for="'star' + rating"
-                                :class="{ 'selected': rating <= selectedAverageVote }"></label>
+                    <div v-if="selectedFilter === 'vote'" class="d-flex flex-wrap">
+                        <div class="col-12 d-flex flex-wrap lign-items-center">
+                            <label class="text-white me-3 my-3" for="rating">Seleziona il voto medio:</label>
+                            <div v-if="selectedFilter === 'vote'" class="rating">
+                                <input v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :value="rating" name="rating"
+                                    :id="'star' + rating" type="radio" v-model="selectedAverageVote"
+                                    @change="searchUsersByAverageVote">
+                                <label v-for="rating in [1, 2, 3, 4, 5]" :key="rating" :for="'star' + rating"
+                                    :class="{ 'selected': rating <= selectedAverageVote }"></label>
+                            </div>
                         </div>
 
                         <!-- radio no voto medio. -->
-                        <input value="0" name="no-rating" id="no-rating" type="radio" class="ms-3"
-                            v-model="selectedAverageVote" @click="resetVote()">
-                        <label for="no-rating">Senza voto medio</label>
-
+                        <div class="col-12 d-flex align-items-center">
+                            <label class="text-white me-3" for="no-rating">Senza voto medio</label>
+                            <input value="0" name="no-rating" id="no-rating" type="radio" class="ms-3"
+                                v-model="selectedAverageVote" @click="resetVote()">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -726,7 +731,7 @@ p {
 .rating label {
     float: left;
     cursor: pointer;
-    color: #ccc;
+    color: #f8f7f7;
     transition: color 0.3s;
 }
 
@@ -737,19 +742,19 @@ p {
 
 /* Rimuovi il selettore generale e usa uno specifico per ciascun input radio */
 .rating input:checked+label {
-    color: #6f00ff;
+    color: #113996;
     transition: color 0.3s;
 }
 
 .rating .selected {
-    color: #6f00ff;
+    color:#a79ff5 ; 
     transition: color 0.3s;
 }
 
 
 /* Rimuovi il colore dalle stelle precedenti in caso di unhover */
 .rating input:checked~label:hover {
-    color: #ccc;
+    color: #32387c;
     transition: color 0.3s;
 }
 </style>
